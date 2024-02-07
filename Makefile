@@ -7,7 +7,8 @@
 ##
 
 # All the source files
-CXX_SOURCES	= main.cpp
+CXX_SOURCES	=	src/main.cpp				\
+				src/Error.cpp
 
 # Compiler and linker settings
 NAME 		= nanotekspice
