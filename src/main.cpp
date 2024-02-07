@@ -2,14 +2,19 @@
 ** EPITECH PROJECT, 2024
 ** NanoTekSpice
 ** File description:
-** No file there , just an epitech header example .
-** You can even have multiple lines if you want !
+** main
 */
 
+#include "FileContainer.hpp"
 #include "ComponentFactory.hpp"
+#include <iostream>
 
-int main() {
+int main(int argc, char **argv)
+{
+    nts::FileContainer fileContainer;
     nts::ComponentFactory factory;
 
+    fileContainer.extractFileContent(argv[1]);
+    (void) argc;
     return 0;
 }
