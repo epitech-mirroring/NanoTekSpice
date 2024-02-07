@@ -40,7 +40,8 @@ $(NAME):	$(CXX_OBJS)
 		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 # Check if the binary was created
 		@if [ -f $(NAME) ]; then \
-			printf "$(SUCCESS)$(GREEN)  🎉  $(NAME) built successfully$(RESET)\n";\
+			printf \
+			"$(SUCCESS)$(GREEN)  🎉  $(NAME) built successfully$(RESET)\n";\
 		else \
 			printf "$(FAILURE)$(RED)  🚨  $(NAME) build failed$(RESET)\n"; \
 			cat $(LOG); \
