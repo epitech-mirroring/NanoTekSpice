@@ -15,8 +15,7 @@ NAME 		= nanotekspice
 XX			= g++
 XXFLAGS		= -W -Wall -Wextra -I./include -std=c++20
 LDFLAGS		= -shared
-BUILD_DIR	= .output
-CXX_OBJS	= $(addprefix $(BUILD_DIR)/, $(CXX_SOURCES:.cpp=.o))
+CXX_OBJS	= $(CXX_SOURCES:.cpp=.o)
 LOG			= ./build.log
 
 .PHONY: $(NAME) all clean fclean re
@@ -33,15 +32,7 @@ RUNNING = [$(YELLOW)~$(RESET)]
 SUCCESS = [$(GREEN)✔$(RESET)]
 FAILURE = [$(RED)✘$(RESET)]
 
-$(CXX_OBJS): $(BUILD_DIR)/%.o: %.cpp
-# Create the .output folder if it doesn't exist
-		@printf "$(RUNNING) $(YELLOW) 📁  Creating $(BUILD_DIR)$(RESET)" \
-		&& mkdir -p $(BUILD_DIR) >> $(LOG) 2>&1 \
-		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
-# Compile the source file
-		@printf "$(RUNNING) $(BLUE) 🔨  $$(basename $<)$(RESET)"
-		@$(XX) -o $@ -c $< $(XXFLAGS) >> $(LOG) 2>&1 \
-		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+all:		$(NAME)
 
 $(NAME):	$(CXX_OBJS)
 # Link the object files
@@ -50,25 +41,28 @@ $(NAME):	$(CXX_OBJS)
 		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 # Check if the binary was created
 		@if [ -f $(NAME) ]; then \
-			printf "$(SUCCESS)$(GREEN)  🎉  $(NAME) built successfully$(RESET)\n";\
+			printf \
+			"$(SUCCESS)$(GREEN)  🎉  $(NAME) built successfully$(RESET)\n";\
 		else \
 			printf "$(FAILURE)$(RED)  🚨  $(NAME) build failed$(RESET)\n"; \
 			cat $(LOG); \
 		fi
 
-all:		$(NAME)
+$(CXX_OBJS):	%.o: %.cpp
+# Compile the source file
+		@printf "$(RUNNING) $(BLUE) 🔨  $$(basename $<)$(RESET)"
+		@$(XX) -o $@ -c $< $(XXFLAGS) >> $(LOG) 2>&1 \
+		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 
 clean:
-# Clean the build folder but keep the folder
-		@printf "$(RUNNING) $(RED) 🗑️   Cleaning $(BUILD_DIR) folder$(RESET)"
-		@rm -f $(CXX_OBJS) >> $(LOG) 2>&1 \
-		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+# Delete all the object files
+		@for file in $(CXX_OBJS); do \
+			printf "$(RUNNING) $(RED) 🗑️   Deleting $$file$(RESET)"; \
+			rm -f $$file >> $(LOG) 2>&1 \
+			&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"; \
+		done
 
 fclean: clean
-# Delete the build folder
-		@printf "$(RUNNING) $(RED) 🗑️   Deleting $(BUILD_DIR) folder$(RESET)"
-		@rm -rf $(BUILD_DIR) >> $(LOG) 2>&1 \
-		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 # Delete the binary
 		@printf "$(RUNNING) $(RED) 🗑️   Deleting $(NAME)$(RESET)"
 		@rm -f $(NAME) >> $(LOG) 2>&1 \
