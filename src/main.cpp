@@ -7,9 +7,11 @@
 */
 
 #include "ComponentFactory.hpp"
+#include "components/InputComponent.hpp"
 
 int main() {
     nts::ComponentFactory factory;
+    factory.registerComponent("input", new nts::Components::InputComponent());
 
     return 0;
 }

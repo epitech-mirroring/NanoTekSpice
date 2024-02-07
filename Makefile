@@ -9,7 +9,7 @@
 # All the source files
 CXX_SOURCES	= src/main.cpp							\
 			  src/ComponentFactory.cpp				\
-			  src/Components/AbstractComponent.cpp	\
+			  src/components/AbstractComponent.cpp	\
 
 # Compiler and linker settings
 NAME 		= nanotekspice
