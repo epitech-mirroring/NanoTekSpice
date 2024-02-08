@@ -31,7 +31,7 @@ void nts::FileContainer::extractFileContent(const std::string &filename)
     count = read(fd, buffer, st.st_size);
     if (count == -1)
         return;
-    content = buffer;  // Casts the buffer to a string
+    content = buffer;  // Casts the buffer(char *) to std::string
     content = this->removeComments(content);
     this->extractChipsetsAndLinks(content);
 }
