@@ -7,7 +7,6 @@
 
 #include "FileContainer.hpp"
 #include <fstream>
-#include <iostream>
 #include <regex>
 #include <unistd.h>
 #include <fcntl.h>
