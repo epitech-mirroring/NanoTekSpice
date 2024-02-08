@@ -11,8 +11,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <cstring>
 
-nts::FileContainer::FileContainer() {}
+nts::FileContainer::FileContainer()
+{
+    this->_pins = std::unordered_map<std::string, IComponent *>();
+}
 
 void nts::FileContainer::extractFileContent(const std::string &filename)
 {
@@ -64,3 +68,22 @@ std::string nts::FileContainer::getLinks(void) const
     return _links;
 }
 
+void nts::FileContainer::buildMap(ComponentFactory &factory)
+{
+    char *token;
+    char *str = strdup(_chipsets.c_str());
+    char *type;
+    char *name;
+
+    token = strtok(str, "\n");
+    while (token != NULL) {
+        if (token[0] == '.') {
+            token = strtok(NULL, "\n");
+            continue;
+        }
+        type = strtok(token, " \t");
+        name = strtok(NULL, " \t");
+        _pins[name] = factory.createComponent(type);
+        token = strtok(NULL, "\n");
+    }
+}

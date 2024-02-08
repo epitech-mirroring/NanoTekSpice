@@ -9,6 +9,9 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
+#include "IComponent.hpp"
+#include "ComponentFactory.hpp"
 
 namespace nts
 {
@@ -22,9 +25,12 @@ namespace nts
 
             std::string getChipsets(void) const;
             std::string getLinks(void) const;
+
+            void buildMap(ComponentFactory &factory);
         protected:
         private:
             std::string _chipsets;
             std::string _links;
+            std::unordered_map<std::string, IComponent *> _pins;
     };
 };
