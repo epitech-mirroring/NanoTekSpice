@@ -23,20 +23,24 @@ void nts::FileContainer::extractFileContent(const std::string &filename)
     ssize_t count;
     char *buffer;
     struct stat st;
-    int fd = open(filename.c_str(), O_RDONLY);
+    int fd;
     std::string content;
 
     if (stat(filename.c_str(), &st) == -1)
         return;
+    fd = open(filename.c_str(), O_RDONLY);
     if (fd == -1)
         return;
-    buffer = new char[st.st_size];
+    buffer = new char[st.st_size + 1];
     count = read(fd, buffer, st.st_size);
-    if (count == -1)
+    if (count == -1 || buffer == nullptr) {
+        close(fd);
         return;
-    content = buffer;  // Casts the buffer(char *) to std::string
+    }
+    content = std::string(buffer, count);
     content = this->removeComments(content);
     this->extractChipsetsAndLinks(content);
+    close(fd);
 }
 
 std::string nts::FileContainer::removeComments(std::string &content)
@@ -86,4 +90,5 @@ void nts::FileContainer::buildMap(ComponentFactory &factory)
         _pins[name] = factory.createComponent(type);
         token = strtok(NULL, "\n");
     }
+    free(str);
 }
