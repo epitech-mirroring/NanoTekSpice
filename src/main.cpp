@@ -8,10 +8,12 @@
 
 #include "ComponentFactory.hpp"
 #include "components/InputComponent.hpp"
+#include "components/OrComponent.hpp"
 
 int main() {
     nts::ComponentFactory factory;
     factory.registerComponent("input", new nts::Components::InputComponent());
+    factory.registerComponent("or", new nts::Components::OrComponent());
 
     return 0;
 }
