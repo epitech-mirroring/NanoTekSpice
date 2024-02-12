@@ -10,10 +10,15 @@
 #include "components/InputComponent.hpp"
 #include "components/OrComponent.hpp"
 
-int main() {
-    nts::ComponentFactory factory;
+static void registerComponents(nts::ComponentFactory &factory)
+{
     factory.registerComponent("input", new nts::Components::InputComponent());
     factory.registerComponent("or", new nts::Components::OrComponent());
+}
+
+int main() {
+    nts::ComponentFactory factory;
+    registerComponents(factory);
 
     return 0;
 }
