@@ -7,8 +7,10 @@
 ##
 
 # All the source files
-CXX_SOURCES	= src/main.cpp						\
-			  src/ComponentFactory.cpp			\
+CXX_SOURCES	= src/main.cpp							\
+			  src/ComponentFactory.cpp				\
+			  src/components/AbstractComponent.cpp	\
+			  src/components/InputComponent.cpp		\
 			  src/FileContainer.cpp				\
 
 # Compiler and linker settings
