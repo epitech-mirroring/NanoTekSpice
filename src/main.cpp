@@ -8,13 +8,18 @@
 #include "FileContainer.hpp"
 #include "ComponentFactory.hpp"
 #include "components/InputComponent.hpp"
-#include <iostream>
+#include "components/OrComponent.hpp"
 
-int main(int argc, char **argv)
+static void registerComponents(nts::ComponentFactory &factory)
 {
-    nts::FileContainer fileContainer;
-    nts::ComponentFactory factory;
     factory.registerComponent("input", new nts::Components::InputComponent());
+    factory.registerComponent("or", new nts::Components::OrComponent());
+}
+
+int main(int argc, char **argv) {
+    nts::ComponentFactory factory;
+    nts::FileContainer fileContainer;
+    registerComponents(factory);
 
     fileContainer.extractFileContent(argv[1]);
     // fileContainer.buildMap(factory);
