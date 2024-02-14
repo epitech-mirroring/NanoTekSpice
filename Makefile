@@ -7,11 +7,13 @@
 ##
 
 # All the source files
-CXX_SOURCES	= src/main.cpp							\
-			  src/ComponentFactory.cpp				\
-			  src/components/AbstractComponent.cpp	\
-			  src/components/InputComponent.cpp		\
-			  src/components/OrComponent.cpp		\
+CXX_SOURCES	= src/main.cpp								\
+			  src/ComponentFactory.cpp					\
+			  src/components/AbstractComponent.cpp		\
+			  src/components/ComposedComponent.cpp		\
+			  src/components/InputComponent.cpp			\
+			  src/components/OrComponent.cpp			\
+			  src/components/Composed4071Component.cpp	\
 			  src/FileContainer.cpp					\
 
 # Compiler and linker settings
