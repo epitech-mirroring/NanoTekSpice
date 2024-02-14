@@ -13,12 +13,15 @@
 #include <sys/stat.h>
 #include <cstring>
 
-nts::FileContainer::FileContainer()
+nts::FileContainer::FileContainer(const std::string &filename)
 {
+    this->_filename = filename;
+    this->_chipsets = std::vector<std::string>();
+    this->_links = std::vector<std::string>();
     this->_pins = std::unordered_map<std::string, IComponent *>();
 }
 
-void nts::FileContainer::extractFileContent(const std::string &filename)
+void nts::FileContainer::extractFileContent()
 {
     ssize_t count;
     char *buffer;
@@ -26,9 +29,9 @@ void nts::FileContainer::extractFileContent(const std::string &filename)
     int fd;
     std::string content;
 
-    if (stat(filename.c_str(), &st) == -1)
+    if (stat(this->_filename.c_str(), &st) == -1)
         return;
-    fd = open(filename.c_str(), O_RDONLY);
+    fd = open(this->_filename.c_str(), O_RDONLY);
     if (fd == -1)
         return;
     buffer = new char[st.st_size + 1];

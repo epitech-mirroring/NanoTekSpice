@@ -17,9 +17,9 @@ namespace nts
 {
     class FileContainer {
         public:
-            FileContainer();
+            FileContainer(const std::string &filename);
             ~FileContainer() = default;
-            void extractFileContent(const std::string &filename);
+            void extractFileContent();
             std::string removeComments(std::string &content);
             void extractChipsetsAndLinks(const std::string &content);
 
