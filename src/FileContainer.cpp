@@ -61,6 +61,22 @@ std::unordered_map<std::string, nts::IComponent *> nts::FileContainer::getMap(vo
     return _pins;
 }
 
+void nts::FileContainer::setlinks(void)
+{
+    char *name = NULL;
+    char *pin = NULL;
+    char *name2 = NULL;
+    char *pin2 = NULL;
+
+    for (size_t i = 0; i < this->_links.size(); i++) {
+        name = strtok((char *)this->_links[i].c_str(), " ");
+        pin = strtok(NULL, " ");
+        name2 = strtok(NULL, " ");
+        pin2 = strtok(NULL, " ");
+        this->_pins[name]->setLink(std::stoi(pin), *this->_pins[name2], std::stoi(pin2));
+    }
+}
+
 void nts::FileContainer::buildMap(ComponentFactory &factory)
 {
     char *name = NULL;

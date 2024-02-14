@@ -25,6 +25,7 @@ int main(int argc, char **argv) {
 
     fileContainer.extractFileContent();
     // fileContainer.buildMap(factory);
+    // fileContainer.setlinks();
     // Crashs if the components types of the given file are not implemented yet
     // Because the error handling is not yet implemented
     (void) argc;

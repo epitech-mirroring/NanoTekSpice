@@ -26,6 +26,8 @@ namespace nts
             std::vector<std::string> getLinks(void) const;
             std::unordered_map<std::string, IComponent *> getMap(void) const;
 
+            void setlinks(void);
+
             void buildMap(ComponentFactory &factory);
         protected:
         private:
