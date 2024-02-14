@@ -7,7 +7,6 @@
 
 #include "FileContainer.hpp"
 #include <fstream>
-#include <regex>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -41,12 +40,40 @@ void nts::FileContainer::extractFileContent()
         return;
     }
     content = std::string(buffer, count);
-    content = this->removeComments(content);
+    content = removeComments(content);
     this->extractChipsetsAndLinks(content);
     close(fd);
 }
 
-std::string nts::FileContainer::removeComments(std::string &content)
+
+std::vector<std::string> nts::FileContainer::getChipsets(void) const
+{
+    return _chipsets;
+}
+
+std::vector<std::string> nts::FileContainer::getLinks(void) const
+{
+    return _links;
+}
+
+std::unordered_map<std::string, nts::IComponent *> nts::FileContainer::getMap(void) const
+{
+    return _pins;
+}
+
+void nts::FileContainer::buildMap(ComponentFactory &factory)
+{
+    char *name = NULL;
+    char *type = NULL;
+
+    for (size_t i = 1; i < this->_chipsets.size() - 1; i++) {
+        name = strtok((char *)this->_chipsets[i].c_str(), " ");
+        type = strtok(NULL, " ");
+        this->_pins[name] = factory.createComponent(type);
+    }
+}
+
+std::string nts::FileContainer::removeComments(std::string &content) const
 {
     std::regex reg("#.*\n");
 
@@ -60,38 +87,51 @@ void nts::FileContainer::extractChipsetsAndLinks(const std::string &content)
     std::smatch match;
 
     if (std::regex_search(content, match, reg)) {
-        _chipsets = match[1];
-        _links = match[3];
+        this->fillChipsets(match);
+        this->fillLinks(match);
     }
 }
 
-std::string nts::FileContainer::getChipsets(void) const
+void nts::FileContainer::fillChipsets(std::smatch &match)
 {
-    return _chipsets;
-}
-
-std::string nts::FileContainer::getLinks(void) const
-{
-    return _links;
-}
-
-void nts::FileContainer::buildMap(ComponentFactory &factory)
-{
+    std::string str = match[1].str();
+    std::regex reg("^([a-zA-Z0-9]+)\\s+(\\w+)$");
+    std::smatch match2;
     char *token;
-    char *str = strdup(_chipsets.c_str());
-    char *type;
-    char *name;
+    std::string str2;
 
-    token = strtok(str, "\n");
+    token = strtok((char *)str.c_str(), "\n");
+    token = strtok(NULL, "\n");
     while (token != NULL) {
-        if (token[0] == '.') {
-            token = strtok(NULL, "\n");
-            continue;
+        str2 = std::string(token);
+        if (std::regex_search(str2, match2, reg)) {
+            str2 = match2[1].str() + " " + match2[2].str();
+            this->_chipsets.push_back(str2);
+        } else {
+            return;
         }
-        type = strtok(token, " \t");
-        name = strtok(NULL, " \t");
-        _pins[name] = factory.createComponent(type);
         token = strtok(NULL, "\n");
     }
-    free(str);
+}
+
+void nts::FileContainer::fillLinks(std::smatch &match)
+{
+    std::string str = match[3].str();
+    std::regex reg("^([a-zA-Z0-9_]+):([0-9]+)\\s+([a-zA-Z0-9]+):([0-9]+)$");
+    std::smatch match2;
+    char *token;
+    std::string str2;
+
+    token = strtok((char *)str.c_str(), "\n");
+    token = strtok(NULL, "\n");
+    while (token != NULL) {
+        str2 = std::string(token);
+        if (std::regex_search(str2, match2, reg)) {
+            str2 = match2[1].str() + " " + match2[2].str() + " " + match2[3].str() + " " + match2[4].str();
+            this->_links.push_back(str2);
+        } else {
+            return;
+        }
+        token = strtok(NULL, "\n");
+    }
 }
