@@ -7,14 +7,20 @@
 ##
 
 # All the source files
-CXX_SOURCES	=	src/main.cpp				\
+CXX_SOURCES	= src/main.cpp								\
+			  src/ComponentFactory.cpp					\
+			  src/components/AbstractComponent.cpp		\
+			  src/components/ComposedComponent.cpp		\
+			  src/components/InputComponent.cpp			\
+			  src/components/OrComponent.cpp			\
+			  src/components/Composed4071Component.cpp	\
+			  src/FileContainer.cpp					\
 				src/Error.cpp
 
 # Compiler and linker settings
 NAME 		= nanotekspice
 XX			= g++
-XXFLAGS		= -W -Wall -Wextra -I./include -std=c++20
-LDFLAGS		= -shared
+XXFLAGS		= -W -Wall -Wextra -std=c++20
 CXX_OBJS	= $(CXX_SOURCES:.cpp=.o)
 LOG			= ./build.log
 
