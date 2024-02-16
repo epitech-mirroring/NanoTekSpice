@@ -38,7 +38,7 @@ namespace nts
 
             std::string removeComments(std::string &content) const;
             void extractChipsetsAndLinks(const std::string &content);
-            void fillChipsets(std::smatch &match);
-            void fillLinks(std::smatch &match);
+            void fillChipsets(std::string &str);
+            void fillLinks(std::string &str);
     };
 };

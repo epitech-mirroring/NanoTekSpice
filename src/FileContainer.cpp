@@ -101,16 +101,19 @@ void nts::FileContainer::extractChipsetsAndLinks(const std::string &content)
 {
     std::regex reg("(\\.chipsets:\n([a-zA-Z0-9_ ]+\n?)+)\n*(\\.links:\n([a-zA-Z0-9_: ]+\n?)+)");
     std::smatch match;
+    std::string str1;
+    std::string str2;
 
     if (std::regex_search(content, match, reg)) {
-        this->fillChipsets(match);
-        this->fillLinks(match);
+        str1 = match[1].str();
+        this->fillChipsets(str1);
+        str2 = match[3].str();
+        this->fillLinks(str2);
     }
 }
 
-void nts::FileContainer::fillChipsets(std::smatch &match)
+void nts::FileContainer::fillChipsets(std::string &str)
 {
-    std::string str = match[1].str();
     std::regex reg("^([a-zA-Z0-9]+)\\s+(\\w+)$");
     std::smatch match2;
     char *token;
@@ -130,9 +133,8 @@ void nts::FileContainer::fillChipsets(std::smatch &match)
     }
 }
 
-void nts::FileContainer::fillLinks(std::smatch &match)
+void nts::FileContainer::fillLinks(std::string &str)
 {
-    std::string str = match[3].str();
     std::regex reg("^([a-zA-Z0-9_]+):([0-9]+)\\s+([a-zA-Z0-9]+):([0-9]+)$");
     std::smatch match2;
     char *token;
