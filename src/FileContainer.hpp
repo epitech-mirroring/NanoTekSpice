@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <regex>
 #include "IComponent.hpp"
 #include "ComponentFactory.hpp"
 
@@ -17,20 +18,27 @@ namespace nts
 {
     class FileContainer {
         public:
-            FileContainer();
+            FileContainer(const std::string &filename);
             ~FileContainer() = default;
-            void extractFileContent(const std::string &filename);
-            std::string removeComments(std::string &content);
-            void extractChipsetsAndLinks(const std::string &content);
+            void extractFileContent();
 
-            std::string getChipsets(void) const;
-            std::string getLinks(void) const;
+            std::vector<std::string> getChipsets(void) const;
+            std::vector<std::string> getLinks(void) const;
+            std::unordered_map<std::string, IComponent *> getMap(void) const;
+
+            void setlinks(void);
 
             void buildMap(ComponentFactory &factory);
         protected:
         private:
-            std::string _chipsets;
-            std::string _links;
+            std::string _filename;
+            std::vector<std::string> _chipsets;
+            std::vector<std::string> _links;
             std::unordered_map<std::string, IComponent *> _pins;
+
+            std::string removeComments(std::string &content) const;
+            void extractChipsetsAndLinks(const std::string &content);
+            void fillChipsets(std::string &str);
+            void fillLinks(std::string &str);
     };
 };
