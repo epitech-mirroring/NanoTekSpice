@@ -20,11 +20,12 @@ static void registerComponents(nts::ComponentFactory &factory)
 
 int main(int argc, char **argv) {
     nts::ComponentFactory factory;
-    nts::FileContainer fileContainer;
+    nts::FileContainer fileContainer(argv[1]);
     registerComponents(factory);
 
-    fileContainer.extractFileContent(argv[1]);
+    fileContainer.extractFileContent();
     // fileContainer.buildMap(factory);
+    // fileContainer.setlinks();
     // Crashs if the components types of the given file are not implemented yet
     // Because the error handling is not yet implemented
     (void) argc;
