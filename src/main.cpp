@@ -10,6 +10,7 @@
 #include "components/InputComponent.hpp"
 #include "components/OrComponent.hpp"
 #include "components/Composed4071Component.hpp"
+#include "Error.hpp"
 
 static void registerComponents(nts::ComponentFactory &factory)
 {
@@ -20,14 +21,17 @@ static void registerComponents(nts::ComponentFactory &factory)
 
 int main(int argc, char **argv) {
     nts::ComponentFactory factory;
-    nts::FileContainer fileContainer(argv[1]);
-    registerComponents(factory);
 
-    fileContainer.extractFileContent();
-    // fileContainer.buildMap(factory);
-    // fileContainer.setlinks();
-    // Crashs if the components types of the given file are not implemented yet
-    // Because the error handling is not yet implemented
-    (void) argc;
+    registerComponents(factory);
+    try {
+        nts::checkArgs(argc, argv);
+        nts::FileContainer fileContainer(argv[1]);
+        fileContainer.extractFileContent();
+        fileContainer.buildMap(factory);
+        fileContainer.setlinks();
+    } catch (nts::Error &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
+    }
     return 0;
 }
