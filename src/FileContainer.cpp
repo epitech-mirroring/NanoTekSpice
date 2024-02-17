@@ -29,22 +29,21 @@ void nts::FileContainer::extractFileContent()
     std::string content;
 
     if (stat(this->_filename.c_str(), &st) == -1)
-        return;
+        throw nts::Error("File does not exist.");
     fd = open(this->_filename.c_str(), O_RDONLY);
     if (fd == -1)
-        return;
+        throw nts::Error("File does not exist.");
     buffer = new char[st.st_size + 1];
     count = read(fd, buffer, st.st_size);
     if (count == -1 || buffer == nullptr) {
         close(fd);
-        return;
+        throw nts::Error("Error while reading file.");
     }
     content = std::string(buffer, count);
     content = removeComments(content);
     this->extractChipsetsAndLinks(content);
     close(fd);
 }
-
 
 std::vector<std::string> nts::FileContainer::getChipsets(void) const
 {

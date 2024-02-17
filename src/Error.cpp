@@ -17,13 +17,13 @@ const char *nts::Error::what() const noexcept
     return _msg.c_str();
 }
 
-void nts::Error::check_args_number(int argc)
+static void checkArgsNumber(int argc)
 {
     if (argc != 2)
         throw nts::Error("Invalid number of arguments.");
 }
 
-void nts::Error::check_file_extension(char *filename)
+static void checkFileExtension(char *filename)
 {
     std::regex reg(".*\\.nts");
     std::smatch match;
@@ -33,11 +33,18 @@ void nts::Error::check_file_extension(char *filename)
         throw nts::Error("Invalid file extension.");
 }
 
-void nts::Error::check_file_existence(char *filename)
+static void checkFileExistence(char *filename)
 {
     int fd = open(filename, O_RDONLY);
 
     if (fd == -1)
         throw nts::Error("File does not exist.");
     close(fd);
+}
+
+void nts::checkArgs(int argc, char **argv)
+{
+    checkArgsNumber(argc);
+    checkFileExtension(argv[1]);
+    checkFileExistence(argv[1]);
 }
