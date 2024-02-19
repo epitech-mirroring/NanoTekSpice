@@ -104,7 +104,7 @@ void nts::FileContainer::setlinks(void)
 
 std::string nts::FileContainer::removeComments(std::string &content) const
 {
-    std::regex reg("(^#.*\n)");
+    std::regex reg("#.*");
 
     while (std::regex_search(content, reg))
         content = std::regex_replace(content, reg, "");
@@ -130,7 +130,7 @@ void nts::FileContainer::extractChipsetsAndLinks(const std::string &content)
 
 void nts::FileContainer::fillChipsets(std::string &str)
 {
-    std::regex reg("^([a-zA-Z0-9]+)\\s+(\\w+)(\\s+#+(.+)?)?$");
+    std::regex reg("^([a-zA-Z0-9]+)\\s+(\\w+)(\\s+)?");
     std::smatch match2;
     char *token;
     std::string str2;
@@ -153,7 +153,7 @@ void nts::FileContainer::fillChipsets(std::string &str)
 
 void nts::FileContainer::fillLinks(std::string &str)
 {
-    std::regex reg("^([a-zA-Z0-9_]+)((\\s+)?:(\\s+)?)([0-9]+)\\s+([a-zA-Z0-9_]+)((\\s+)?:(\\s+)?)([0-9]+)(\\s+#+(.+)?)?$");
+    std::regex reg("^([a-zA-Z0-9_]+)((\\s+)?:(\\s+)?)([0-9]+)\\s+([a-zA-Z0-9_]+)((\\s+)?:(\\s+)?)([0-9]+)( +)?");
     std::smatch match2;
     char *token;
     std::string str2;
