@@ -32,3 +32,8 @@ nts::Tristate XorComponent::compute(std::size_t pin)
         return UNDEFINED;
     return FALSE;
 }
+
+XorComponent *XorComponent::clone() const
+{
+    return new XorComponent();
+}

@@ -33,3 +33,8 @@ nts::Tristate AndComponent::compute(std::size_t pin)
         return UNDEFINED;
     return FALSE;
 }
+
+AndComponent *AndComponent::clone() const
+{
+    return new AndComponent();
+}
