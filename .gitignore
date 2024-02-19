@@ -33,3 +33,8 @@
 
 .idea/
 *.iml
+
+nts_advanced/
+nts_single/
+subject_sample/
+documentation/
