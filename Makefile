@@ -15,6 +15,7 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/components/OrComponent.cpp			\
 			  src/components/Composed4071Component.cpp	\
 			  src/components/TrueComponent.cpp			\
+			  src/components/FalseComponent.cpp			\
 
 # Compiler and linker settings
 NAME 		= nanotekspice
