@@ -19,6 +19,7 @@ AbstractComponent::AbstractComponent(std::size_t nbPins) {
 
 void AbstractComponent::simulate(std::size_t tick) {
     // Simulate the component
+    (void)tick;
 }
 
 void AbstractComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) {
