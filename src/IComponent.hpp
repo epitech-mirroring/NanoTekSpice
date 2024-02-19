@@ -16,9 +16,7 @@ namespace nts {
         FALSE = false
     };
 
-    Tristate operator!(Tristate const &a) noexcept {
-        return (a == UNDEFINED) ? UNDEFINED : (a == TRUE) ? FALSE : TRUE;
-    }
+    [[nodiscard]] Tristate operator!(Tristate const &a);
 
     class IComponent {
         public:

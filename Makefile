@@ -8,6 +8,7 @@
 
 # All the source files
 CXX_SOURCES	= src/main.cpp								\
+			  src/IComponent.cpp						\
 			  src/ComponentFactory.cpp					\
 			  src/components/AbstractComponent.cpp		\
 			  src/components/ComposedComponent.cpp		\
