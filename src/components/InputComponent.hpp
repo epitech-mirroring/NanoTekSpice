@@ -12,7 +12,7 @@
 
 namespace nts::Components {
     class InputComponent: public AbstractComponent {
-    private:
+    protected:
         Tristate _value;
     public:
         InputComponent();
