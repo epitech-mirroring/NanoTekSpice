@@ -17,12 +17,6 @@ const char *nts::Error::what() const noexcept
     return _msg.c_str();
 }
 
-static void checkArgsNumber(int argc)
-{
-    if (argc != 2)
-        throw nts::Error("Invalid number of arguments.");
-}
-
 static void checkFileExtension(char *filename)
 {
     std::regex reg(".*\\.nts");
@@ -44,7 +38,8 @@ static void checkFileExistence(char *filename)
 
 void nts::checkArgs(int argc, char **argv)
 {
-    checkArgsNumber(argc);
+    if (argc != 2)
+        throw nts::Error("Invalid number of arguments.");
     checkFileExtension(argv[1]);
     checkFileExistence(argv[1]);
 }
