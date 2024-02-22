@@ -71,8 +71,8 @@ void nts::FileContainer::buildMap(ComponentFactory &factory)
         name = strtok(NULL, " ");
         if (name == NULL || type == NULL)
             throw nts::Error("Invalid file format.");
-        if (!isComponentType(type))
-            throw nts::Error("Invalid component type.");
+        if (!factory.isRegistered(name))
+            throw nts::Error("Component type does not exist.");
         if (this->_pins.find(name) != this->_pins.end())
             throw nts::Error("Component name already exists.");
         this->_pins[name] = factory.createComponent(type);
@@ -172,15 +172,6 @@ void nts::FileContainer::fillLinks(std::string &str)
         }
         token = strtok(NULL, "\n");
     }
-}
-
-bool nts::FileContainer::isComponentType(const std::string &str)
-{
-    for (size_t i = 0; i < componentType.size(); i++) {
-        if (str == componentType[i])
-            return true;
-    }
-    return false;
 }
 
 bool nts::FileContainer::isPinExist(const std::string &str)

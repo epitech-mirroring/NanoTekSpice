@@ -42,8 +42,4 @@ namespace nts
             bool isComponentType(const std::string &str);
             bool isPinExist(const std::string &str);
     };
-
-    static std::vector<std::string> componentType = {
-        "input", "or", "4071"};
-        // "input", "output", "clock", "true", "false", "and", "or", "xor", "not", "4001", "4008", "4011", "4013", "4017", "4030", "4040", "4069", "4071", "4081", "4094", "4514", "4801", "end"};
 };
