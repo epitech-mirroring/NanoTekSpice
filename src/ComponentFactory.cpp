@@ -34,4 +34,9 @@ namespace nts {
     {
         _components.erase(name);
     }
+
+    bool ComponentFactory::isRegistered(const std::string &name)
+    {
+        return _components.find(name) != _components.end();
+    }
 }

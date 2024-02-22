@@ -16,6 +16,8 @@ namespace nts {
         FALSE = false
     };
 
+    [[nodiscard]] Tristate operator!(Tristate const &a);
+
     class IComponent {
         public:
             virtual ~IComponent() = default;

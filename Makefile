@@ -8,12 +8,19 @@
 
 # All the source files
 CXX_SOURCES	= src/main.cpp								\
+			  src/IComponent.cpp						\
 			  src/ComponentFactory.cpp					\
 			  src/components/AbstractComponent.cpp		\
 			  src/components/ComposedComponent.cpp		\
 			  src/components/InputComponent.cpp			\
 			  src/components/OrComponent.cpp			\
 			  src/components/Composed4071Component.cpp	\
+			  src/components/ClockComponent.cpp			\
+			  src/components/TrueComponent.cpp			\
+			  src/components/FalseComponent.cpp			\
+			  src/components/NotComponent.cpp			\
+			  src/components/AndComponent.cpp			\
+			  src/components/XorComponent.cpp			\
 			  src/FileContainer.cpp						\
 			  src/Error.cpp								\
 
