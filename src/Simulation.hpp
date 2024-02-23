@@ -30,5 +30,8 @@ namespace nts {
                 void display(void);
                 void simulate(void);
                 void loop(void);
+
+                void handleInputs(char *line);
+                void setValues(std::string name, std::string value);
     };
 };

@@ -8,10 +8,12 @@
 #include "Simulation.hpp"
 #include "Error.hpp"
 #include "components/InputComponent.hpp"
+#include "components/ClockComponent.hpp"
 // #include "OutputComponent.hpp"
 // This include is in comments since the Output component is not implemented yet
 #include <string.h>
 #include <signal.h>
+#include <fstream>
 
 nts::Simulation::Simulation(std::map<std::string, IComponent *> pins)
 {
@@ -39,8 +41,7 @@ void nts::Simulation::execSimulation()
             return;
         if (isKnownCommand(line))
             continue;
-        else
-            std::cout << "Unknown command." << std::endl;
+        handleInputs(line);
     }
 }
 
@@ -90,9 +91,11 @@ void nts::Simulation::simulate()
     //         pin.second->simulate(1);
     // }
     // This part is in comments since the Output component is not implemented yet
-    for (auto &pin : pins) {
+    for (auto &pin : this->_pins)
         pin.second->simulate(1);
-    }
+    // for (auto &pin : pins) {
+    //     pin.second->simulate(1);
+    // }
     this->_ticks++;
 }
 
@@ -124,7 +127,56 @@ void nts::Simulation::loop()
     while (this->_loop) {
         simulate();
         display();
-        sleep(1);
         sigaction(SIGINT, &sigIntHandler, NULL);
+        sleep(1);
+    }
+    sigIntHandler.sa_handler = SIG_DFL;
+    sigaction(SIGINT, &sigIntHandler, NULL);
+}
+
+void nts::Simulation::handleInputs(char *line)
+{
+    std::stringstream ss(line);
+    std::string name;
+    std::string value;
+
+    if (!getline(ss, name, '=')) {
+        // std::cout << "Invalid input" << std::endl;
+        return;
+    }
+    if (this->_pins[name] == nullptr ||
+    (dynamic_cast<nts::Components::InputComponent *>(this->_pins[name]) == nullptr &&
+    dynamic_cast<nts::Components::ClockComponent *>(this->_pins[name]) == nullptr)) {
+        // std::cout << "Command not found" << std::endl;
+        return;
+    }
+    if (!getline(ss, value)) {
+        // std::cout << "Invalid input" << std::endl;
+        return;
+    }
+    if (value != "0" && value != "1" && value != "U") {
+        // std::cout << "Invalid value" << std::endl;
+        return;
+    }
+    setValues(name, value);
+}
+
+void nts::Simulation::setValues(std::string name, std::string value)
+{
+    if (dynamic_cast<nts::Components::ClockComponent *>(this->_pins[name]) != nullptr) {
+        if (value == "0")
+            dynamic_cast<nts::Components::ClockComponent *>(this->_pins[name])->setValue(nts::FALSE);
+        else if (value == "1")
+            dynamic_cast<nts::Components::ClockComponent *>(this->_pins[name])->setValue(nts::TRUE);
+        else
+            dynamic_cast<nts::Components::ClockComponent *>(this->_pins[name])->setValue(nts::UNDEFINED);
+    }
+    if (dynamic_cast<nts::Components::InputComponent *>(this->_pins[name]) != nullptr) {
+        if (value == "0")
+            dynamic_cast<nts::Components::InputComponent *>(this->_pins[name])->setValue(nts::FALSE);
+        else if (value == "1")
+            dynamic_cast<nts::Components::InputComponent *>(this->_pins[name])->setValue(nts::TRUE);
+        else
+            dynamic_cast<nts::Components::InputComponent *>(this->_pins[name])->setValue(nts::UNDEFINED);
     }
 }
