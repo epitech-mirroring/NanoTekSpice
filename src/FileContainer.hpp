@@ -26,9 +26,8 @@ namespace nts
             std::vector<std::string> getLinks(void) const;
             std::unordered_map<std::string, IComponent *> getMap(void) const;
 
-            void setlinks(void);
-
             void buildMap(ComponentFactory &factory);
+            void setlinks(void);
         protected:
         private:
             std::string _filename;
@@ -40,5 +39,7 @@ namespace nts
             void extractChipsetsAndLinks(const std::string &content);
             void fillChipsets(std::string &str);
             void fillLinks(std::string &str);
+            bool isComponentType(const std::string &str);
+            bool isPinExist(const std::string &str);
     };
 };
