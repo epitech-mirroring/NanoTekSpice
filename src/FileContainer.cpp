@@ -18,7 +18,7 @@ nts::FileContainer::FileContainer(const std::string &filename)
     this->_filename = filename;
     this->_chipsets = std::vector<std::string>();
     this->_links = std::vector<std::string>();
-    this->_pins = std::unordered_map<std::string, IComponent *>();
+    this->_pins = std::map<std::string, IComponent *>();
 }
 
 void nts::FileContainer::extractFileContent()
@@ -56,7 +56,7 @@ std::vector<std::string> nts::FileContainer::getLinks(void) const
     return _links;
 }
 
-std::unordered_map<std::string, nts::IComponent *> nts::FileContainer::getMap(void) const
+std::map<std::string, nts::IComponent *> nts::FileContainer::getMap(void) const
 {
     return _pins;
 }
