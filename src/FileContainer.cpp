@@ -113,7 +113,7 @@ std::string nts::FileContainer::removeComments(std::string &content) const
 
 void nts::FileContainer::extractChipsetsAndLinks(const std::string &content)
 {
-    std::regex reg("(\\.chipsets:\n([a-zA-Z0-9_ #]+\n?)+\n)\n*(\\.links:\n([a-zA-Z0-9_: #]+\n?)+\n+)$");
+    std::regex reg("(\\.chipsets:\n([a-zA-Z0-9_ #]+\n?)+\n)\n*(\\.links:\n([a-zA-Z0-9_: #]+\n?)+)(\n+)?$");
     std::smatch match;
     std::string str1;
     std::string str2;
