@@ -31,8 +31,16 @@
 *.out
 *.app
 
+# Subject sources directories
+documentation/
+nts_advanced/
+nts_single/
+subject_sample/
+
 .idea/
 *.iml
+.vscode/
+
 
 nts_advanced/
 nts_single/
