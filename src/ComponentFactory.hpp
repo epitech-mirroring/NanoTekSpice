@@ -23,5 +23,6 @@ namespace nts {
         [[nodiscard]] IComponent *operator<<(const std::string &name);
         [[nodiscard]] IComponent *createComponent(const std::string &name);
         void unregisterComponent(const std::string &name);
+        bool isRegistered(const std::string &name);
     };
 }

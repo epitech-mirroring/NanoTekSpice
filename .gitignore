@@ -40,3 +40,9 @@ subject_sample/
 .idea/
 *.iml
 .vscode/
+
+
+nts_advanced/
+nts_single/
+subject_sample/
+documentation/

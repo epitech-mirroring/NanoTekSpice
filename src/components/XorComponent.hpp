@@ -7,18 +7,14 @@
 */
 
 #pragma once
-
 #include "AbstractComponent.hpp"
 
 namespace nts::Components {
-    class InputComponent: public AbstractComponent {
-    protected:
-        Tristate _value;
+    class XorComponent: public AbstractComponent {
     public:
-        InputComponent();
-        ~InputComponent() override = default;
+        XorComponent();
+        ~XorComponent() override = default;
         Tristate compute(std::size_t pin) override;
-        void setValue(Tristate value);
-        [[nodiscard]] InputComponent *clone() const override;
+        [[nodiscard]] XorComponent *clone() const override;
     };
 }
