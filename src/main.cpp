@@ -2,10 +2,10 @@
 ** EPITECH PROJECT, 2024
 ** NanoTekSpice
 ** File description:
-** No file there , just an epitech header example .
-** You can even have multiple lines if you want !
+** main
 */
 
+#include "FileContainer.hpp"
 #include "ComponentFactory.hpp"
 #include "components/InputComponent.hpp"
 #include "components/OrComponent.hpp"
@@ -16,6 +16,7 @@
 #include "components/NotComponent.hpp"
 #include "components/AndComponent.hpp"
 #include "components/XorComponent.hpp"
+#include "Error.hpp"
 
 static void registerComponents(nts::ComponentFactory &factory)
 {
@@ -30,9 +31,19 @@ static void registerComponents(nts::ComponentFactory &factory)
     factory.registerComponent("xor", new nts::Components::XorComponent());
 }
 
-int main() {
+int main(int argc, char **argv) {
     nts::ComponentFactory factory;
-    registerComponents(factory);
 
+    registerComponents(factory);
+    try {
+        nts::checkArgs(argc, argv);
+        nts::FileContainer fileContainer(argv[1]);
+        fileContainer.extractFileContent();
+        fileContainer.buildMap(factory);
+        fileContainer.setlinks();
+    } catch (nts::Error &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
+    }
     return 0;
 }
