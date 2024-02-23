@@ -82,14 +82,17 @@ void nts::Simulation::display()
 
 void nts::Simulation::simulate()
 {
-    for (auto &pin : this->_pins) {
-        pin.second->simulate(this->_ticks);
-    }
+    std::unordered_map<std::string, IComponent *> pins;
     // for (auto &pin : this->_pins) {
     //     if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) != nullptr)
-    //         pin.second->compute(1);
+    //         pins.push_back(pin);
+    //     else
+    //         pin.second->simulate(1);
     // }
     // This part is in comments since the Output component is not implemented yet
+    for (auto &pin : pins) {
+        pin.second->simulate(1);
+    }
     this->_ticks++;
 }
 
