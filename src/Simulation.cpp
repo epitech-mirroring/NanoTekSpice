@@ -141,21 +141,17 @@ void nts::Simulation::handleInputs(char *line)
     std::string value;
 
     if (!getline(ss, name, '=')) {
-        // std::cout << "Invalid input" << std::endl;
         return;
     }
     if (this->_pins[name] == nullptr ||
     (dynamic_cast<nts::Components::InputComponent *>(this->_pins[name]) == nullptr &&
     dynamic_cast<nts::Components::ClockComponent *>(this->_pins[name]) == nullptr)) {
-        // std::cout << "Command not found" << std::endl;
         return;
     }
     if (!getline(ss, value)) {
-        // std::cout << "Invalid input" << std::endl;
         return;
     }
     if (value != "0" && value != "1" && value != "U") {
-        // std::cout << "Invalid value" << std::endl;
         return;
     }
     setValues(name, value);
