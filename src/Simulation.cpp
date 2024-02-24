@@ -90,12 +90,10 @@ void nts::Simulation::simulate()
     //     else
     //         pin.second->simulate(1);
     // }
-    // This part is in comments since the Output component is not implemented yet
-    for (auto &pin : this->_pins)
-        pin.second->simulate(1);
     // for (auto &pin : pins) {
     //     pin.second->simulate(1);
     // }
+    // This part is in comments since the Output component is not implemented yet
     this->_ticks++;
 }
 
