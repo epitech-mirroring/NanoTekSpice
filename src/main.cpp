@@ -17,6 +17,7 @@
 #include "components/AndComponent.hpp"
 #include "components/XorComponent.hpp"
 #include "Error.hpp"
+#include "Simulation.hpp"
 
 static void registerComponents(nts::ComponentFactory &factory)
 {
@@ -31,7 +32,8 @@ static void registerComponents(nts::ComponentFactory &factory)
     factory.registerComponent("xor", new nts::Components::XorComponent());
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     nts::ComponentFactory factory;
 
     registerComponents(factory);
@@ -41,6 +43,8 @@ int main(int argc, char **argv) {
         fileContainer.extractFileContent();
         fileContainer.buildMap(factory);
         fileContainer.setlinks();
+        nts::Simulation simulation(fileContainer.getMap());
+        simulation.execSimulation();
     } catch (nts::Error &e) {
         std::cerr << e.what() << std::endl;
         return 84;

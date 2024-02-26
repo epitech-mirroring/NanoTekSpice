@@ -8,11 +8,20 @@
 
 #include "IComponent.hpp"
 
-using namespace nts;
-
-Tristate nts::operator!(Tristate const &tristate)
+nts::Tristate nts::operator!(Tristate const &tristate)
 {
     if (tristate == UNDEFINED)
         return UNDEFINED;
     return (tristate == TRUE) ? FALSE : TRUE;
+}
+
+std::ostream &operator<<(std::ostream &os, nts::Tristate const &a)
+{
+    if (a == nts::UNDEFINED)
+        os << "U";
+    else if (a == nts::TRUE)
+        os << "1";
+    else
+        os << "0";
+    return os;
 }
