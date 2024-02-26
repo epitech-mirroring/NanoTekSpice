@@ -123,9 +123,10 @@ void nts::Simulation::loop()
     this->_loop = true;
     handleLoop(this);
     while (this->_loop) {
-        simulate();
-        display();
         sigaction(SIGINT, &sigIntHandler, NULL);
+        simulate();
+        sigaction(SIGINT, &sigIntHandler, NULL);
+        display();
     }
     sigIntHandler.sa_handler = SIG_DFL;
     sigaction(SIGINT, &sigIntHandler, NULL);
