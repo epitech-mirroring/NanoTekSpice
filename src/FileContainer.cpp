@@ -21,6 +21,13 @@ nts::FileContainer::FileContainer(const std::string &filename)
     this->_pins = std::unordered_map<std::string, IComponent *>();
 }
 
+nts::FileContainer::~FileContainer()
+{
+    for (auto &pin : this->_pins) {
+        delete pin.second;
+    }
+}
+
 void nts::FileContainer::extractFileContent()
 {
     ssize_t count;
@@ -44,6 +51,7 @@ void nts::FileContainer::extractFileContent()
     content = removeComments(content);
     this->extractChipsetsAndLinks(content);
     close(fd);
+    delete[] buffer;
 }
 
 std::vector<std::string> nts::FileContainer::getChipsets(void) const
