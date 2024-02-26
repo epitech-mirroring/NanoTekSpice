@@ -34,4 +34,3 @@ CNorComponent *CNorComponent::clone() const
 {
     return new CNorComponent();
 }
-
