@@ -23,6 +23,8 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/components/XorComponent.cpp			\
 			  src/FileContainer.cpp						\
 			  src/Error.cpp								\
+			  src/components/composed/C4001Component.cpp\
+			  src/Components/composed/CNorComponent.cpp	\
 
 # Compiler and linker settings
 NAME 		= nanotekspice
