@@ -27,6 +27,7 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/Components/composed/CNorComponent.cpp	\
 			  src/Components/composed/CNandComponent.cpp\
 			  src/components/composed/C4011Component.cpp\
+			  src/components/composed/C4030Component.cpp\
 
 # Compiler and linker settings
 NAME 		= nanotekspice
