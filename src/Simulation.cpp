@@ -126,7 +126,6 @@ void nts::Simulation::loop()
         simulate();
         display();
         sigaction(SIGINT, &sigIntHandler, NULL);
-        sleep(1);
     }
     sigIntHandler.sa_handler = SIG_DFL;
     sigaction(SIGINT, &sigIntHandler, NULL);
