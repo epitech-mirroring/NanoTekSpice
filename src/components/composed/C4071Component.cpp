@@ -6,12 +6,12 @@
 ** You can even have multiple lines if you want !
 */
 
-#include "Composed4071Component.hpp"
-#include "OrComponent.hpp"
+#include "C4071Component.hpp"
+#include "../OrComponent.hpp"
 
 using namespace nts::Components;
 
-Composed4071Component::Composed4071Component(): ComposedComponent(14, 4)
+C4071Component::C4071Component(): ComposedComponent(14, 4)
 {
     _internal["A"] = new OrComponent();
     _internal["B"] = new OrComponent();
@@ -35,7 +35,7 @@ Composed4071Component::Composed4071Component(): ComposedComponent(14, 4)
     this->setLink(11, *_internal["D"], 3);
 }
 
-nts::Tristate Composed4071Component::compute(std::size_t pin)
+nts::Tristate C4071Component::compute(std::size_t pin)
 {
     if (pin == 3)
         return _internal["A"]->compute(3);
@@ -48,7 +48,7 @@ nts::Tristate Composed4071Component::compute(std::size_t pin)
     return UNDEFINED;
 }
 
-Composed4071Component *Composed4071Component::clone() const
+C4071Component *C4071Component::clone() const
 {
-    return new Composed4071Component();
+    return new C4071Component();
 }

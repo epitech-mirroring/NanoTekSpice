@@ -14,7 +14,7 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/components/ComposedComponent.cpp		\
 			  src/components/InputComponent.cpp			\
 			  src/components/OrComponent.cpp			\
-			  src/components/Composed4071Component.cpp	\
+			  src/components/composed/C4071Component.cpp\
 			  src/components/ClockComponent.cpp			\
 			  src/components/TrueComponent.cpp			\
 			  src/components/FalseComponent.cpp			\
