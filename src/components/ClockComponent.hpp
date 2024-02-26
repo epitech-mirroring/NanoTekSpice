@@ -11,10 +11,13 @@
 
 namespace nts::Components {
     class ClockComponent: public InputComponent {
+    protected:
+        Tristate _value;
     public:
         ClockComponent();
         ~ClockComponent() override = default;
         Tristate compute(std::size_t pin) override;
+        void setValue(Tristate value);
         [[nodiscard]] ClockComponent *clone() const override;
         void simulate(std::size_t tick) override;
     };

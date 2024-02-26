@@ -24,7 +24,7 @@ namespace nts
 
             std::vector<std::string> getChipsets(void) const;
             std::vector<std::string> getLinks(void) const;
-            std::unordered_map<std::string, IComponent *> getMap(void) const;
+            std::map<std::string, IComponent *> getMap(void) const;
 
             void buildMap(ComponentFactory &factory);
             void setlinks(void);
@@ -33,7 +33,7 @@ namespace nts
             std::string _filename;
             std::vector<std::string> _chipsets;
             std::vector<std::string> _links;
-            std::unordered_map<std::string, IComponent *> _pins;
+            std::map<std::string, IComponent *> _pins;
 
             std::string removeComments(std::string &content) const;
             void extractChipsetsAndLinks(const std::string &content);
