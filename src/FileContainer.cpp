@@ -71,7 +71,7 @@ void nts::FileContainer::buildMap(ComponentFactory &factory)
         name = strtok(NULL, " ");
         if (name == NULL || type == NULL)
             throw nts::Error("Invalid file format.");
-        if (!factory.isRegistered(name))
+        if (!factory.isRegistered(type))
             throw nts::Error("Component type does not exist.");
         if (this->_pins.find(name) != this->_pins.end())
             throw nts::Error("Component name already exists.");
