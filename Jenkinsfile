@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'epitechcontent/epitest-docker:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
     environment {
         // Set the ssh key for the mirror using secret private key
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
@@ -14,7 +9,7 @@ pipeline {
         stage('🕵️ Lint') {
             steps {
                 // Run docker container
-                sh 'docker run --rm --security-opt "label:disable" -i -v "$(pwd)":"/mnt/delivery" -v "$(pwd)":"/mnt/reports" ghcr.io/epitech/coding-style-checker:latest "/mnt/delivery" "/mnt/reports"'
+                sh 'docker run --rm --security-opt "label:disable" -v "$(pwd)":"/mnt/delivery" -v "$(pwd)":"/mnt/reports" ghcr.io/epitech/coding-style-checker:latest "/mnt/delivery" "/mnt/reports"'
 
                 // Parse the report and fail the build if the quality gate is not passed
                 script {
