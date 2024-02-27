@@ -19,7 +19,7 @@ namespace nts
     class FileContainer {
         public:
             FileContainer(const std::string &filename);
-            ~FileContainer() = default;
+            ~FileContainer();
             void extractFileContent();
 
             std::vector<std::string> getChipsets(void) const;

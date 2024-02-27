@@ -21,6 +21,13 @@ nts::FileContainer::FileContainer(const std::string &filename)
     this->_pins = std::map<std::string, IComponent *>();
 }
 
+nts::FileContainer::~FileContainer()
+{
+    for (auto &pin : this->_pins) {
+        delete pin.second;
+    }
+}
+
 void nts::FileContainer::extractFileContent()
 {
     ssize_t count;
@@ -44,6 +51,7 @@ void nts::FileContainer::extractFileContent()
     content = removeComments(content);
     this->extractChipsetsAndLinks(content);
     close(fd);
+    delete[] buffer;
 }
 
 std::vector<std::string> nts::FileContainer::getChipsets(void) const
@@ -129,7 +137,7 @@ void nts::FileContainer::extractChipsetsAndLinks(const std::string &content)
 
 void nts::FileContainer::fillChipsets(std::string &str)
 {
-    std::regex reg("^([a-zA-Z0-9]+)\\s+(\\w+)(\\s+)?");
+    std::regex reg("^\\s*([a-zA-Z0-9]+)\\s+(\\w+)\\s*(#.*)?$");
     std::smatch match2;
     char *token;
     std::string str2;
@@ -152,7 +160,7 @@ void nts::FileContainer::fillChipsets(std::string &str)
 
 void nts::FileContainer::fillLinks(std::string &str)
 {
-    std::regex reg("^([a-zA-Z0-9_]+)((\\s+)?:(\\s+)?)([0-9]+)\\s+([a-zA-Z0-9_]+)((\\s+)?:(\\s+)?)([0-9]+)( +)?");
+    std::regex reg("^\\s*([a-zA-Z0-9_]+)\\s*:\\s*([0-9]+)\\s+([a-zA-Z0-9_]+)\\s*:\\s*([0-9]+)\\s*(#.*)?$");
     std::smatch match2;
     char *token;
     std::string str2;
@@ -164,7 +172,7 @@ void nts::FileContainer::fillLinks(std::string &str)
     while (token != NULL) {
         str2 = std::string(token);
         if (std::regex_search(str2, match2, reg)) {
-            str2 = match2[1].str() + " " + match2[5].str() + " " + match2[6].str() + " " + match2[10].str();
+            str2 = match2[1].str() + " " + match2[2].str() + " " + match2[3].str() + " " + match2[4].str();
             this->_links.push_back(str2);
         } else {
             throw nts::Error("Invalid file format in the links section.");

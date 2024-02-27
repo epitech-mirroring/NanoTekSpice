@@ -17,6 +17,6 @@ namespace nts::Components {
 
         ComposedComponent(std::size_t nbPins, std::size_t nbInternals);
     public:
-        ~ComposedComponent() override = default;
+        ~ComposedComponent() override;
     };
 }
