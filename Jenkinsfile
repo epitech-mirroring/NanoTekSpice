@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'Linux'
+    }
     environment {
         // Set the ssh key for the mirror using secret private key
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
