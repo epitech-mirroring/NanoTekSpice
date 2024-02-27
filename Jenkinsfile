@@ -71,12 +71,7 @@ pipeline {
 
                 // Setup the ssh key for the mirror
                 withCredentials([sshUserPrivateKey(credentialsId: 'EPITECH_SSH_KEY', keyFileVariable: 'PRIVATE_KEY')]) {
-                    sh 'mkdir -p ~/.ssh'
-                    sh 'echo "${PRIVATE_KEY}" > ~/.ssh/id_rsa'
-                    sh 'echo "${PUBLIC_KEY}" > ~/.ssh/id_rsa.pub'
-                    sh 'chmod 600 ~/.ssh/id_rsa'
-                    sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
-                    sh 'GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=~/.ssh/known_hosts" git push mirror --mirror'
+                    sh 'GIT_SSH_COMMAND = "ssh -i $PRIVATE_KEY" git push --mirror mirror'
                 }
             }
         }
