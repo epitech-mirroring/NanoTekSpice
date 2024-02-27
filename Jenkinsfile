@@ -71,10 +71,9 @@ pipeline {
 
                 // Setup the ssh key for the mirror
                 withCredentials([sshUserPrivateKey(credentialsId: 'EPITECH_SSH_KEY', keyFileVariable: 'PRIVATE_KEY')]) {
-                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY"'
-                    sh 'git push mirror --all'
-                    sh 'git push mirror --tags'
-                    sh 'git push mirror refs/remotes/*'
+                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY" git push mirror --all'
+                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY" git push mirror --tags'
+                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY" git push mirror refs/remotes/*'
                 }
             }
         }
