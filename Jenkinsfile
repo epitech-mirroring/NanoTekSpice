@@ -15,7 +15,6 @@ pipeline {
             agent {
                 docker {
                     image 'ghcr.io/epitech/coding-style-checker:latest'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock -it --entrypoint='
                 }
             }
             steps {
