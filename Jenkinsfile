@@ -19,12 +19,8 @@ pipeline {
                 }
             }
             steps {
-                // Debug
-                sh 'ls -la'
-                sh 'pwd'
-
                 // Run check.sh in the current directory (it accept a directory source as argument and a directory when the report will be generated)
-                sh 'check.sh . .'
+                sh 'sudo check.sh . .'
 
                 // Parse the report and fail the build if the quality gate is not passed
                 script {
