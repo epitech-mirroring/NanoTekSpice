@@ -3,6 +3,7 @@ pipeline {
     environment {
         // Set the ssh key for the mirror using secret private key
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
+        PUBLIC_KEY = credentials('EPITECH_SSH_PUBKEY')
         MIRROR_URL = 'git@github.com:EpitechPromo2027/B-OOP-400-NAN-4-1-tekspice-thomas.boue.git'
     }
     stages {
@@ -72,6 +73,7 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'EPITECH_SSH_KEY', keyFileVariable: 'PRIVATE_KEY')]) {
                     sh 'mkdir -p ~/.ssh'
                     sh 'echo "${PRIVATE_KEY}" > ~/.ssh/id_rsa'
+                    sh 'echo "${PUBLIC_KEY}" > ~/.ssh/id_rsa.pub'
                     sh 'chmod 600 ~/.ssh/id_rsa'
                     sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
                 }
