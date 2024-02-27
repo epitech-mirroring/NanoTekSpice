@@ -12,19 +12,9 @@ pipeline {
     }
     stages {
         stage('🕵️ Lint') {
-            agent {
-                docker {
-                    image 'ghcr.io/epitech/coding-style-checker:latest'
-                }
-            }
             steps {
-                // Debug
-                sh 'ls -la'
-                sh 'pwd'
-                sh 'cat $(which check.sh)'
-
-                // Run check.sh in the current directory (it accept a directory source as argument and a directory when the report will be generated)
-                sh 'sudo check.sh . .'
+                // Run docker container
+                sh 'docker run --rm --security-opt "label:disable" -i -v "$(pwd)":"/mnt/delivery" -v "$(pwd)":"/mnt/reports" ghcr.io/epitech/coding-style-checker:latest "/mnt/delivery" "/mnt/reports"'
 
                 // Parse the report and fail the build if the quality gate is not passed
                 script {
