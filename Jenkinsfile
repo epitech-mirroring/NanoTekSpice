@@ -17,7 +17,7 @@ pipeline {
                 sh 'chmod +x coding-style.sh'
 
                 // Run check.sh in the current directory (it accept a directory source as argument and a directory when the report will be generated)
-                sh './coding-style.sh . . '
+                sh './coding-style.sh . . || true'
 
                 // Parse the report and fail the build if the quality gate is not passed
                 script {
