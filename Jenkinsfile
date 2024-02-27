@@ -70,6 +70,7 @@ pipeline {
 
                 // Setup the ssh key for the mirror
                 withCredentials([sshUserPrivateKey(credentialsId: 'EPITECH_SSH_KEY', keyFileVariable: 'PRIVATE_KEY')]) {
+                    sh 'mkdir -p ~/.ssh'
                     sh 'echo "${PRIVATE_KEY}" > ~/.ssh/id_rsa'
                     sh 'chmod 600 ~/.ssh/id_rsa'
                     sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
