@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'epitechcontent/epitest-docker'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
     environment {
         // Set the ssh key for the mirror using secret private key
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
@@ -18,7 +13,7 @@ pipeline {
                 sh 'chmod +x coding-style.sh'
 
                 // Run check.sh in the current directory (it accept a directory source as argument and a directory when the report will be generated)
-                sh './coding-style.sh . . || true'
+                sh './coding-style.sh . .'
 
                 // Parse the report and fail the build if the quality gate is not passed
                 script {
