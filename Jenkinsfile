@@ -76,10 +76,10 @@ pipeline {
                     sh 'echo "${PUBLIC_KEY}" > ~/.ssh/id_rsa.pub'
                     sh 'chmod 600 ~/.ssh/id_rsa'
                     sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
-                }
 
-                // Push the mirror
-                sh 'git push --mirror mirror --force'
+                    // Push the mirror
+                    sh 'git push --mirror mirror --force'
+                }
             }
         }
     }
@@ -93,7 +93,6 @@ pipeline {
                         patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
                                    [pattern: '.propsfile', type: 'EXCLUDE']])
                 sh 'make fclean'
-                sh 'rm -rf ~/.ssh'
             }
         }
 }
