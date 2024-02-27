@@ -76,9 +76,7 @@ pipeline {
                     sh 'echo "${PUBLIC_KEY}" > ~/.ssh/id_rsa.pub'
                     sh 'chmod 600 ~/.ssh/id_rsa'
                     sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
-
-                    // Push the mirror
-                    sh 'git push --mirror mirror --force'
+                    sh 'GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=~/.ssh/known_hosts" git push mirror --mirror'
                 }
             }
         }
