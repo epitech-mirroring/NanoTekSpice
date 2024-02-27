@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        label 'Linux'
+        docker {
+            image 'epitechcontent/epitest-docker:latest'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
     }
     environment {
         // Set the ssh key for the mirror using secret private key
@@ -10,9 +13,6 @@ pipeline {
     stages {
         stage('🕵️ Lint') {
             steps {
-                // Install wget
-                sh 'apt-get update && apt-get install -y wget'
-
                 // Download the coding style checker
                 sh 'wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh'
                 sh 'chmod +x coding-style.sh'
