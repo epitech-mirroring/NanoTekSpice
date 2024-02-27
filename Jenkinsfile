@@ -19,6 +19,11 @@ pipeline {
                 }
             }
             steps {
+                // Debug
+                sh 'ls -la'
+                sh 'pwd'
+                sh 'cat $(which check.sh)'
+
                 // Run check.sh in the current directory (it accept a directory source as argument and a directory when the report will be generated)
                 sh 'sudo check.sh . .'
 
