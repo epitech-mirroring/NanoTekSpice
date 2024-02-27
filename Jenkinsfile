@@ -49,9 +49,6 @@ pipeline {
 
                 // Archive the binary
                 archiveArtifacts 'nanotekspice'
-
-                // Clean
-                sh 'make fclean'
             }
         }
         stage('🪞 Mirror') {
@@ -86,6 +83,8 @@ pipeline {
                         notFailBuild: true,
                         patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
                                    [pattern: '.propsfile', type: 'EXCLUDE']])
+                sh 'make fclean'
+                sh 'rm -rf ~/.ssh'
             }
         }
 }
