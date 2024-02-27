@@ -8,6 +8,10 @@ pipeline {
     stages {
         stage('🕵️ Lint') {
             steps {
+                // Clean before linting
+                cleanWs()
+                sh 'make fclean'
+
                 // Run docker container
                 sh 'docker run --rm --security-opt "label:disable" -v "$(pwd)":"/mnt/delivery" -v "$(pwd)":"/mnt/reports" ghcr.io/epitech/coding-style-checker:latest "/mnt/delivery" "/mnt/reports"'
 
