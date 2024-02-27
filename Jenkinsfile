@@ -11,7 +11,7 @@ pipeline {
         stage('🕵️ Lint') {
             steps {
                 // Install wget
-                sh 'sudo apt-get update && sudo apt-get install -y wget'
+                sh 'apt-get update && apt-get install -y wget'
 
                 // Download the coding style checker
                 sh 'wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh'
