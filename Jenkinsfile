@@ -69,11 +69,13 @@ pipeline {
                 // Add the mirror
                 sh "git remote add mirror ${MIRROR_URL}"
 
+
+                // Switch to the main branch
+                sh "git checkout main"
+
                 // Setup the ssh key for the mirror
                 withCredentials([sshUserPrivateKey(credentialsId: 'EPITECH_SSH_KEY', keyFileVariable: 'PRIVATE_KEY')]) {
-                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY" git push mirror --all'
-                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY" git push mirror --tags'
-                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY" git push mirror refs/remotes/*'
+                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY" git push --mirror mirror'
                 }
             }
         }
