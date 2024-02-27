@@ -12,13 +12,19 @@ pipeline {
     }
     stages {
         stage('🕵️ Lint') {
+            agent {
+                docker {
+                    image 'ghcr.io/epitech/coding-style-checker:latest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock -it --entrypoint='
+                }
+            }
             steps {
-                // Download the coding style checker
-                sh 'wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh'
-                sh 'chmod +x coding-style.sh'
+                // Debug
+                sh 'ls -la'
+                sh 'pwd'
 
                 // Run check.sh in the current directory (it accept a directory source as argument and a directory when the report will be generated)
-                sh 'sudo ./coding-style.sh . .'
+                sh 'check.sh . .'
 
                 // Parse the report and fail the build if the quality gate is not passed
                 script {
