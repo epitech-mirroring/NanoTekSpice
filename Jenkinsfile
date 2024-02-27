@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'ghcr.io/epitech/coding-style-checker:latest'
+            args '-it --entrypoint=/bin/bash'
         }
     }
     environment {
