@@ -49,6 +49,9 @@ pipeline {
 
                 // Archive the binary
                 archiveArtifacts 'nanotekspice'
+
+                // Clean
+                sh 'make fclean'
             }
         }
         stage('🪞 Mirror') {
