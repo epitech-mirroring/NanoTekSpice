@@ -7,6 +7,7 @@ pipeline {
     environment {
         // Set the ssh key for the mirror using secret private key
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
+        MIRROR_URL = 'git@github.com:EpitechPromo2027/B-OOP-400-NAN-4-1-tekspice-thomas.boue.git'
     }
     stages {
         stage('🕵️ Lint') {
@@ -15,18 +16,20 @@ pipeline {
                 sh 'check.sh . .'
 
                 // Parse the report and fail the build if the quality gate is not passed
-                def report = readFile 'coding-style-reports.log'
-                def errors = report.readLines()
-                for (error in errors) {
-                    def file = error.split(':')[0]
-                    def line = error.split(':')[1]
-                    def type = error.split(':')[2]
-                    def code = error.split(':')[3]
-                    echo "File: ${file}, Line: ${line}, Type: ${type}, Code: ${code}"
-                }
-                // Fail the build if the quality gate is not passed
-                if (errors.size() > 0) {
-                    error "Too many coding style errors"
+                script {
+                    def report = readFile 'coding-style-reports.log'
+                    def errors = report.readLines()
+                    for (error in errors) {
+                        def file = error.split(':')[0]
+                        def line = error.split(':')[1]
+                        def type = error.split(':')[2]
+                        def code = error.split(':')[3]
+                        echo "File: ${file}, Line: ${line}, Type: ${type}, Code: ${code}"
+                    }
+                    // Fail the build if the quality gate is not passed
+                    if (errors.size() > 0) {
+                        error "Too many coding style errors"
+                    }
                 }
 
                 // Archive the report
@@ -42,10 +45,10 @@ pipeline {
                 sh 'make'
 
                 // Check file presence (e.g. binary, library, etc.)
-                if (fileExists('nanotekspice')) {
-                    echo 'nanotekspice binary found'
-                } else {
-                    error 'nanotekspice binary not found'
+                script {
+                    if (!fileExists('nanotekspice')) {
+                        error "The binary file does not exist"
+                    }
                 }
 
                 // Archive the binary
@@ -57,14 +60,11 @@ pipeline {
                 branch 'main'
             }
             steps {
-                // Mirror the repository
-                def mirror = 'git@github.com:EpitechPromo2027/B-OOP-400-NAN-4-1-tekspice-thomas.boue.git'
-
                 // Remove the mirror if it already exists
                 sh "git remote remove mirror || true"
 
                 // Add the mirror
-                sh "git remote add mirror ${mirror}"
+                sh "git remote add mirror ${MIRROR_URL}"
 
                 // Setup the ssh key for the mirror
                 withCredentials([sshUserPrivateKey(credentialsId: 'EPITECH_SSH_KEY', keyFileVariable: 'PRIVATE_KEY')]) {
