@@ -30,7 +30,7 @@ nts::Tristate CNorComponent::compute(std::size_t pin)
     return UNDEFINED;
 }
 
-CNorComponent *CNorComponent::clone() const
+std::unique_ptr<nts::IComponent> CNorComponent::clone() const
 {
-    return new CNorComponent();
+    return std::make_unique<CNorComponent>();
 }

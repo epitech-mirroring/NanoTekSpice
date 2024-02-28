@@ -16,6 +16,6 @@ namespace nts::Components {
         OrComponent();
         ~OrComponent() override = default;
         Tristate compute(std::size_t pin) override;
-        [[nodiscard]] OrComponent *clone() const override;
+        [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };
 }

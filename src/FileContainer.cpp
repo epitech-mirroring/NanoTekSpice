@@ -18,13 +18,13 @@ nts::FileContainer::FileContainer(const std::string &filename)
     this->_filename = filename;
     this->_chipsets = std::vector<std::string>();
     this->_links = std::vector<std::string>();
-    this->_pins = std::map<std::string, IComponent *>();
+    this->_pins = std::map<std::string, std::unique_ptr<nts::IComponent>>();
 }
 
 nts::FileContainer::~FileContainer()
 {
     for (auto &pin : this->_pins) {
-        delete pin.second;
+        pin.second.reset();
     }
 }
 
@@ -64,9 +64,15 @@ std::vector<std::string> nts::FileContainer::getLinks(void) const
     return _links;
 }
 
-std::map<std::string, nts::IComponent *> nts::FileContainer::getMap(void) const
+std::map<std::string, std::shared_ptr<nts::IComponent>> nts::FileContainer::getMap(void) const
 {
-    return _pins;
+    // Return pins but make them shared pointers
+    std::map<std::string, std::shared_ptr<nts::IComponent>> sharedPins;
+
+    for (auto &pin : this->_pins) {
+        sharedPins[pin.first] = std::shared_ptr<nts::IComponent>(pin.second.get());
+    }
+    return sharedPins;
 }
 
 void nts::FileContainer::buildMap(ComponentFactory &factory)

@@ -15,6 +15,6 @@ namespace nts::Components {
         C4011Component();
         ~C4011Component() override = default;
         Tristate compute(std::size_t pin) override;
-        [[nodiscard]] C4011Component *clone() const override;
+        [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };
 }

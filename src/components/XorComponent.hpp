@@ -15,6 +15,6 @@ namespace nts::Components {
         XorComponent();
         ~XorComponent() override = default;
         Tristate compute(std::size_t pin) override;
-        [[nodiscard]] XorComponent *clone() const override;
+        [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };
 }

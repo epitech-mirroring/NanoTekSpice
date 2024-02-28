@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <tuple>
 #include <string>
+#include <memory>
 
 namespace nts::Components {
     enum PinMode {

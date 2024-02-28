@@ -18,6 +18,6 @@ namespace nts::Components {
         ~OutputComponent() override = default;
         void simulate(std::size_t tick) override;
         Tristate compute(std::size_t pin) override;
-        [[nodiscard]] OutputComponent *clone() const override;
+        [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };
 }

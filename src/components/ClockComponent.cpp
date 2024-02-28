@@ -21,8 +21,8 @@ nts::Tristate ClockComponent::compute(std::size_t pin) {
     return _value;
 }
 
-ClockComponent *ClockComponent::clone() const {
-    return new ClockComponent();
+std::unique_ptr<nts::IComponent> ClockComponent::clone() const {
+    return std::make_unique<ClockComponent>();
 }
 
 void ClockComponent::simulate(std::size_t tick)
