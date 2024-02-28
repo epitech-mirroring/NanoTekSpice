@@ -14,7 +14,7 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/components/ComposedComponent.cpp		\
 			  src/components/InputComponent.cpp			\
 			  src/components/OrComponent.cpp			\
-			  src/components/Composed4071Component.cpp	\
+			  src/components/composed/C4071Component.cpp\
 			  src/components/ClockComponent.cpp			\
 			  src/components/TrueComponent.cpp			\
 			  src/components/FalseComponent.cpp			\
@@ -23,8 +23,15 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/components/XorComponent.cpp			\
 			  src/FileContainer.cpp						\
 			  src/Error.cpp								\
+			  src/components/composed/C4001Component.cpp\
+			  src/components/composed/CNorComponent.cpp	\
+			  src/components/composed/CNandComponent.cpp\
+			  src/components/composed/C4011Component.cpp\
+			  src/components/composed/C4030Component.cpp\
+			  src/components/composed/C4069Component.cpp\
 			  src/Simulation.cpp						\
 			  src/components/OutputComponent.cpp		\
+			  src/components/composed/C4081Component.cpp\
 
 # Compiler and linker settings
 NAME 		= nanotekspice
