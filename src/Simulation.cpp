@@ -9,8 +9,7 @@
 #include "Error.hpp"
 #include "components/InputComponent.hpp"
 #include "components/ClockComponent.hpp"
-// #include "OutputComponent.hpp"
-// This include is in comments since the Output component is not implemented yet
+#include "components/OutputComponent.hpp"
 #include <cstring>
 #include <sstream>
 #include <csignal>
@@ -75,26 +74,24 @@ void nts::Simulation::display()
             std::cout << "  " << pin.first << ": " << pin.second->compute(1) << std::endl;
     }
     std::cout << "output(s):" << std::endl;
-    // for (auto &pin : this->_pins) {
-    //     if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) == nullptr)
-    //         std::cout << "  " << pin.first << ": " << pin.second->compute(1) << std::endl;
-    // }
-    // This part is in comments since the Output component is not implemented yet
+    for (auto &pin : this->_pins) {
+        if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) == nullptr)
+            std::cout << "  " << pin.first << ": " << pin.second->compute(1) << std::endl;
+    }
 }
 
 void nts::Simulation::simulate()
 {
     std::unordered_map<std::string, IComponent *> pins;
-    // for (auto &pin : this->_pins) {
-    //     if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) != nullptr)
-    //         pins.push_back(pin);
-    //     else
-    //         pin.second->simulate(1);
-    // }
-    // for (auto &pin : pins) {
-    //     pin.second->simulate(1);
-    // }
-    // This part is in comments since the Output component is not implemented yet
+    for (auto &pin : this->_pins) {
+        if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) != nullptr)
+            pins[pin.first] = pin.second;
+        else
+            pin.second->simulate(1);
+    }
+    for (auto &pin : pins) {
+        pin.second->simulate(1);
+    }
     this->_ticks++;
 }
 
