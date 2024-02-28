@@ -29,17 +29,17 @@ pipeline {
                         def code = error.split(':')[3]
                         echo "File: ${file}, Line: ${line}, Type: ${type}, Code: ${code}"
                     }
+                    // Archive the report
+                    archiveArtifacts 'coding-style-reports.log'
+
+                    // Publish the report
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '.', reportFiles: 'coding-style-reports.log', reportName: 'Coding Style Report', reportTitles: ''])
+
                     // Fail the build if the quality gate is not passed
                     if (errors.size() > 0) {
                         error "Too many coding style errors"
                     }
                 }
-
-                // Archive the report
-                archiveArtifacts 'coding-style-reports.log'
-
-                // Publish the report
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '.', reportFiles: 'coding-style-reports.log', reportName: 'Coding Style Report', reportTitles: ''])
             }
         }
         stage('🏗️ Build') {
