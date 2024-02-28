@@ -3,11 +3,18 @@ pipeline {
     environment {
         // Set the ssh key for the mirror using secret private key
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
+        PUBLIC_KEY = credentials('EPITECH_SSH_PUBKEY')
         MIRROR_URL = 'git@github.com:EpitechPromo2027/B-OOP-400-NAN-4-1-tekspice-thomas.boue.git'
     }
     stages {
         stage('🕵️ Lint') {
             steps {
+                // Clean before linting
+                cleanWs()
+
+                // Clone the repository
+                checkout scm
+
                 // Run docker container
                 sh 'docker run --rm --security-opt "label:disable" -v "$(pwd)":"/mnt/delivery" -v "$(pwd)":"/mnt/reports" ghcr.io/epitech/coding-style-checker:latest "/mnt/delivery" "/mnt/reports"'
 
@@ -62,15 +69,14 @@ pipeline {
                 // Add the mirror
                 sh "git remote add mirror ${MIRROR_URL}"
 
+
+                // Switch to the main branch
+                sh "git checkout main"
+
                 // Setup the ssh key for the mirror
                 withCredentials([sshUserPrivateKey(credentialsId: 'EPITECH_SSH_KEY', keyFileVariable: 'PRIVATE_KEY')]) {
-                    sh 'echo "${PRIVATE_KEY}" > ~/.ssh/id_rsa'
-                    sh 'chmod 600 ~/.ssh/id_rsa'
-                    sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
+                    sh 'GIT_SSH_COMMAND="ssh -i $PRIVATE_KEY" git push --mirror mirror'
                 }
-
-                // Push the mirror
-                sh 'git push --mirror mirror --force'
             }
         }
     }
@@ -83,6 +89,7 @@ pipeline {
                         notFailBuild: true,
                         patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
                                    [pattern: '.propsfile', type: 'EXCLUDE']])
+                sh 'make fclean'
             }
         }
 }
