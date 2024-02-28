@@ -9,7 +9,7 @@
 
 #include <vector>
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <regex>
 #include "IComponent.hpp"
 #include "ComponentFactory.hpp"
@@ -19,7 +19,7 @@ namespace nts
     class FileContainer {
         public:
             FileContainer(const std::string &filename);
-            ~FileContainer() = default;
+            ~FileContainer();
             void extractFileContent();
 
             std::vector<std::string> getChipsets(void) const;
