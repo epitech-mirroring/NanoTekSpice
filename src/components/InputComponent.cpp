@@ -25,6 +25,6 @@ void InputComponent::setValue(Tristate value) {
     _value = value;
 }
 
-InputComponent *InputComponent::clone() const {
-    return new InputComponent();
+std::unique_ptr<nts::IComponent> InputComponent::clone() const {
+    return std::make_unique<InputComponent>();
 }

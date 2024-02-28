@@ -48,7 +48,7 @@ nts::Tristate C4001Component::compute(std::size_t pin)
     return UNDEFINED;
 }
 
-C4001Component *C4001Component::clone() const
+std::unique_ptr<nts::IComponent> C4001Component::clone() const
 {
-    return new C4001Component();
+    return std::make_unique<C4001Component>();
 }

@@ -24,12 +24,12 @@ namespace nts {
         _components[name] = component;
     }
 
-    IComponent *ComponentFactory::operator<<(const std::string &name)
+    std::unique_ptr<IComponent> ComponentFactory::operator<<(const std::string &name)
     {
         return _components[name]->clone();
     }
 
-    IComponent *ComponentFactory::createComponent(const std::string &name)
+    std::unique_ptr<IComponent> ComponentFactory::createComponent(const std::string &name)
     {
         return _components[name]->clone();
     }

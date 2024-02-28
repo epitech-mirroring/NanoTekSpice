@@ -30,7 +30,7 @@ nts::Tristate CNandComponent::compute(std::size_t pin)
     return UNDEFINED;
 }
 
-CNandComponent *CNandComponent::clone() const
+std::unique_ptr<nts::IComponent> CNandComponent::clone() const
 {
-    return new CNandComponent();
+    return std::make_unique<CNandComponent>();
 }

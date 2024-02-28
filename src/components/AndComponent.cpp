@@ -34,7 +34,7 @@ nts::Tristate AndComponent::compute(std::size_t pin)
     return FALSE;
 }
 
-AndComponent *AndComponent::clone() const
+std::unique_ptr<nts::IComponent> AndComponent::clone() const
 {
-    return new AndComponent();
+    return std::make_unique<AndComponent>();
 }

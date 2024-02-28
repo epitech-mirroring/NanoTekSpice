@@ -33,7 +33,7 @@ nts::Tristate XorComponent::compute(std::size_t pin)
     return FALSE;
 }
 
-XorComponent *XorComponent::clone() const
+std::unique_ptr<nts::IComponent> XorComponent::clone() const
 {
-    return new XorComponent();
+    return std::make_unique<XorComponent>();
 }

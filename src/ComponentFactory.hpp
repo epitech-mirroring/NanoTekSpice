@@ -9,6 +9,7 @@
 #pragma once
 #include <unordered_map>
 #include <string>
+#include <memory>
 #include "IComponent.hpp"
 
 namespace nts {
@@ -20,8 +21,8 @@ namespace nts {
         ~ComponentFactory();
 
         void registerComponent(const std::string &name, IComponent *component);
-        [[nodiscard]] IComponent *operator<<(const std::string &name);
-        [[nodiscard]] IComponent *createComponent(const std::string &name);
+        [[nodiscard]] std::unique_ptr<IComponent> operator<<(const std::string &name);
+        [[nodiscard]] std::unique_ptr<IComponent> createComponent(const std::string &name);
         void unregisterComponent(const std::string &name);
         bool isRegistered(const std::string &name);
     };

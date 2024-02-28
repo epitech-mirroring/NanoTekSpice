@@ -20,6 +20,6 @@ nts::Tristate FalseComponent::compute(std::size_t pin) {
     return FALSE;
 }
 
-FalseComponent *FalseComponent::clone() const {
-    return new FalseComponent();
+std::unique_ptr<nts::IComponent> FalseComponent::clone() const {
+    return std::make_unique<FalseComponent>();
 }

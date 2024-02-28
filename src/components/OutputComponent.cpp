@@ -26,6 +26,6 @@ void OutputComponent::simulate(std::size_t tick) {
     this->_value = this->getLinkedComponent(1)->compute(this->getParentPin(1));
 }
 
-OutputComponent *OutputComponent::clone() const {
-    return new OutputComponent();
+std::unique_ptr<nts::IComponent> OutputComponent::clone() const {
+    return std::make_unique<OutputComponent>();
 }
