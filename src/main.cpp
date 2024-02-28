@@ -21,11 +21,14 @@
 #include "components/composed/C4001Component.hpp"
 #include "components/composed/C4011Component.hpp"
 #include "components/composed/C4030Component.hpp"
+#include "components/OutputComponent.hpp"
 #include "Error.hpp"
+#include "Simulation.hpp"
 
 static void registerComponents(nts::ComponentFactory &factory)
 {
     factory.registerComponent("input", new nts::Components::InputComponent());
+    factory.registerComponent("output", new nts::Components::OutputComponent());
     factory.registerComponent("or", new nts::Components::OrComponent());
     factory.registerComponent("4071", new nts::Components::C4071Component());
     factory.registerComponent("clock", new nts::Components::ClockComponent());
