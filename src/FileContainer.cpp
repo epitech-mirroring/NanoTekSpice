@@ -18,7 +18,7 @@ nts::FileContainer::FileContainer(const std::string &filename)
     this->_filename = filename;
     this->_chipsets = std::vector<std::string>();
     this->_links = std::vector<std::string>();
-    this->_pins = std::unordered_map<std::string, IComponent *>();
+    this->_pins = std::map<std::string, IComponent *>();
 }
 
 nts::FileContainer::~FileContainer()
@@ -26,9 +26,7 @@ nts::FileContainer::~FileContainer()
     for (auto &pin : this->_pins) {
         delete pin.second;
     }
-    this->_pins = std::unordered_map<std::string, IComponent *>();
 }
-
 
 void nts::FileContainer::extractFileContent()
 {
@@ -122,7 +120,8 @@ std::string nts::FileContainer::removeComments(std::string &content) const
 
 void nts::FileContainer::extractChipsetsAndLinks(const std::string &content)
 {
-    std::regex reg("(\\.chipsets:\n([a-zA-Z0-9_ #]+\n?)+\n)\n*(\\.links:\n([a-zA-Z0-9_: #]+\n?)+)(\n+)?$");    std::smatch match;
+    std::regex reg("(\\.chipsets:\n([a-zA-Z0-9_ #]+\n?)+\n)\n*(\\.links:\n([a-zA-Z0-9_: #]+\n?)+)(\n+)?$");
+    std::smatch match;
     std::string str1;
     std::string str2;
 
