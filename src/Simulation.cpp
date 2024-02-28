@@ -11,8 +11,9 @@
 #include "components/ClockComponent.hpp"
 // #include "OutputComponent.hpp"
 // This include is in comments since the Output component is not implemented yet
-#include <string.h>
-#include <signal.h>
+#include <cstring>
+#include <sstream>
+#include <csignal>
 #include <fstream>
 
 nts::Simulation::Simulation(std::map<std::string, IComponent *> pins)

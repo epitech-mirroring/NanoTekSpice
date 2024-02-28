@@ -18,10 +18,12 @@
 #include "components/XorComponent.hpp"
 #include "Error.hpp"
 #include "Simulation.hpp"
+#include "components/OutputComponent.hpp"
 
 static void registerComponents(nts::ComponentFactory &factory)
 {
     factory.registerComponent("input", new nts::Components::InputComponent());
+    factory.registerComponent("output", new nts::Components::OutputComponent());
     factory.registerComponent("or", new nts::Components::OrComponent());
     factory.registerComponent("4071", new nts::Components::Composed4071Component());
     factory.registerComponent("clock", new nts::Components::ClockComponent());
