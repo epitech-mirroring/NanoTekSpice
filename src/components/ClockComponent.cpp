@@ -31,3 +31,7 @@ void ClockComponent::simulate(std::size_t tick)
         _value = !_value;
     }
 }
+
+void ClockComponent::setValue(nts::Tristate value) {
+    _value = value;
+}

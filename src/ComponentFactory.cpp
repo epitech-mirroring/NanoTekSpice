@@ -13,7 +13,11 @@ namespace nts {
         _components = std::unordered_map<std::string, IComponent *>();
     }
 
-    ComponentFactory::~ComponentFactory() = default;
+    ComponentFactory::~ComponentFactory() {
+        for (auto &component : _components) {
+            delete component.second;
+        }
+    }
 
     void ComponentFactory::registerComponent(const std::string &name, IComponent *component)
     {

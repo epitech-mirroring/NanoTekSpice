@@ -8,6 +8,7 @@
 
 #pragma once
 #include <cstddef>
+#include <ostream>
 
 namespace nts {
     enum Tristate {
@@ -17,6 +18,7 @@ namespace nts {
     };
 
     [[nodiscard]] Tristate operator!(Tristate const &a);
+    std::ostream &operator<<(std::ostream &os, nts::Tristate const &a);
 
     class IComponent {
         public:
