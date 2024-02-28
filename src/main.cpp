@@ -21,6 +21,7 @@
 #include "components/composed/C4001Component.hpp"
 #include "components/composed/C4011Component.hpp"
 #include "components/composed/C4030Component.hpp"
+#include "components/composed/C4069Component.hpp"
 #include "components/OutputComponent.hpp"
 #include "Error.hpp"
 #include "Simulation.hpp"
@@ -42,6 +43,7 @@ static void registerComponents(nts::ComponentFactory &factory)
     factory.registerComponent("4001", new nts::Components::C4001Component());
     factory.registerComponent("4011", new nts::Components::C4011Component());
     factory.registerComponent("4030", new nts::Components::C4030Component());
+    factory.registerComponent("4069", new nts::Components::C4069Component());
 }
 
 int main(int argc, char **argv) {
