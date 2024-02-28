@@ -18,7 +18,6 @@ namespace nts {
     };
 
     [[nodiscard]] Tristate operator!(Tristate const &a);
-    std::ostream &operator<<(std::ostream &os, nts::Tristate const &a);
 
     class IComponent {
         public:
@@ -31,3 +30,5 @@ namespace nts {
             [[nodiscard]] virtual IComponent     *clone() const = 0;
     };
 }
+
+std::ostream &operator<<(std::ostream &os, nts::Tristate const &a);
