@@ -114,7 +114,7 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	-lcriterion >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n";
 	@printf "$(RUNNING)$(BLUE)  🧪  Running tests$(RESET)" \
-	&& ./tests.out >> $(LOG) 2>&1 \
+	&& ./tests.out --xml=criterion.xml >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
 	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
@@ -139,6 +139,6 @@ clean_test:
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting *.gcno$(RESET)"
 	@find ./ -name "*.gcno" -delete >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
-	@printf "$(RUNNING) $(RED) 🗑️   Deleting criterion.json$(RESET)"
-	@rm -f criterion.json >> $(LOG) 2>&1 \
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting criterion.xml$(RESET)"
+	@rm -f criterion.xml >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
