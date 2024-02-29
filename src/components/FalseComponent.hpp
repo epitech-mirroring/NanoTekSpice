@@ -12,6 +12,9 @@
 namespace nts::Components {
     class FalseComponent : public AbstractComponent {
     public:
+        // ------ PINS ------
+        static inline const std::size_t OUT = 1;
+        // ------ PINS ------
         FalseComponent();
         ~FalseComponent() override = default;
         Tristate compute(std::size_t pin) override;

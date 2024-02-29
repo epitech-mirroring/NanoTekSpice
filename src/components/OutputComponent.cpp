@@ -12,18 +12,18 @@ using namespace nts::Components;
 
 OutputComponent::OutputComponent(): AbstractComponent(1) {
     this->_value = UNDEFINED;
-    this->setPinMode(1, PinMode::INPUT);
+    this->setPinMode(IN, PinMode::INPUT);
 }
 
 nts::Tristate OutputComponent::compute(std::size_t pin) {
-    if (pin != 1)
+    if (pin != IN)
         return UNDEFINED;
     return this->_value;
 }
 
 void OutputComponent::simulate(std::size_t tick) {
     (void)tick;
-    this->_value = this->getLinkedComponent(1)->compute(this->getParentPin(1));
+    this->_value = this->getLinkedComponent(IN)->compute(this->getParentPin(IN));
 }
 
 std::unique_ptr<nts::IComponent> OutputComponent::clone() const {

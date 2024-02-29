@@ -19,40 +19,40 @@ C4069Component::C4069Component(): ComposedComponent(14, 6)
     _internal["D"] = new NotComponent();
     _internal["E"] = new NotComponent();
     _internal["F"] = new NotComponent();
-    this->setPinMode(2, PinMode::OUTPUT);
-    this->setPinMode(4, PinMode::OUTPUT);
-    this->setPinMode(6, PinMode::OUTPUT);
-    this->setPinMode(8, PinMode::OUTPUT);
-    this->setPinMode(10, PinMode::OUTPUT);
-    this->setPinMode(12, PinMode::OUTPUT);
-    this->setLink(1, *_internal["A"], 1);
-    this->setLink(2, *_internal["A"], 2);
-    this->setLink(3, *_internal["B"], 1);
-    this->setLink(4, *_internal["B"], 2);
-    this->setLink(5, *_internal["C"], 1);
-    this->setLink(6, *_internal["C"], 2);
-    this->setLink(9, *_internal["D"], 1);
-    this->setLink(8, *_internal["D"], 2);
-    this->setLink(11, *_internal["E"], 1);
-    this->setLink(10, *_internal["E"], 2);
-    this->setLink(13, *_internal["F"], 1);
-    this->setLink(12, *_internal["F"], 2);
+    this->setPinMode(OUT_1, PinMode::OUTPUT);
+    this->setPinMode(OUT_2, PinMode::OUTPUT);
+    this->setPinMode(OUT_3, PinMode::OUTPUT);
+    this->setPinMode(OUT_4, PinMode::OUTPUT);
+    this->setPinMode(OUT_5, PinMode::OUTPUT);
+    this->setPinMode(OUT_6, PinMode::OUTPUT);
+    this->setLink(IN_1, *_internal["A"], NotComponent::IN);
+    this->setLink(OUT_1, *_internal["A"], NotComponent::OUT);
+    this->setLink(IN_2, *_internal["B"], NotComponent::IN);
+    this->setLink(OUT_2, *_internal["B"], NotComponent::OUT);
+    this->setLink(IN_3, *_internal["C"], NotComponent::IN);
+    this->setLink(OUT_3, *_internal["C"], NotComponent::OUT);
+    this->setLink(IN_4, *_internal["D"], NotComponent::IN);
+    this->setLink(OUT_4, *_internal["D"], NotComponent::OUT);
+    this->setLink(IN_5, *_internal["E"], NotComponent::IN);
+    this->setLink(OUT_5, *_internal["E"], NotComponent::OUT);
+    this->setLink(IN_6, *_internal["F"], NotComponent::IN);
+    this->setLink(OUT_6, *_internal["F"], NotComponent::OUT);
 }
 
 nts::Tristate C4069Component::compute(std::size_t pin)
 {
-    if (pin == 2)
-        return _internal["A"]->compute(2);
-    if (pin == 4)
-        return _internal["B"]->compute(2);
-    if (pin == 6)
-        return _internal["C"]->compute(2);
-    if (pin == 8)
-        return _internal["D"]->compute(2);
-    if (pin == 10)
-        return _internal["E"]->compute(2);
-    if (pin == 12)
-        return _internal["F"]->compute(2);
+    if (pin == OUT_1)
+        return _internal["A"]->compute(NotComponent::OUT);
+    if (pin == OUT_2)
+        return _internal["B"]->compute(NotComponent::OUT);
+    if (pin == OUT_3)
+        return _internal["C"]->compute(NotComponent::OUT);
+    if (pin == OUT_4)
+        return _internal["D"]->compute(NotComponent::OUT);
+    if (pin == OUT_5)
+        return _internal["E"]->compute(NotComponent::OUT);
+    if (pin == OUT_6)
+        return _internal["F"]->compute(NotComponent::OUT);
     return UNDEFINED;
 }
 

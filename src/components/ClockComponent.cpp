@@ -12,11 +12,11 @@ using namespace nts::Components;
 
 ClockComponent::ClockComponent(): InputComponent() {
     _value = UNDEFINED;
-    this->setPinMode(1, PinMode::OUTPUT);
+    this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
 nts::Tristate ClockComponent::compute(std::size_t pin) {
-    if (pin != 1)
+    if (pin != OUT)
         return UNDEFINED;
     return _value;
 }

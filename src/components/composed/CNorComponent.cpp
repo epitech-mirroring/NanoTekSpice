@@ -16,17 +16,17 @@ CNorComponent::CNorComponent(): ComposedComponent(3, 2)
 {
     _internal["A"] = new OrComponent();
     _internal["B"] = new NotComponent();
-    this->setPinMode(3, PinMode::OUTPUT);
-    this->setLink(1, *_internal["A"], 1);
-    this->setLink(2, *_internal["A"], 2);
-    _internal["A"]->setLink(3, *_internal["B"], 1);
-    this->setLink(3, *_internal["B"], 2);
+    this->setPinMode(OUT, PinMode::OUTPUT);
+    this->setLink(IN_1, *_internal["A"], OrComponent::IN_1);
+    this->setLink(IN_2, *_internal["A"], OrComponent::IN_2);
+    _internal["A"]->setLink(OrComponent::OUT, *_internal["B"], NotComponent::IN);
+    this->setLink(OUT, *_internal["B"], NotComponent::OUT);
 }
 
 nts::Tristate CNorComponent::compute(std::size_t pin)
 {
-    if (pin == 3)
-        return _internal["B"]->compute(2);
+    if (pin == OUT)
+        return _internal["B"]->compute(NotComponent::OUT);
     return UNDEFINED;
 }
 
