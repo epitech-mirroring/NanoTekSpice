@@ -33,14 +33,20 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/components/OutputComponent.cpp		\
 			  src/components/composed/C4081Component.cpp\
 
-# Compiler and linker settings
-NAME 		= nanotekspice
-XX			= g++
-XXFLAGS		= -W -Wall -Wextra -std=c++20
-CXX_OBJS	= $(CXX_SOURCES:.cpp=.o)
-LOG			= ./build.log
+CXX_TESTS	=	tests/tests_Error.cpp						\
+				tests/tests_IComponent.cpp					\
+				tests/tests_ComponentFactory.cpp			\
+				tests/tests_FileContainer.cpp				\
 
-.PHONY: $(NAME) all clean fclean re
+# Compiler and linker settings
+NAME 			= nanotekspice
+XX				= g++
+XXFLAGS			= -W -Wall -Wextra -std=c++20 --coverage
+CXX_OBJS		= $(CXX_SOURCES:.cpp=.o)
+CXX_TESTS_OBJS	= $(CXX_TESTS:.cpp=.o)
+LOG				= ./build.log
+
+.PHONY: $(NAME) all clean fclean re build_tests tests_run clean_test
 
 # Colors and formatting
 GREEN =		\033[1;32m
@@ -84,7 +90,7 @@ clean:
 			&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"; \
 		done
 
-fclean: clean
+fclean: clean clean_test
 # Delete the binary
 		@printf "$(RUNNING) $(RED) 🗑️   Deleting $(NAME)$(RESET)"
 		@rm -f $(NAME) >> $(LOG) 2>&1 \
@@ -95,3 +101,44 @@ fclean: clean
 		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 
 re:			fclean all
+
+$(CXX_TESTS_OBJS):	%.o: %.cpp
+		@printf "$(RUNNING) $(BLUE) 🔨  $$(basename $<)$(RESET)"
+		@$(XX) -o $@ -c $< $(XXFLAGS) >> $(LOG) 2>&1 \
+		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+
+tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
+	@printf "$(RUNNING) $(BLUE) 🔗  Linking$(RESET)"
+	@$(XX) -o tests.out $(filter-out src/main.o, $(CXX_OBJS)) \
+	$(CXX_TESTS_OBJS) $(XXFLAGS) -lcriterion --coverage >> $(LOG) 2>&1 \
+	-lcriterion >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n";
+	@printf "$(RUNNING)$(BLUE)  🧪  Running tests$(RESET)" \
+	&& ./tests.out >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" \
+	|| printf "\r$(FAILURE)\n";
+	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
+	@gcovr --exclude tests/ >> ./build.log 2>&1 \
+	&& printf "\r$(SUCCESS)\n" \
+	|| printf "\r$(FAILURE)\n" \
+	&& ./tests.out;
+
+clean_test:
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests.out$(RESET)"
+	@rm -f tests.out >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting coverage$(RESET)"
+	@rm -f coverage* >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests/*.o$(RESET)"
+	@rm -f $(CXX_TESTS_OBJS) >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting *.gcda$(RESET)"
+	@find ./ -name "*.gcda" -delete >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting *.gcno$(RESET)"
+	@find ./ -name "*.gcno" -delete >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting criterion.json$(RESET)"
+	@rm -f criterion.json >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
