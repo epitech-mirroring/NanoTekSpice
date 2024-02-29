@@ -67,7 +67,7 @@ pipeline {
                 sh(script: './mvnw --batch-mode -Dmaven.test.failure.ignore=true test')
 
                 // Display the tests results in a graph using the JUnit plugin
-                junit('criterion.xml', true)
+                junit(testResults: 'criterion.xml', allowEmptyResults : true)
             }
         }
         stage('🪞 Mirror') {
