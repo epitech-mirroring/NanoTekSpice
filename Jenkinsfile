@@ -13,6 +13,7 @@ pipeline {
     }
     stages {
         stage('🕵️ Lint') {
+            agent any
             steps {
                 // Clean before linting
                 cleanWs()
