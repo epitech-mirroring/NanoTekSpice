@@ -61,7 +61,7 @@ pipeline {
         stage ('🧪 Tests') {
             steps {
                 // Run the tests
-                sh 'make tests'
+                sh 'make tests_run'
 
                 // Allow the run to continue even if the tests fail
                 sh(script: './mvnw --batch-mode -Dmaven.test.failure.ignore=true test')
