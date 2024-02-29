@@ -23,7 +23,7 @@ nts::Tristate OutputComponent::compute(std::size_t pin) {
 
 void OutputComponent::simulate(std::size_t tick) {
     (void)tick;
-    this->_value = this->getLinkedComponent(IN)->compute(this->getParentPin(IN));
+    this->_value = this->computeInput(IN);
 }
 
 std::unique_ptr<nts::IComponent> OutputComponent::clone() const {

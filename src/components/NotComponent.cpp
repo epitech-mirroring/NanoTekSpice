@@ -16,12 +16,12 @@ NotComponent::NotComponent(): AbstractComponent(2) {
 }
 
 nts::Tristate NotComponent::compute(std::size_t pin) {
-    if (this->getLinkedComponent(IN) == nullptr)
+    if (!this->isLinked(IN))
         return UNDEFINED;
     if (pin != OUT)
         return UNDEFINED;
 
-    Tristate a = this->getLinkedComponent(IN)->compute(this->getParentPin(IN));
+    Tristate a = this->computeInput(IN);
 
     if (a == TRUE)
         return FALSE;

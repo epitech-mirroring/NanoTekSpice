@@ -20,13 +20,13 @@ AndComponent::AndComponent()
 
 nts::Tristate AndComponent::compute(std::size_t pin)
 {
-    if (this->getLinkedComponent(IN_1) == nullptr || this->getLinkedComponent(IN_2) == nullptr)
+    if (!this->isLinked(IN_1) || !this->isLinked(IN_2))
         return UNDEFINED;
     if (pin != OUT)
         return UNDEFINED;
 
-    Tristate a = this->getLinkedComponent(IN_1)->compute(this->getParentPin(IN_1));
-    Tristate b = this->getLinkedComponent(IN_2)->compute(this->getParentPin(IN_2));
+    Tristate a = this->computeInput(IN_1);
+    Tristate b = this->computeInput(IN_2);
     if (a == TRUE && b == TRUE)
         return TRUE;
     if (a == UNDEFINED || b == UNDEFINED)

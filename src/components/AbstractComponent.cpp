@@ -11,9 +11,18 @@
 using namespace nts::Components;
 
 AbstractComponent::AbstractComponent(std::size_t nbPins) {
-    this->_pins = std::unordered_map<std::size_t, std::tuple<IComponent *, PinMode, std::size_t>>();
+    this->_pins = std::unordered_map<std::size_t, Pin>();
     for (std::size_t i = 1; i <= nbPins; i++) {
-        this->_pins[i] = std::make_tuple(nullptr, INPUT, 0);
+        this->_pins[i] = std::make_pair(INPUT, std::vector<Link>());
+    }
+}
+
+AbstractComponent::~AbstractComponent() {
+    for (auto &pin : this->_pins) {
+        std::vector<Link> links = std::get<1>(pin.second);
+        for (auto &link : links) {
+            delete link.first;
+        }
     }
 }
 
@@ -31,7 +40,7 @@ void AbstractComponent::setLink(std::size_t pin, nts::IComponent &other, std::si
 
     // Link the pins
     PinMode mode = this->getPinMode(pin);
-    this->_pins.at(pin) = std::make_tuple(&other, mode, otherPin);
+    this->_pins.at(pin).second.push_back(std::make_pair(&other, otherPin));
 
     // Link the other component's pin
     other.setLink(otherPin, *this, pin);
@@ -42,11 +51,17 @@ bool AbstractComponent::hasPin(std::size_t pin) const {
 }
 
 PinMode AbstractComponent::getPinMode(std::size_t pin) const {
-    return std::get<1>(this->_pins.at(pin));
+    Pin pinData = this->_pins.at(pin);
+    return std::get<0>(pinData);
 }
 
 bool AbstractComponent::isLinked(std::size_t pin) const {
-    return std::get<0>(this->_pins.at(pin)) != nullptr;
+    if (!this->hasPin(pin)) {
+        return false;
+    }
+    Pin pinData = this->_pins.at(pin);
+    std::vector<Link> links = std::get<1>(pinData);
+    return !links.empty();
 }
 
 
@@ -58,22 +73,59 @@ void AbstractComponent::getLink(std::size_t pin) const {
     }
 
     // Execute the linked component's compute method
-    std::get<0>(this->_pins.at(pin))->compute(std::get<2>(this->_pins.at(pin)));
+    Pin pinData = this->_pins.at(pin);
+    std::vector<Link> links = std::get<1>(pinData);
+    for (auto &link : links) {
+        link.first->compute(link.second);
+    }
 }
 
 void AbstractComponent::setPinMode(std::size_t pin, PinMode type) {
     if (this->hasPin(pin)) {
-        std::get<1>(this->_pins.at(pin)) = type;
+        Pin pinData = this->_pins.at(pin);
+        std::get<0>(pinData) = type;
+        this->_pins.at(pin) = pinData;
     }
 }
 
-std::size_t AbstractComponent::getParentPin(std::size_t pin) const {
-    return std::get<2>(this->_pins.at(pin));
+std::size_t AbstractComponent::getParentPin(std::size_t pin, std::size_t link) const {
+    if (!this->hasPin(pin)) {
+        return 0;
+    }
+    Pin pinData = this->_pins.at(pin);
+    std::vector<Link> links = std::get<1>(pinData);
+    if (link >= links.size()) {
+        return 0;
+    }
+
+    return std::get<1>(links.at(link));
 }
 
-nts::IComponent *AbstractComponent::getLinkedComponent(std::size_t pin) const {
+nts::IComponent *AbstractComponent::getLinkedComponent(std::size_t pin, std::size_t link) const {
     if (!this->isLinked(pin)) {
         return nullptr;
     }
-    return std::get<0>(this->_pins.at(pin));
+    Pin pinData = this->_pins.at(pin);
+    std::vector<Link> links = std::get<1>(pinData);
+    if (link >= links.size()) {
+        return nullptr;
+    }
+    return std::get<0>(links.at(link));
+}
+
+nts::Tristate AbstractComponent::computeInput(std::size_t pin) const {
+    if (!this->hasPin(pin) || this->getPinMode(pin) != INPUT) {
+        return UNDEFINED;
+    }
+    Pin pinData = this->_pins.at(pin);
+    std::vector<Link> links = std::get<1>(pinData);
+    if (links.empty()) {
+        return UNDEFINED;
+    }
+
+    Tristate value = UNDEFINED;
+    for (auto &link : links) {
+        Tristate linkValue = link.first->compute(link.second);
+        value = value || linkValue;
+    }
 }

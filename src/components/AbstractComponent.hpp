@@ -12,23 +12,27 @@
 #include <tuple>
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace nts::Components {
     enum PinMode {
         INPUT,
         OUTPUT
     };
+    typedef std::pair<IComponent *, std::size_t> Link;
+    typedef std::pair<PinMode, std::vector<Link>> Pin;
 
     class AbstractComponent : public IComponent {
     private:
-        std::unordered_map<std::size_t, std::tuple<IComponent *, PinMode, std::size_t>> _pins;
+        std::unordered_map<std::size_t, Pin> _pins;
     protected:
         explicit AbstractComponent(std::size_t nbPins);
 
         void setPinMode(std::size_t pin, PinMode type);
 
+        [[nodiscard]] nts::Tristate computeInput(std::size_t pin) const;
     public:
-        ~AbstractComponent() override = default;
+        ~AbstractComponent() override;
 
         void simulate(std::size_t tick) override;
 
@@ -43,9 +47,9 @@ namespace nts::Components {
 
         [[nodiscard]] bool isLinked(std::size_t pin) const;
 
-        [[nodiscard]] std::size_t getParentPin(std::size_t pin) const;
+        [[nodiscard]] std::size_t getParentPin(std::size_t pin, std::size_t link) const;
 
         [[nodiscard]] nts::IComponent *
-        getLinkedComponent(std::size_t pin) const;
+        getLinkedComponent(std::size_t pin, std::size_t link) const;
     };
 }
