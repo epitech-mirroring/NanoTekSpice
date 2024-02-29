@@ -12,26 +12,26 @@
 namespace nts {
     class Simulation {
     public:
-        Simulation(std::map<std::string, IComponent *>);
+        Simulation(std::map<std::string, nts::IComponent *> pins);
         ~Simulation();
 
         void execSimulation();
-        void stopLoop(void);
+        void stopLoop();
     protected:
     private:
-        std::map<std::string, IComponent *> _pins;
+        std::map<std::string, nts::IComponent *> _pins;
         std::unordered_map<std::string, void (nts::Simulation::*)()> _commands;
         bool _exit;
         size_t _ticks;
         bool _loop;
 
-        bool isKnownCommand(char *line);
-        void exit(void);
-        void display(void);
-        void simulate(void);
-        void loop(void);
+        bool isKnownCommand(const char *line);
+        void exit();
+        void display();
+        void simulate();
+        void loop();
 
-        void handleInputs(char *line);
-        void setValues(std::string name, std::string value);
+        void handleInputs(const char *line);
+        void setValues(const std::string& name, const std::string& value);
     };
 };

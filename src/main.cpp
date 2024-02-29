@@ -58,6 +58,8 @@ int main(int argc, char **argv) {
         fileContainer.extractFileContent();
         fileContainer.buildMap(factory);
         fileContainer.setlinks();
+        nts::Simulation simlation(fileContainer.getMap());
+        simlation.execSimulation();
     } catch (nts::Error &e) {
         std::cerr << e.what() << std::endl;
         return 84;
