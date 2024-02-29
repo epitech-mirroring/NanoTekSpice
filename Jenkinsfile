@@ -65,6 +65,14 @@ pipeline {
 
                 // Display the tests results in a graph using the JUnit plugin
                 junit(testResults: 'criterion.xml', allowEmptyResults : true)
+
+                // Display coverage using the Coverage plugin
+                recordCoverage(tools: [[parser: 'JACOCO']],
+                        id: 'jacoco', name: 'JaCoCo Coverage',
+                        sourceCodeRetention: 'EVERY_BUILD',
+                        qualityGates: [
+                                [threshold: 60.0, metric: 'LINE', baseline: 'PROJECT', unstable: true],
+                                [threshold: 60.0, metric: 'BRANCH', baseline: 'PROJECT', unstable: true]])
             }
         }
         stage('🪞 Mirror') {
