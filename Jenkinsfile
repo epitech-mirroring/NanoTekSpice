@@ -43,6 +43,12 @@ pipeline {
             }
         }
         stage('🏗️ Build') {
+            agent {
+                docker {
+                    image 'epitechcontent/epitest-docker:latest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 // Run the build
                 sh 'make'
@@ -56,6 +62,26 @@ pipeline {
 
                 // Archive the binary
                 archiveArtifacts 'nanotekspice'
+            }
+        }
+        stage ('🧪 Tests') {
+            agent {
+                docker {
+                    image 'epitechcontent/epitest-docker:latest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
+            steps {
+                // Run the tests
+                sh 'make tests_run'
+
+                // Display the tests results in a graph using the JUnit plugin
+                junit(testResults: 'criterion.xml', allowEmptyResults : true)
+
+                // Display coverage using the Coverage plugin
+                recordCoverage(tools: [[parser: 'COBERTURA']],
+                        id: 'cobertura', name: 'Coverage',
+                        sourceCodeRetention: 'EVERY_BUILD')
             }
         }
         stage('🪞 Mirror') {
@@ -80,16 +106,16 @@ pipeline {
             }
         }
     }
-        post {
-            // Clean after build
-            always {
-                cleanWs(cleanWhenNotBuilt: true,
-                        deleteDirs: true,
-                        disableDeferredWipeout: true,
-                        notFailBuild: true,
-                        patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-                                   [pattern: '.propsfile', type: 'EXCLUDE']])
-                sh 'make fclean'
-            }
+    post {
+        // Clean after build
+        always {
+            cleanWs(cleanWhenNotBuilt: true,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                               [pattern: '.propsfile', type: 'EXCLUDE']])
+            sh 'make fclean'
         }
+    }
 }

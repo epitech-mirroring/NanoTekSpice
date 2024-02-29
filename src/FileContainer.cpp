@@ -18,13 +18,13 @@ nts::FileContainer::FileContainer(const std::string &filename)
     this->_filename = filename;
     this->_chipsets = std::vector<std::string>();
     this->_links = std::vector<std::string>();
-    this->_pins = std::map<std::string, std::unique_ptr<nts::IComponent>>();
+    this->_pins = std::map<std::string, nts::IComponent *>();
 }
 
 nts::FileContainer::~FileContainer()
 {
     for (auto &pin : this->_pins) {
-        pin.second.reset();
+        delete pin.second;
     }
 }
 
@@ -32,7 +32,7 @@ void nts::FileContainer::extractFileContent()
 {
     ssize_t count;
     char *buffer;
-    struct stat st;
+    struct stat st{};
     int fd;
     std::string content;
 
@@ -43,7 +43,7 @@ void nts::FileContainer::extractFileContent()
         throw nts::Error("File does not exist.");
     buffer = new char[st.st_size + 1];
     count = read(fd, buffer, st.st_size);
-    if (count == -1 || buffer == nullptr) {
+    if (count == -1) {
         close(fd);
         throw nts::Error("Error while reading file.");
     }
@@ -54,68 +54,62 @@ void nts::FileContainer::extractFileContent()
     delete[] buffer;
 }
 
-std::vector<std::string> nts::FileContainer::getChipsets(void) const
+std::vector<std::string> nts::FileContainer::getChipsets() const
 {
     return _chipsets;
 }
 
-std::vector<std::string> nts::FileContainer::getLinks(void) const
+std::vector<std::string> nts::FileContainer::getLinks() const
 {
     return _links;
 }
 
-std::map<std::string, std::shared_ptr<nts::IComponent>> nts::FileContainer::getMap(void) const
+std::map<std::string, nts::IComponent *> nts::FileContainer::getMap() const
 {
-    // Return pins but make them shared pointers
-    std::map<std::string, std::shared_ptr<nts::IComponent>> sharedPins;
-
-    for (auto &pin : this->_pins) {
-        sharedPins[pin.first] = std::shared_ptr<nts::IComponent>(pin.second.get());
-    }
-    return sharedPins;
+    return _pins;
 }
 
 void nts::FileContainer::buildMap(ComponentFactory &factory)
 {
-    char *name = NULL;
-    char *type = NULL;
+    char *name = nullptr;
+    char *type = nullptr;
 
-    for (size_t i = 0; i < this->_chipsets.size(); i++) {
-        type = strtok((char *)this->_chipsets[i].c_str(), " ");
-        name = strtok(NULL, " ");
-        if (name == NULL || type == NULL)
+    for (const auto & _chipset : this->_chipsets) {
+        type = strtok((char *)_chipset.c_str(), " ");
+        name = strtok(nullptr, " ");
+        if (name == nullptr || type == nullptr)
             throw nts::Error("Invalid file format in the chipset section.");
         if (!factory.isRegistered(type))
             throw nts::Error("Component type: " + std::string(name) + " does not exist.");
         if (this->_pins.find(name) != this->_pins.end())
             throw nts::Error("Component name: " + std::string(name) + " already exists.");
-        this->_pins[name] = factory.createComponent(type);
+        this->_pins[name] = factory.createComponent(type).release();
     }
 }
 
-void nts::FileContainer::setlinks(void)
+void nts::FileContainer::setlinks()
 {
-    char *name = NULL;
-    char *pin = NULL;
-    char *name2 = NULL;
-    char *pin2 = NULL;
+    char *name = nullptr;
+    char *pin = nullptr;
+    char *name2 = nullptr;
+    char *pin2 = nullptr;
 
-    for (size_t i = 0; i < this->_links.size(); i++) {
-        name = strtok((char *)this->_links[i].c_str(), " ");
-        pin = strtok(NULL, " ");
-        name2 = strtok(NULL, " ");
-        pin2 = strtok(NULL, " ");
-        if (name == NULL || pin == NULL || name2 == NULL || pin2 == NULL)
+    for (const auto & _link : this->_links) {
+        name = strtok((char *)_link.c_str(), " ");
+        pin = strtok(nullptr, " ");
+        name2 = strtok(nullptr, " ");
+        pin2 = strtok(nullptr, " ");
+        if (name == nullptr || pin == nullptr || name2 == nullptr || pin2 == nullptr)
             throw nts::Error("Invalid file format in the links section.");
         if (this->_pins.find(name) == this->_pins.end())
             throw nts::Error("First component name: " + std::string(name) + " does not exist.");
-        if (this->_pins[name2] == NULL)
+        if (this->_pins[name2] == nullptr)
             throw nts::Error("Second component name: " + std::string(name2) + " does not exist.");
         this->_pins[name]->setLink(std::stoi(pin), *this->_pins[name2], std::stoi(pin2));
     }
 }
 
-std::string nts::FileContainer::removeComments(std::string &content) const
+std::string nts::FileContainer::removeComments(std::string &content)
 {
     std::regex reg("#.*");
 
@@ -143,16 +137,16 @@ void nts::FileContainer::extractChipsetsAndLinks(const std::string &content)
 
 void nts::FileContainer::fillChipsets(std::string &str)
 {
-    std::regex reg("^\\s*([a-zA-Z0-9]+)\\s+(\\w+)\\s*(#.*)?$");
+    std::regex reg(R"(^\s*([a-zA-Z0-9]+)\s+(\w+)\s*(#.*)?$)");
     std::smatch match2;
     char *token;
     std::string str2;
 
     token = strtok((char *)str.c_str(), "\n");
-    token = strtok(NULL, "\n");
-    if (token == NULL)
+    token = strtok(nullptr, "\n");
+    if (token == nullptr)
         throw nts::Error("Invalid file format in the chipset section.");
-    while (token != NULL) {
+    while (token != nullptr) {
         str2 = std::string(token);
         if (std::regex_search(str2, match2, reg)) {
             str2 = match2[1].str() + " " + match2[2].str();
@@ -160,22 +154,22 @@ void nts::FileContainer::fillChipsets(std::string &str)
         } else {
             throw nts::Error("Invalid file format in the chipset section.");
         }
-        token = strtok(NULL, "\n");
+        token = strtok(nullptr, "\n");
     }
 }
 
 void nts::FileContainer::fillLinks(std::string &str)
 {
-    std::regex reg("^\\s*([a-zA-Z0-9_]+)\\s*:\\s*([0-9]+)\\s+([a-zA-Z0-9_]+)\\s*:\\s*([0-9]+)\\s*(#.*)?$");
+    std::regex reg(R"(^\s*([a-zA-Z0-9_]+)\s*:\s*([0-9]+)\s+([a-zA-Z0-9_]+)\s*:\s*([0-9]+)\s*(#.*)?$)");
     std::smatch match2;
     char *token;
     std::string str2;
 
     token = strtok((char *)str.c_str(), "\n");
-    token = strtok(NULL, "\n");
-    if (token == NULL)
+    token = strtok(nullptr, "\n");
+    if (token == nullptr)
         throw nts::Error("Invalid file format in the links section.");
-    while (token != NULL) {
+    while (token != nullptr) {
         str2 = std::string(token);
         if (std::regex_search(str2, match2, reg)) {
             str2 = match2[1].str() + " " + match2[2].str() + " " + match2[3].str() + " " + match2[4].str();
@@ -183,14 +177,14 @@ void nts::FileContainer::fillLinks(std::string &str)
         } else {
             throw nts::Error("Invalid file format in the links section.");
         }
-        token = strtok(NULL, "\n");
+        token = strtok(nullptr, "\n");
     }
 }
 
 bool nts::FileContainer::isPinExist(const std::string &str)
 {
-    for (size_t i = 0; i < this->_chipsets.size(); i++) {
-        if (this->_chipsets[i] == str)
+    for (const auto & _chipset : this->_chipsets) {
+        if (_chipset == str)
             return true;
     }
     return false;

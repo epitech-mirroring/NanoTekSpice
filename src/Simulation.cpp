@@ -15,7 +15,7 @@
 #include <csignal>
 #include <fstream>
 
-nts::Simulation::Simulation(std::map<std::string, IComponent *> pins)
+nts::Simulation::Simulation(std::map<std::string, nts::IComponent *> pins)
 {
     this->_pins = pins;
     this->_exit = false;
@@ -32,7 +32,7 @@ nts::Simulation::~Simulation()
 
 void nts::Simulation::execSimulation()
 {
-    char *line = NULL;
+    char *line = nullptr;
     size_t len = 0;
 
     while (!this->_exit) {
@@ -50,7 +50,7 @@ void nts::Simulation::stopLoop()
     this->_loop = false;
 }
 
-bool nts::Simulation::isKnownCommand(char *line)
+bool nts::Simulation::isKnownCommand(const char *line)
 {
     std::string str = line;
     if (this->_commands[line] != nullptr) {
@@ -75,7 +75,7 @@ void nts::Simulation::display()
     }
     std::cout << "output(s):" << std::endl;
     for (auto &pin : this->_pins) {
-        if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) == nullptr)
+        if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) != nullptr)
             std::cout << "  " << pin.first << ": " << pin.second->compute(1) << std::endl;
     }
 }
@@ -99,38 +99,38 @@ static void handleLoop(void *arg)
 {
     static nts::Simulation *sim;
 
-    if (arg == NULL && sim == NULL)
+    if (arg == nullptr && sim == nullptr)
         return;
-    if (arg != NULL)
+    if (arg != nullptr)
         sim = (nts::Simulation *)arg;
-    if (arg == NULL)
+    if (arg == nullptr)
         sim->stopLoop();
 }
 
 static void signalHandler(int signum)
 {
     if (signum == SIGINT)
-        handleLoop(NULL);
+        handleLoop(nullptr);
 }
 
 void nts::Simulation::loop()
 {
-    struct sigaction sigIntHandler;
+    struct sigaction sigIntHandler{};
 
     sigIntHandler.sa_handler = signalHandler;
     this->_loop = true;
     handleLoop(this);
     while (this->_loop) {
-        sigaction(SIGINT, &sigIntHandler, NULL);
+        sigaction(SIGINT, &sigIntHandler, nullptr);
         simulate();
-        sigaction(SIGINT, &sigIntHandler, NULL);
+        sigaction(SIGINT, &sigIntHandler, nullptr);
         display();
     }
     sigIntHandler.sa_handler = SIG_DFL;
-    sigaction(SIGINT, &sigIntHandler, NULL);
+    sigaction(SIGINT, &sigIntHandler, nullptr);
 }
 
-void nts::Simulation::handleInputs(char *line)
+void nts::Simulation::handleInputs(const char *line)
 {
     std::stringstream ss(line);
     std::string name;
@@ -153,7 +153,7 @@ void nts::Simulation::handleInputs(char *line)
     setValues(name, value);
 }
 
-void nts::Simulation::setValues(std::string name, std::string value)
+void nts::Simulation::setValues(const std::string& name, const std::string& value)
 {
     if (dynamic_cast<nts::Components::ClockComponent *>(this->_pins[name]) != nullptr) {
         if (value == "0")
