@@ -36,11 +36,10 @@ void nts::FileContainer::extractFileContent()
     int fd;
     std::string content;
 
-    if (stat(this->_filename.c_str(), &st) == -1)
-        throw nts::Error("File does not exist.");
     fd = open(this->_filename.c_str(), O_RDONLY);
     if (fd == -1)
         throw nts::Error("File does not exist.");
+    stat(this->_filename.c_str(), &st);
     buffer = new char[st.st_size + 1];
     count = read(fd, buffer, st.st_size);
     if (count == -1) {

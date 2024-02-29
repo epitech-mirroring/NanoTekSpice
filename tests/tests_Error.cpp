@@ -59,5 +59,5 @@ Test(Error, normal_file)
     char *argv[] = {(char *)"./nanotekspice", (char *)"tests/valid_file.nts"};
     int argc = 2;
 
-    cr_assert_no_throw(nts::checkArgs(argc, argv));
+    cr_assert_no_throw(nts::checkArgs(argc, argv), nts::Error);
 }

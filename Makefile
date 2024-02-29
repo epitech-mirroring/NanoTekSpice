@@ -117,11 +117,15 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	&& ./tests.out --xml=criterion.xml --ignore-warnings >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
-	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
+	@printf "$(RUNNING)$(YELLOW)  📊  Generating Cobertura coverage$(RESET)";
 	@gcovr --cobertura cobertura.xml --exclude tests/ >> ./build.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
+	|| printf "\r$(FAILURE)\n";
+	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
+	@gcovr --exclude tests/ >> ./build.log 2>&1 \
+	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n" \
-	&& cat build.log;
+	&& cat $(LOG);
 
 clean_test:
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests.out$(RESET)"
