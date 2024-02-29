@@ -10,20 +10,21 @@
 
 using namespace nts::Components;
 
-OrComponent::OrComponent(): AbstractComponent(3) {
-    this->setPinMode(1, PinMode::INPUT);
-    this->setPinMode(2, PinMode::INPUT);
-    this->setPinMode(3, PinMode::OUTPUT);
+OrComponent::OrComponent(): AbstractComponent(3, "or") {
+    this->setPinMode(IN_1, PinMode::INPUT);
+    this->setPinMode(IN_2, PinMode::INPUT);
+    this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
 nts::Tristate OrComponent::compute(std::size_t pin) {
-    if (this->getLinkedComponent(1) == nullptr || this->getLinkedComponent(2) == nullptr)
+    beforeCompute(pin)
+    if (!this->isLinked(IN_1) || !this->isLinked(IN_2))
         return UNDEFINED;
-    if (pin != 3)
+    if (pin != OUT)
         return UNDEFINED;
 
-    Tristate a = this->getLinkedComponent(1)->compute(this->getParentPin(1));
-    Tristate b = this->getLinkedComponent(2)->compute(this->getParentPin(2));
+    Tristate a = this->computeInput(IN_1);
+    Tristate b = this->computeInput(IN_2);
     if (a == TRUE || b == TRUE)
         return TRUE;
     if (a == UNDEFINED || b == UNDEFINED)

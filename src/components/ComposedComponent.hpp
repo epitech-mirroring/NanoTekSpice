@@ -15,7 +15,10 @@ namespace nts::Components {
     protected:
         std::unordered_map<std::string, IComponent *> _internal;
 
-        ComposedComponent(std::size_t nbPins, std::size_t nbInternals);
+        ComposedComponent(std::size_t nbPins, const std::string& name, std::size_t nbInternals);
+
+        void setInternalLink(std::size_t pin, nts::IComponent &other,
+                     std::size_t otherPin);
     public:
         ~ComposedComponent() override;
     };

@@ -10,13 +10,13 @@
 
 using namespace nts::Components;
 
-InputComponent::InputComponent(): AbstractComponent(1) {
+InputComponent::InputComponent(): AbstractComponent(1, "input") {
     _value = UNDEFINED;
-    this->setPinMode(1, PinMode::OUTPUT);
+    this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
 nts::Tristate InputComponent::compute(std::size_t pin) {
-    if (pin != 1)
+    if (pin != OUT)
         return UNDEFINED;
     return _value;
 }

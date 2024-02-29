@@ -10,18 +10,19 @@
 
 using namespace nts::Components;
 
-NotComponent::NotComponent(): AbstractComponent(2) {
-    this->setPinMode(1, PinMode::INPUT);
-    this->setPinMode(2, PinMode::OUTPUT);
+NotComponent::NotComponent(): AbstractComponent(2, "not") {
+    this->setPinMode(IN, PinMode::INPUT);
+    this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
 nts::Tristate NotComponent::compute(std::size_t pin) {
-    if (this->getLinkedComponent(1) == nullptr)
+    beforeCompute(pin)
+    if (!this->isLinked(IN))
         return UNDEFINED;
-    if (pin != 2)
+    if (pin != OUT)
         return UNDEFINED;
 
-    Tristate a = this->getLinkedComponent(1)->compute(this->getParentPin(1));
+    Tristate a = this->computeInput(IN);
 
     if (a == TRUE)
         return FALSE;

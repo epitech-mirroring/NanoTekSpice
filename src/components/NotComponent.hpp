@@ -12,6 +12,10 @@
 namespace nts::Components {
     class NotComponent: public AbstractComponent {
     public:
+        // ------ PINS ------
+        static inline const std::size_t IN = 1;
+        static inline const std::size_t OUT = 2;
+        // ------ PINS ------
         NotComponent();
         ~NotComponent() override = default;
         Tristate compute(std::size_t pin) override;
