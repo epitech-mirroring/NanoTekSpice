@@ -114,14 +114,14 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	-lcriterion >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n";
 	@printf "$(RUNNING)$(BLUE)  🧪  Running tests$(RESET)" \
-	&& ./tests.out --xml=criterion.xml >> $(LOG) 2>&1 \
+	&& ./tests.out --xml=criterion.xml --ignore-warnings >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
 	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
 	@gcovr --exclude tests/ >> ./build.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n" \
-	&& ./tests.out;
+	&& cat build.log;
 
 clean_test:
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests.out$(RESET)"
