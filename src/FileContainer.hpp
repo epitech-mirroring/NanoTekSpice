@@ -23,20 +23,20 @@ namespace nts
             ~FileContainer();
             void extractFileContent();
 
-            std::vector<std::string> getChipsets(void) const;
-            std::vector<std::string> getLinks(void) const;
-            std::map<std::string, std::shared_ptr<nts::IComponent>> getMap(void) const;
+            std::vector<std::string> getChipsets() const;
+            std::vector<std::string> getLinks() const;
+            std::map<std::string, nts::IComponent *> getMap() const;
 
             void buildMap(ComponentFactory &factory);
-            void setlinks(void);
+            void setlinks();
         protected:
         private:
             std::string _filename;
             std::vector<std::string> _chipsets;
             std::vector<std::string> _links;
-            std::map<std::string, std::unique_ptr<nts::IComponent>> _pins;
+            std::map<std::string, nts::IComponent *> _pins;
 
-            std::string removeComments(std::string &content) const;
+            static std::string removeComments(std::string &content) ;
             void extractChipsetsAndLinks(const std::string &content);
             void fillChipsets(std::string &str);
             void fillLinks(std::string &str);
