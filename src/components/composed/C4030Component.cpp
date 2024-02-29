@@ -11,7 +11,7 @@
 
 using namespace nts::Components;
 
-C4030Component::C4030Component(): ComposedComponent(14, 4)
+C4030Component::C4030Component(): ComposedComponent(14, "4030", 4)
 {
     _internal["A"] = new XorComponent();
     _internal["B"] = new XorComponent();
@@ -21,22 +21,23 @@ C4030Component::C4030Component(): ComposedComponent(14, 4)
     this->setPinMode(Y2, PinMode::OUTPUT);
     this->setPinMode(Y3, PinMode::OUTPUT);
     this->setPinMode(Y4, PinMode::OUTPUT);
-    this->setLink(A1, *_internal["A"], XorComponent::IN_1);
-    this->setLink(B1, *_internal["A"], XorComponent::IN_2);
-    this->setLink(Y1, *_internal["A"], XorComponent::OUT);
-    this->setLink(A2, *_internal["B"], XorComponent::IN_1);
-    this->setLink(B2, *_internal["B"], XorComponent::IN_2);
-    this->setLink(Y2, *_internal["B"], XorComponent::OUT);
-    this->setLink(A3, *_internal["C"], XorComponent::IN_1);
-    this->setLink(B3, *_internal["C"], XorComponent::IN_2);
-    this->setLink(Y3, *_internal["C"], XorComponent::OUT);
-    this->setLink(A4, *_internal["D"], XorComponent::IN_1);
-    this->setLink(B4, *_internal["D"], XorComponent::IN_2);
-    this->setLink(Y4, *_internal["D"], XorComponent::OUT);
+    this->setInternalLink(A1, *_internal["A"], XorComponent::IN_1);
+    this->setInternalLink(B1, *_internal["A"], XorComponent::IN_2);
+    this->setInternalLink(Y1, *_internal["A"], XorComponent::OUT);
+    this->setInternalLink(A2, *_internal["B"], XorComponent::IN_1);
+    this->setInternalLink(B2, *_internal["B"], XorComponent::IN_2);
+    this->setInternalLink(Y2, *_internal["B"], XorComponent::OUT);
+    this->setInternalLink(A3, *_internal["C"], XorComponent::IN_1);
+    this->setInternalLink(B3, *_internal["C"], XorComponent::IN_2);
+    this->setInternalLink(Y3, *_internal["C"], XorComponent::OUT);
+    this->setInternalLink(A4, *_internal["D"], XorComponent::IN_1);
+    this->setInternalLink(B4, *_internal["D"], XorComponent::IN_2);
+    this->setInternalLink(Y4, *_internal["D"], XorComponent::OUT);
 }
 
 nts::Tristate C4030Component::compute(std::size_t pin)
 {
+    beforeCompute(pin)
     if (pin == Y1)
         return _internal["A"]->compute(XorComponent::OUT);
     if (pin == Y2)

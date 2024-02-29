@@ -10,11 +10,12 @@
 
 using namespace nts::Components;
 
-TrueComponent::TrueComponent(): AbstractComponent(1) {
+TrueComponent::TrueComponent(): AbstractComponent(1, "true") {
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
 nts::Tristate TrueComponent::compute(std::size_t pin) {
+    beforeCompute(pin)
     if (pin != OUT)
         return UNDEFINED;
     return TRUE;

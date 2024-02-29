@@ -11,7 +11,7 @@
 
 using namespace nts::Components;
 
-C4069Component::C4069Component(): ComposedComponent(14, 6)
+C4069Component::C4069Component(): ComposedComponent(14, "4069", 6)
 {
     _internal["A"] = new NotComponent();
     _internal["B"] = new NotComponent();
@@ -25,22 +25,23 @@ C4069Component::C4069Component(): ComposedComponent(14, 6)
     this->setPinMode(OUT_4, PinMode::OUTPUT);
     this->setPinMode(OUT_5, PinMode::OUTPUT);
     this->setPinMode(OUT_6, PinMode::OUTPUT);
-    this->setLink(IN_1, *_internal["A"], NotComponent::IN);
-    this->setLink(OUT_1, *_internal["A"], NotComponent::OUT);
-    this->setLink(IN_2, *_internal["B"], NotComponent::IN);
-    this->setLink(OUT_2, *_internal["B"], NotComponent::OUT);
-    this->setLink(IN_3, *_internal["C"], NotComponent::IN);
-    this->setLink(OUT_3, *_internal["C"], NotComponent::OUT);
-    this->setLink(IN_4, *_internal["D"], NotComponent::IN);
-    this->setLink(OUT_4, *_internal["D"], NotComponent::OUT);
-    this->setLink(IN_5, *_internal["E"], NotComponent::IN);
-    this->setLink(OUT_5, *_internal["E"], NotComponent::OUT);
-    this->setLink(IN_6, *_internal["F"], NotComponent::IN);
-    this->setLink(OUT_6, *_internal["F"], NotComponent::OUT);
+    this->setInternalLink(IN_1, *_internal["A"], NotComponent::IN);
+    this->setInternalLink(OUT_1, *_internal["A"], NotComponent::OUT);
+    this->setInternalLink(IN_2, *_internal["B"], NotComponent::IN);
+    this->setInternalLink(OUT_2, *_internal["B"], NotComponent::OUT);
+    this->setInternalLink(IN_3, *_internal["C"], NotComponent::IN);
+    this->setInternalLink(OUT_3, *_internal["C"], NotComponent::OUT);
+    this->setInternalLink(IN_4, *_internal["D"], NotComponent::IN);
+    this->setInternalLink(OUT_4, *_internal["D"], NotComponent::OUT);
+    this->setInternalLink(IN_5, *_internal["E"], NotComponent::IN);
+    this->setInternalLink(OUT_5, *_internal["E"], NotComponent::OUT);
+    this->setInternalLink(IN_6, *_internal["F"], NotComponent::IN);
+    this->setInternalLink(OUT_6, *_internal["F"], NotComponent::OUT);
 }
 
 nts::Tristate C4069Component::compute(std::size_t pin)
 {
+    beforeCompute(pin)
     if (pin == OUT_1)
         return _internal["A"]->compute(NotComponent::OUT);
     if (pin == OUT_2)

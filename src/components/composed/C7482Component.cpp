@@ -10,10 +10,11 @@
 #include "../XorComponent.hpp"
 #include "../AndComponent.hpp"
 #include "../OrComponent.hpp"
+#include <iostream>
 
 using namespace nts::Components;
 
-C7482Component::C7482Component(): ComposedComponent(14, 10) {
+C7482Component::C7482Component(): ComposedComponent(14, "7482", 10) {
     _internal["g00"] = new XorComponent();
     _internal["g10"] = new AndComponent();
     _internal["g01"] = new XorComponent();
@@ -27,32 +28,33 @@ C7482Component::C7482Component(): ComposedComponent(14, 10) {
     this->setPinMode(Y1, PinMode::OUTPUT);
     this->setPinMode(Y2, PinMode::OUTPUT);
     this->setPinMode(COUT, PinMode::OUTPUT);
-    this->setLink(C7482Component::A1, *_internal["g00"], XorComponent::IN_1);
-    this->setLink(C7482Component::A1, *_internal["g10"], AndComponent::IN_1);
-    this->setLink(C7482Component::B1, *_internal["g00"], XorComponent::IN_2);
-    this->setLink(C7482Component::B1, *_internal["g10"], AndComponent::IN_2);
-    this->setLink(C7482Component::A2, *_internal["g01"], XorComponent::IN_1);
-    this->setLink(C7482Component::A2, *_internal["g11"], AndComponent::IN_1);
-    this->setLink(C7482Component::B2, *_internal["g01"], XorComponent::IN_2);
-    this->setLink(C7482Component::B2, *_internal["g11"], AndComponent::IN_2);
-    this->setLink(C7482Component::CIN, *_internal["g20"], XorComponent::IN_1);
-    this->setLink(C7482Component::CIN, *_internal["g30"], AndComponent::IN_1);
+    this->setInternalLink(C7482Component::A1, *_internal["g00"], XorComponent::IN_1);
+    this->setInternalLink(C7482Component::A1, *_internal["g10"], AndComponent::IN_1);
+    this->setInternalLink(C7482Component::B1, *_internal["g00"], XorComponent::IN_2);
+    this->setInternalLink(C7482Component::B1, *_internal["g10"], AndComponent::IN_2);
+    this->setInternalLink(C7482Component::A2, *_internal["g01"], XorComponent::IN_1);
+    this->setInternalLink(C7482Component::A2, *_internal["g11"], AndComponent::IN_1);
+    this->setInternalLink(C7482Component::B2, *_internal["g01"], XorComponent::IN_2);
+    this->setInternalLink(C7482Component::B2, *_internal["g11"], AndComponent::IN_2);
+    this->setInternalLink(C7482Component::CIN, *_internal["g20"], XorComponent::IN_1);
+    this->setInternalLink(C7482Component::CIN, *_internal["g30"], AndComponent::IN_1);
     _internal["g00"]->setLink(XorComponent::OUT, *_internal["g20"], XorComponent::IN_2);
     _internal["g00"]->setLink(AndComponent::OUT, *_internal["g30"], AndComponent::IN_2);
-    this->setLink(C7482Component::Y1, *_internal["g20"], XorComponent::OUT);
+    this->setInternalLink(C7482Component::Y1, *_internal["g20"], XorComponent::OUT);
     _internal["g30"]->setLink(AndComponent::OUT, *_internal["g40"], OrComponent::IN_1);
     _internal["g10"]->setLink(AndComponent::OUT, *_internal["g40"], OrComponent::IN_2);
     _internal["g40"]->setLink(OrComponent::OUT, *_internal["g21"], XorComponent::IN_1);
     _internal["g40"]->setLink(OrComponent::OUT, *_internal["g31"], AndComponent::IN_1);
     _internal["g01"]->setLink(XorComponent::OUT, *_internal["g21"], XorComponent::IN_2);
     _internal["g11"]->setLink(AndComponent::OUT, *_internal["g31"], AndComponent::IN_2);
-    this->setLink(C7482Component::Y2, *_internal["g21"], XorComponent::OUT);
+    this->setInternalLink(C7482Component::Y2, *_internal["g21"], XorComponent::OUT);
     _internal["g31"]->setLink(AndComponent::OUT, *_internal["g41"], OrComponent::IN_1);
     _internal["g11"]->setLink(AndComponent::OUT, *_internal["g41"], OrComponent::IN_2);
-    this->setLink(C7482Component::COUT, *_internal["g41"], OrComponent::OUT);
+    this->setInternalLink(C7482Component::COUT, *_internal["g41"], OrComponent::OUT);
 }
 
 nts::Tristate C7482Component::compute(std::size_t pin) {
+    beforeCompute(pin)
     if (pin == Y1)
         return _internal["g20"]->compute(XorComponent::OUT);
     if (pin == Y2)

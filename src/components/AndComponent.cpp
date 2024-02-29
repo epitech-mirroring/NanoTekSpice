@@ -11,7 +11,7 @@
 using namespace nts::Components;
 
 AndComponent::AndComponent()
-    : AbstractComponent(3)
+    : AbstractComponent(3, "and")
 {
     this->setPinMode(IN_1, PinMode::INPUT);
     this->setPinMode(IN_2, PinMode::INPUT);
@@ -20,6 +20,7 @@ AndComponent::AndComponent()
 
 nts::Tristate AndComponent::compute(std::size_t pin)
 {
+    beforeCompute(pin);
     if (!this->isLinked(IN_1) || !this->isLinked(IN_2))
         return UNDEFINED;
     if (pin != OUT)

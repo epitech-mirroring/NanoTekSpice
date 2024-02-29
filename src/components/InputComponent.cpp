@@ -10,7 +10,7 @@
 
 using namespace nts::Components;
 
-InputComponent::InputComponent(): AbstractComponent(1) {
+InputComponent::InputComponent(): AbstractComponent(1, "input") {
     _value = UNDEFINED;
     this->setPinMode(OUT, PinMode::OUTPUT);
 }

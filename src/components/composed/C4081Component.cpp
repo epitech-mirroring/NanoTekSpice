@@ -11,7 +11,7 @@
 
 using namespace nts::Components;
 
-C4081Component::C4081Component(): ComposedComponent(14, 4) {
+C4081Component::C4081Component(): ComposedComponent(14,"4081", 4) {
     _internal["A"] = new AndComponent();
     _internal["B"] = new AndComponent();
     _internal["C"] = new AndComponent();
@@ -20,21 +20,22 @@ C4081Component::C4081Component(): ComposedComponent(14, 4) {
     this->setPinMode(Y2, PinMode::OUTPUT);
     this->setPinMode(Y3, PinMode::OUTPUT);
     this->setPinMode(Y4, PinMode::OUTPUT);
-    this->setLink(A1, *_internal["A"], AndComponent::IN_1);
-    this->setLink(B1, *_internal["A"], AndComponent::IN_2);
-    this->setLink(Y1, *_internal["A"], AndComponent::OUT);
-    this->setLink(A2, *_internal["B"], AndComponent::IN_1);
-    this->setLink(B2, *_internal["B"], AndComponent::IN_2);
-    this->setLink(Y2, *_internal["B"], AndComponent::OUT);
-    this->setLink(A3, *_internal["C"], AndComponent::IN_1);
-    this->setLink(B3, *_internal["C"], AndComponent::IN_2);
-    this->setLink(Y3, *_internal["C"], AndComponent::OUT);
-    this->setLink(A4, *_internal["D"], AndComponent::IN_1);
-    this->setLink(B4, *_internal["D"], AndComponent::IN_2);
-    this->setLink(Y4, *_internal["D"], AndComponent::OUT);
+    this->setInternalLink(A1, *_internal["A"], AndComponent::IN_1);
+    this->setInternalLink(B1, *_internal["A"], AndComponent::IN_2);
+    this->setInternalLink(Y1, *_internal["A"], AndComponent::OUT);
+    this->setInternalLink(A2, *_internal["B"], AndComponent::IN_1);
+    this->setInternalLink(B2, *_internal["B"], AndComponent::IN_2);
+    this->setInternalLink(Y2, *_internal["B"], AndComponent::OUT);
+    this->setInternalLink(A3, *_internal["C"], AndComponent::IN_1);
+    this->setInternalLink(B3, *_internal["C"], AndComponent::IN_2);
+    this->setInternalLink(Y3, *_internal["C"], AndComponent::OUT);
+    this->setInternalLink(A4, *_internal["D"], AndComponent::IN_1);
+    this->setInternalLink(B4, *_internal["D"], AndComponent::IN_2);
+    this->setInternalLink(Y4, *_internal["D"], AndComponent::OUT);
 }
 
 nts::Tristate C4081Component::compute(std::size_t pin) {
+    beforeCompute(pin)
     if (pin == Y1)
         return _internal["A"]->compute(AndComponent::OUT);
     if (pin == Y2)

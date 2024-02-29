@@ -11,6 +11,7 @@
 using namespace nts::Components;
 
 ClockComponent::ClockComponent(): InputComponent() {
+    this->_name = "clock";
     _value = UNDEFINED;
     this->setPinMode(OUT, PinMode::OUTPUT);
 }

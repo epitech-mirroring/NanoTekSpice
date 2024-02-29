@@ -10,12 +10,13 @@
 
 using namespace nts::Components;
 
-NotComponent::NotComponent(): AbstractComponent(2) {
+NotComponent::NotComponent(): AbstractComponent(2, "not") {
     this->setPinMode(IN, PinMode::INPUT);
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
 nts::Tristate NotComponent::compute(std::size_t pin) {
+    beforeCompute(pin)
     if (!this->isLinked(IN))
         return UNDEFINED;
     if (pin != OUT)

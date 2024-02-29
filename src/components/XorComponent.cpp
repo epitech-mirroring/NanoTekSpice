@@ -10,7 +10,7 @@
 
 using namespace nts::Components;
 
-XorComponent::XorComponent(): AbstractComponent(3)
+XorComponent::XorComponent(): AbstractComponent(3, "xor")
 {
     this->setPinMode(IN_1, PinMode::INPUT);
     this->setPinMode(IN_2, PinMode::INPUT);
@@ -19,6 +19,7 @@ XorComponent::XorComponent(): AbstractComponent(3)
 
 nts::Tristate XorComponent::compute(std::size_t pin)
 {
+    beforeCompute(pin)
     if (!this->isLinked(IN_1) || !this->isLinked(IN_2))
         return UNDEFINED;
     if (pin != OUT)
