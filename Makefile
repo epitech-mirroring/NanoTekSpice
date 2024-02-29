@@ -46,7 +46,7 @@ CXX_OBJS		= $(CXX_SOURCES:.cpp=.o)
 CXX_TESTS_OBJS	= $(CXX_TESTS:.cpp=.o)
 LOG				= ./build.log
 
-.PHONY: $(NAME) all clean fclean re build_tests tests_run clean_test
+.PHONY: $(NAME) all clean fclean re tests_run clean_test
 
 # Colors and formatting
 GREEN =		\033[1;32m
