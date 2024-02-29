@@ -10,10 +10,13 @@
 #include "AbstractComponent.hpp"
 
 namespace nts::Components {
-    class NotComponent: public AbstractComponent {
+    class OutputComponent: public AbstractComponent {
+    private:
+        Tristate _value;
     public:
-        NotComponent();
-        ~NotComponent() override = default;
+        OutputComponent();
+        ~OutputComponent() override = default;
+        void simulate(std::size_t tick) override;
         Tristate compute(std::size_t pin) override;
         [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };

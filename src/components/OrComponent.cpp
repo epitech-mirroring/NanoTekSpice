@@ -31,6 +31,6 @@ nts::Tristate OrComponent::compute(std::size_t pin) {
     return FALSE;
 }
 
-OrComponent *OrComponent::clone() const {
-    return new OrComponent();
+std::unique_ptr<nts::IComponent> OrComponent::clone() const {
+    return std::make_unique<OrComponent>();
 }

@@ -7,14 +7,14 @@
 */
 
 #pragma once
-#include "ComposedComponent.hpp"
+#include "../ComposedComponent.hpp"
 
 namespace nts::Components {
-    class Composed4071Component: public ComposedComponent {
+    class C4001Component: public ComposedComponent {
     public:
-        Composed4071Component();
-        ~Composed4071Component() override = default;
+        C4001Component();
+        ~C4001Component() override = default;
         Tristate compute(std::size_t pin) override;
-        [[nodiscard]] Composed4071Component *clone() const override;
+        [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };
 }

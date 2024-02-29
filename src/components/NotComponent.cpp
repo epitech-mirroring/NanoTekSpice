@@ -30,6 +30,6 @@ nts::Tristate NotComponent::compute(std::size_t pin) {
     return UNDEFINED;
 }
 
-NotComponent *NotComponent::clone() const {
-    return new NotComponent();
+std::unique_ptr<nts::IComponent> NotComponent::clone() const {
+    return std::make_unique<NotComponent>();
 }

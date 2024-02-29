@@ -20,6 +20,6 @@ nts::Tristate TrueComponent::compute(std::size_t pin) {
     return TRUE;
 }
 
-TrueComponent *TrueComponent::clone() const {
-    return new TrueComponent();
+std::unique_ptr<nts::IComponent> TrueComponent::clone() const {
+    return std::make_unique<TrueComponent>();
 }

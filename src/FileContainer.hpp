@@ -9,8 +9,9 @@
 
 #include <vector>
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <regex>
+#include <memory>
 #include "IComponent.hpp"
 #include "ComponentFactory.hpp"
 
@@ -24,7 +25,7 @@ namespace nts
 
             std::vector<std::string> getChipsets(void) const;
             std::vector<std::string> getLinks(void) const;
-            std::map<std::string, IComponent *> getMap(void) const;
+            std::map<std::string, std::shared_ptr<nts::IComponent>> getMap(void) const;
 
             void buildMap(ComponentFactory &factory);
             void setlinks(void);
@@ -33,7 +34,7 @@ namespace nts
             std::string _filename;
             std::vector<std::string> _chipsets;
             std::vector<std::string> _links;
-            std::map<std::string, IComponent *> _pins;
+            std::map<std::string, std::unique_ptr<nts::IComponent>> _pins;
 
             std::string removeComments(std::string &content) const;
             void extractChipsetsAndLinks(const std::string &content);

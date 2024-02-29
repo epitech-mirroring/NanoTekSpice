@@ -13,8 +13,7 @@ namespace nts {
         _components = std::unordered_map<std::string, IComponent *>();
     }
 
-    ComponentFactory::~ComponentFactory()
-    {
+    ComponentFactory::~ComponentFactory() {
         for (auto &component : _components) {
             delete component.second;
         }
@@ -25,12 +24,12 @@ namespace nts {
         _components[name] = component;
     }
 
-    IComponent *ComponentFactory::operator<<(const std::string &name)
+    std::unique_ptr<IComponent> ComponentFactory::operator<<(const std::string &name)
     {
         return _components[name]->clone();
     }
 
-    IComponent *ComponentFactory::createComponent(const std::string &name)
+    std::unique_ptr<IComponent> ComponentFactory::createComponent(const std::string &name)
     {
         return _components[name]->clone();
     }

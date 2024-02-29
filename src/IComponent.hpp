@@ -9,6 +9,7 @@
 #pragma once
 #include <cstddef>
 #include <ostream>
+#include <memory>
 
 namespace nts {
     enum Tristate {
@@ -27,7 +28,7 @@ namespace nts {
             virtual void            setLink(std::size_t pin,
                                             nts::IComponent &other,
                                             std::size_t otherPin) = 0;
-            [[nodiscard]] virtual IComponent     *clone() const = 0;
+            [[nodiscard]] virtual std::unique_ptr<IComponent> clone() const = 0;
     };
 }
 

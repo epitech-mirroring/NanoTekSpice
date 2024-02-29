@@ -6,37 +6,35 @@
 ** You can even have multiple lines if you want !
 */
 
-#include "Composed4071Component.hpp"
-#include "OrComponent.hpp"
+#include "C4081Component.hpp"
+#include "../AndComponent.hpp"
 
 using namespace nts::Components;
 
-Composed4071Component::Composed4071Component(): ComposedComponent(14, 4)
-{
-    _internal["A"] = new OrComponent();
-    _internal["B"] = new OrComponent();
-    _internal["C"] = new OrComponent();
-    _internal["D"] = new OrComponent();
+C4081Component::C4081Component(): ComposedComponent(14, 4) {
+    _internal["A"] = new AndComponent();
+    _internal["B"] = new AndComponent();
+    _internal["C"] = new AndComponent();
+    _internal["D"] = new AndComponent();
     this->setPinMode(3, PinMode::OUTPUT);
     this->setPinMode(4, PinMode::OUTPUT);
     this->setPinMode(10, PinMode::OUTPUT);
     this->setPinMode(11, PinMode::OUTPUT);
     this->setLink(1, *_internal["A"], 1);
     this->setLink(2, *_internal["A"], 2);
+    this->setLink(3, *_internal["A"], 3);
+    this->setLink(4, *_internal["B"], 3);
     this->setLink(5, *_internal["B"], 1);
     this->setLink(6, *_internal["B"], 2);
     this->setLink(8, *_internal["C"], 1);
     this->setLink(9, *_internal["C"], 2);
-    this->setLink(12, *_internal["D"], 1);
-    this->setLink(13, *_internal["D"], 2);
-    this->setLink(3, *_internal["A"], 3);
-    this->setLink(4, *_internal["B"], 3);
     this->setLink(10, *_internal["C"], 3);
     this->setLink(11, *_internal["D"], 3);
+    this->setLink(12, *_internal["D"], 1);
+    this->setLink(13, *_internal["D"], 2);
 }
 
-nts::Tristate Composed4071Component::compute(std::size_t pin)
-{
+nts::Tristate C4081Component::compute(std::size_t pin) {
     if (pin == 3)
         return _internal["A"]->compute(3);
     if (pin == 4)
@@ -48,7 +46,6 @@ nts::Tristate Composed4071Component::compute(std::size_t pin)
     return UNDEFINED;
 }
 
-Composed4071Component *Composed4071Component::clone() const
-{
-    return new Composed4071Component();
+std::unique_ptr<nts::IComponent> C4081Component::clone() const {
+    return std::make_unique<C4081Component>();
 }
