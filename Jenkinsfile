@@ -80,7 +80,7 @@ pipeline {
 
                 // Display coverage using the Coverage plugin
                 recordCoverage(tools: [[parser: 'COBERTURA']],
-                        id: 'cobertura', name: 'COBERTURA Coverage',
+                        id: 'cobertura', name: 'Coverage',
                         sourceCodeRetention: 'EVERY_BUILD')
             }
         }
