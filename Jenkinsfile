@@ -68,6 +68,7 @@ pipeline {
 
                 // Display the tests results in a graph using the JUnit plugin
                 junit('criterion.xml', true)
+            }
         }
         stage('🪞 Mirror') {
             when {
@@ -91,16 +92,16 @@ pipeline {
             }
         }
     }
-        post {
-            // Clean after build
-            always {
-                cleanWs(cleanWhenNotBuilt: true,
-                        deleteDirs: true,
-                        disableDeferredWipeout: true,
-                        notFailBuild: true,
-                        patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-                                   [pattern: '.propsfile', type: 'EXCLUDE']])
-                sh 'make fclean'
-            }
+    post {
+        // Clean after build
+        always {
+            cleanWs(cleanWhenNotBuilt: true,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                               [pattern: '.propsfile', type: 'EXCLUDE']])
+            sh 'make fclean'
         }
+    }
 }
