@@ -26,6 +26,8 @@
 #include "components/OutputComponent.hpp"
 #include "Error.hpp"
 #include "Simulation.hpp"
+#include "components/composed/C7482Component.hpp"
+#include "components/composed/C4008Component.hpp"
 
 static void registerComponents(nts::ComponentFactory &factory)
 {
@@ -46,6 +48,8 @@ static void registerComponents(nts::ComponentFactory &factory)
     factory.registerComponent("4030", new nts::Components::C4030Component());
     factory.registerComponent("4069", new nts::Components::C4069Component());
     factory.registerComponent("4081", new nts::Components::C4081Component());
+    factory.registerComponent("7482", new nts::Components::C7482Component());
+    factory.registerComponent("4008", new nts::Components::C4008Component());
 }
 
 int main(int argc, char **argv) {
