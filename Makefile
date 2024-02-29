@@ -118,7 +118,7 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
 	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
-	@gcovr --exclude --jacoco jacoco.xml tests/ >> ./build.log 2>&1 \
+	@gcovr --cobertura cobertura.xml --exclude tests/ >> ./build.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n" \
 	&& cat build.log;
@@ -142,6 +142,6 @@ clean_test:
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting criterion.xml$(RESET)"
 	@rm -f criterion.xml >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
-	@printf "$(RUNNING) $(RED) 🗑️   Deleting jacoco.xml$(RESET)"
-	@rm -f jacoco.xml >> $(LOG) 2>&1 \
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting cobertura.xml$(RESET)"
+	@rm -f cobertura.xml >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
