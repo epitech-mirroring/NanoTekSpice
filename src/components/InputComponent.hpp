@@ -14,6 +14,7 @@ namespace nts::Components {
     class InputComponent: public AbstractComponent {
     protected:
         Tristate _value;
+        Tristate _tempValue;
     public:
         // ------ PINS ------
         static inline const std::size_t OUT = 1;
@@ -22,6 +23,7 @@ namespace nts::Components {
         ~InputComponent() override = default;
         Tristate internalCompute(std::size_t pin) override;
         void setValue(Tristate value);
+        void simulate(std::size_t tick) override;
         [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };
 }

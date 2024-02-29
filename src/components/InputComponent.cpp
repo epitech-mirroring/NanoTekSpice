@@ -22,7 +22,11 @@ nts::Tristate InputComponent::internalCompute(std::size_t pin) {
 }
 
 void InputComponent::setValue(Tristate value) {
-    _value = value;
+    _tempValue = value;
+}
+
+void InputComponent::simulate(std::size_t tick) {
+    _value = _tempValue;
 }
 
 std::unique_ptr<nts::IComponent> InputComponent::clone() const {
