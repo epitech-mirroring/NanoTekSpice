@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'epitechcontent/epitest-docker:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
     environment {
         // Set the ssh key for the mirror using secret private key
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
@@ -13,7 +8,6 @@ pipeline {
     }
     stages {
         stage('🕵️ Lint') {
-            agent any
             steps {
                 // Clean before linting
                 cleanWs()
@@ -49,6 +43,12 @@ pipeline {
             }
         }
         stage('🏗️ Build') {
+            agent {
+                docker {
+                    image 'epitechcontent/epitest-docker:latest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 // Run the build
                 sh 'make'
@@ -65,6 +65,12 @@ pipeline {
             }
         }
         stage ('🧪 Tests') {
+            agent {
+                docker {
+                    image 'epitechcontent/epitest-docker:latest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 // Run the tests
                 sh 'make tests_run'
