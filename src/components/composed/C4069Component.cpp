@@ -39,9 +39,7 @@ C4069Component::C4069Component(): ComposedComponent(14, "4069", 6)
     this->setInternalLink(OUT_6, *_internal["F"], NotComponent::OUT);
 }
 
-nts::Tristate C4069Component::compute(std::size_t pin)
-{
-    beforeCompute(pin)
+nts::Tristate C4069Component::internalCompute(std::size_t pin) {
     if (pin == OUT_1)
         return _internal["A"]->compute(NotComponent::OUT);
     if (pin == OUT_2)

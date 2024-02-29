@@ -30,7 +30,7 @@ namespace nts::Components {
         // ------ PINS ------
         C4071Component();
         ~C4071Component() override = default;
-        Tristate compute(std::size_t pin) override;
+        Tristate internalCompute(std::size_t pin) override;
         [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };
 }

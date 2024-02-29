@@ -23,9 +23,7 @@ CNandComponent::CNandComponent(): ComposedComponent(3, "nand", 2)
     this->setInternalLink(OUT, *_internal["B"], NotComponent::OUT);
 }
 
-nts::Tristate CNandComponent::compute(std::size_t pin)
-{
-    beforeCompute(pin)
+nts::Tristate CNandComponent::internalCompute(std::size_t pin) {
     if (pin == OUT)
         return _internal["B"]->compute(NotComponent::OUT);
     return UNDEFINED;

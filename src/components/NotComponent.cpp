@@ -15,13 +15,7 @@ NotComponent::NotComponent(): AbstractComponent(2, "not") {
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
-nts::Tristate NotComponent::compute(std::size_t pin) {
-    beforeCompute(pin)
-    if (!this->isLinked(IN))
-        return UNDEFINED;
-    if (pin != OUT)
-        return UNDEFINED;
-
+nts::Tristate NotComponent::internalCompute(std::size_t pin) {
     Tristate a = this->computeInput(IN);
 
     if (a == TRUE)

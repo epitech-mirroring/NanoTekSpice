@@ -16,7 +16,7 @@ ClockComponent::ClockComponent(): InputComponent() {
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
-nts::Tristate ClockComponent::compute(std::size_t pin) {
+nts::Tristate ClockComponent::internalCompute(std::size_t pin) {
     if (pin != OUT)
         return UNDEFINED;
     return _value;

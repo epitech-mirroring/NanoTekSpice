@@ -15,7 +15,7 @@ InputComponent::InputComponent(): AbstractComponent(1, "input") {
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
-nts::Tristate InputComponent::compute(std::size_t pin) {
+nts::Tristate InputComponent::internalCompute(std::size_t pin) {
     if (pin != OUT)
         return UNDEFINED;
     return _value;

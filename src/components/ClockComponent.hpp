@@ -19,7 +19,7 @@ namespace nts::Components {
         // ------ PINS ------
         ClockComponent();
         ~ClockComponent() override = default;
-        Tristate compute(std::size_t pin) override;
+        Tristate internalCompute(std::size_t pin) override;
         [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
         void simulate(std::size_t tick) override;
         void setValue(Tristate value);

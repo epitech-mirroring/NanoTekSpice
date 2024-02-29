@@ -18,14 +18,8 @@ AndComponent::AndComponent()
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
-nts::Tristate AndComponent::compute(std::size_t pin)
-{
-    beforeCompute(pin);
-    if (!this->isLinked(IN_1) || !this->isLinked(IN_2))
-        return UNDEFINED;
-    if (pin != OUT)
-        return UNDEFINED;
-
+nts::Tristate AndComponent::internalCompute(std::size_t pin) {
+    (void)pin;
     Tristate a = this->computeInput(IN_1);
     Tristate b = this->computeInput(IN_2);
     if (a == TRUE && b == TRUE)

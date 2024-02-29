@@ -12,19 +12,28 @@ using namespace nts::Components;
 
 AbstractComponent::AbstractComponent(std::size_t nbPins, const std::string &name) : _name(name) {
     this->_pins = std::unordered_map<std::size_t, Pin>();
+    this->_oldValues = std::unordered_map<std::size_t, nts::Tristate>();
+    this->_computed = std::unordered_map<std::size_t, bool>();
     for (std::size_t i = 1; i <= nbPins; i++) {
         this->_pins[i] = std::make_pair(INPUT, std::vector<Link>());
+        this->_oldValues[i] = UNDEFINED;
+        this->_computed[i] = false;
     }
 }
 
 AbstractComponent::~AbstractComponent() {
     // Delete the pins
     this->_pins.clear();
+    this->_oldValues.clear();
+    this->_computed.clear();
 }
 
 void AbstractComponent::simulate(std::size_t tick) {
     // Simulate the component
     (void)tick;
+    for (std::size_t i = 1; i <= this->_pins.size(); i++) {
+        this->_computed[i] = false;
+    }
 }
 
 bool AbstractComponent::isLinkedTo(std::size_t pin, IComponent *component) const {
@@ -134,6 +143,10 @@ nts::Tristate AbstractComponent::computeInput(std::size_t pin) const {
         return UNDEFINED;
     }
 
+    if (this->isLinkedTo(pin, (IComponent *) this)) {
+        return this->_oldValues.at(pin);
+    }
+
     Tristate value = UNDEFINED;
     bool hasValue = false;
     for (auto &link : links) {
@@ -161,4 +174,21 @@ nts::Tristate AbstractComponent::computeInput(std::size_t pin) const {
         return UNDEFINED;
     }
     return value;
+}
+
+nts::Tristate AbstractComponent::compute(std::size_t pin) {
+    if (!this->hasPin(pin)) {
+        return UNDEFINED;
+    }
+    if (this->_computed[pin]) {
+        return _oldValues[pin];
+    }
+    if (this->getPinMode(pin) == INPUT) {
+        return this->computeInput(pin);
+    }
+
+    _computed[pin] = true;
+    Tristate n = this->internalCompute(pin);
+    _oldValues[pin] = n;
+    return n;
 }

@@ -34,8 +34,7 @@ C4081Component::C4081Component(): ComposedComponent(14,"4081", 4) {
     this->setInternalLink(Y4, *_internal["D"], AndComponent::OUT);
 }
 
-nts::Tristate C4081Component::compute(std::size_t pin) {
-    beforeCompute(pin)
+nts::Tristate C4081Component::internalCompute(std::size_t pin) {
     if (pin == Y1)
         return _internal["A"]->compute(AndComponent::OUT);
     if (pin == Y2)
