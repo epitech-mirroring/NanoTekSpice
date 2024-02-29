@@ -46,7 +46,7 @@ C7482Component::C7482Component(): ComposedComponent(14, "7482", 10) {
     _internal["g40"]->setLink(OrComponent::OUT, *_internal["g21"], XorComponent::IN_1);
     _internal["g40"]->setLink(OrComponent::OUT, *_internal["g31"], AndComponent::IN_1);
     _internal["g01"]->setLink(XorComponent::OUT, *_internal["g21"], XorComponent::IN_2);
-    _internal["g11"]->setLink(AndComponent::OUT, *_internal["g31"], AndComponent::IN_2);
+    _internal["g01"]->setLink(XorComponent::OUT, *_internal["g31"], XorComponent::IN_2);
     this->setInternalLink(C7482Component::Y2, *_internal["g21"], XorComponent::OUT);
     _internal["g31"]->setLink(AndComponent::OUT, *_internal["g41"], OrComponent::IN_1);
     _internal["g11"]->setLink(AndComponent::OUT, *_internal["g41"], OrComponent::IN_2);
