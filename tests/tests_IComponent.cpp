@@ -38,7 +38,7 @@ Test(print_operator, undefined, .init = redirect_all_stdout)
     nts::Tristate tristate = nts::UNDEFINED;
 
     std::cout << tristate << std::flush;
-    cr_assert_stdout_eq_str("O");
+    cr_assert_stdout_eq_str("U");
 }
 
 Test(print_operator, true, .init = redirect_all_stdout)
