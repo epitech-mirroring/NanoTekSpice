@@ -63,9 +63,6 @@ pipeline {
                 // Run the tests
                 sh 'make tests_run'
 
-                // Allow the run to continue even if the tests fail
-                sh(script: './mvnw --batch-mode -Dmaven.test.failure.ignore=true test')
-
                 // Display the tests results in a graph using the JUnit plugin
                 junit(testResults: 'criterion.xml', allowEmptyResults : true)
             }
