@@ -21,7 +21,7 @@ namespace nts::Components {
         // ------ PINS ------
         InputComponent();
         ~InputComponent() override = default;
-        Tristate compute(std::size_t pin) override;
+        Tristate internalCompute(std::size_t pin) override;
         void setValue(Tristate value);
         void simulate(std::size_t tick) override;
         [[nodiscard]] std::unique_ptr<IComponent> clone() const override;

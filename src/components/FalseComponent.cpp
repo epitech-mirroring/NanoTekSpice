@@ -14,10 +14,8 @@ FalseComponent::FalseComponent(): AbstractComponent(1, "false") {
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
-nts::Tristate FalseComponent::compute(std::size_t pin) {
-    beforeCompute(pin)
-    if (pin != OUT)
-        return UNDEFINED;
+nts::Tristate FalseComponent::internalCompute(std::size_t pin) {
+    (void)pin;
     return FALSE;
 }
 

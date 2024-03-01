@@ -35,9 +35,7 @@ C4011Component::C4011Component(): ComposedComponent(14, "4011", 4)
     this->setInternalLink(Y4, *_internal["D"], CNandComponent::OUT);
 }
 
-nts::Tristate C4011Component::compute(std::size_t pin)
-{
-    beforeCompute(pin)
+nts::Tristate C4011Component::internalCompute(std::size_t pin) {
     if (pin == Y1)
         return _internal["A"]->compute(CNandComponent::OUT);
     if (pin == Y2)

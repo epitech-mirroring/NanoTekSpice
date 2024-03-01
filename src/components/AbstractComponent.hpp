@@ -32,6 +32,8 @@ namespace nts::Components {
         [[nodiscard]] nts::Tristate computeInput(std::size_t pin) const;
 
         std::unordered_map<std::size_t, Pin> _pins;
+        std::unordered_map<std::size_t, nts::Tristate> _oldValues;
+        std::unordered_map<std::size_t, bool> _computed;
     public:
         ~AbstractComponent() override;
 
@@ -55,6 +57,10 @@ namespace nts::Components {
 
         [[nodiscard]] bool isLinkedTo(std::size_t pin, IComponent *component) const;
 
-#define beforeCompute(pin) if (!this->hasPin(pin)) { return UNDEFINED; } if (this->getPinMode(pin) == INPUT) { return this->computeInput(pin); }
+        [[nodiscard]] nts::Tristate compute(std::size_t pin) final;
+
+        [[nodiscard]] virtual nts::Tristate internalCompute(std::size_t pin) = 0;
+
+        void setOldValue(std::size_t pin, nts::Tristate value);
     };
 }

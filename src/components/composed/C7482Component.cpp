@@ -53,8 +53,7 @@ C7482Component::C7482Component(): ComposedComponent(14, "7482", 10) {
     this->setInternalLink(C7482Component::COUT, *_internal["g41"], OrComponent::OUT);
 }
 
-nts::Tristate C7482Component::compute(std::size_t pin) {
-    beforeCompute(pin)
+nts::Tristate C7482Component::internalCompute(std::size_t pin) {
     if (pin == Y1)
         return _internal["g20"]->compute(XorComponent::OUT);
     if (pin == Y2)

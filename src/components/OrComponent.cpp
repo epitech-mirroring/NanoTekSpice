@@ -16,11 +16,8 @@ OrComponent::OrComponent(): AbstractComponent(3, "or") {
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
-nts::Tristate OrComponent::compute(std::size_t pin) {
-    beforeCompute(pin)
-    if (pin != OUT)
-        return UNDEFINED;
-
+nts::Tristate OrComponent::internalCompute(std::size_t pin) {
+    (void)pin;
     Tristate a = this->computeInput(IN_1);
     Tristate b = this->computeInput(IN_2);
     if (a == TRUE || b == TRUE)

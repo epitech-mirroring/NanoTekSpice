@@ -35,9 +35,7 @@ C4030Component::C4030Component(): ComposedComponent(14, "4030", 4)
     this->setInternalLink(Y4, *_internal["D"], XorComponent::OUT);
 }
 
-nts::Tristate C4030Component::compute(std::size_t pin)
-{
-    beforeCompute(pin)
+nts::Tristate C4030Component::internalCompute(std::size_t pin) {
     if (pin == Y1)
         return _internal["A"]->compute(XorComponent::OUT);
     if (pin == Y2)

@@ -13,7 +13,7 @@
 namespace nts::Components {
     class ComposedComponent: public AbstractComponent {
     protected:
-        std::unordered_map<std::string, IComponent *> _internal;
+        std::unordered_map<std::string, AbstractComponent *> _internal;
 
         ComposedComponent(std::size_t nbPins, const std::string& name, std::size_t nbInternals);
 

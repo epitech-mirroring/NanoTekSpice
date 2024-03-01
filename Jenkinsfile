@@ -75,6 +75,9 @@ pipeline {
                 // Run the tests
                 sh 'make tests_run'
 
+                // Run gcovr to generate the coverage report
+                sh 'gcovr --cobertura cobertura.xml --exclude tests/'
+
                 // Display the tests results in a graph using the JUnit plugin
                 junit(testResults: 'criterion.xml', allowEmptyResults : true)
 
