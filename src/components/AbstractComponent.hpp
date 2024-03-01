@@ -60,5 +60,7 @@ namespace nts::Components {
         [[nodiscard]] nts::Tristate compute(std::size_t pin) final;
 
         [[nodiscard]] virtual nts::Tristate internalCompute(std::size_t pin) = 0;
+
+        void setOldValue(std::size_t pin, nts::Tristate value);
     };
 }

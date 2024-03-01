@@ -192,3 +192,9 @@ nts::Tristate AbstractComponent::compute(std::size_t pin) {
     _oldValues[pin] = n;
     return n;
 }
+
+void AbstractComponent::setOldValue(std::size_t pin, nts::Tristate value) {
+    if (this->hasPin(pin)) {
+        this->_oldValues[pin] = value;
+    }
+}
