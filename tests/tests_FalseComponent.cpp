@@ -12,9 +12,9 @@
 
 Test(FalseComponent, simple_false)
 {
-    nts::Components::FalseComponent trueComp;
+    nts::Components::FalseComponent falseComp;
 
-    cr_assert_eq(trueComp.compute(1), nts::Tristate::FALSE);
+    cr_assert_eq(falseComp.compute(1), nts::Tristate::FALSE);
 }
 
 Test(FalseComponent, clone)
