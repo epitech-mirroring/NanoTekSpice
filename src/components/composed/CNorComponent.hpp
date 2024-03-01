@@ -12,6 +12,11 @@
 namespace nts::Components {
     class CNorComponent: public ComposedComponent {
     public:
+        // ------ PINS ------
+        static inline const std::size_t IN_1 = 1;
+        static inline const std::size_t IN_2 = 2;
+        static inline const std::size_t OUT = 3;
+        // ------ PINS ------
         CNorComponent();
         ~CNorComponent() override = default;
         Tristate compute(std::size_t pin) override;

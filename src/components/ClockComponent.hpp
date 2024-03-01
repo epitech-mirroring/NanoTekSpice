@@ -14,6 +14,9 @@ namespace nts::Components {
     protected:
         Tristate _value;
     public:
+        // ------ PINS ------
+        static inline const std::size_t OUT = 1;
+        // ------ PINS ------
         ClockComponent();
         ~ClockComponent() override = default;
         Tristate compute(std::size_t pin) override;

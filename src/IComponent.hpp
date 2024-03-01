@@ -33,3 +33,4 @@ namespace nts {
 }
 
 std::ostream &operator<<(std::ostream &os, nts::Tristate const &a);
+nts::Tristate operator||(nts::Tristate const &a, nts::Tristate const &b);

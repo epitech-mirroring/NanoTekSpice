@@ -14,6 +14,9 @@ namespace nts::Components {
     private:
         Tristate _value;
     public:
+        // ------ PINS ------
+        static inline const std::size_t IN = 1;
+        // ------ PINS ------
         OutputComponent();
         ~OutputComponent() override = default;
         void simulate(std::size_t tick) override;

@@ -11,40 +11,41 @@
 
 using namespace nts::Components;
 
-C4030Component::C4030Component(): ComposedComponent(14, 4)
+C4030Component::C4030Component(): ComposedComponent(14, "4030", 4)
 {
     _internal["A"] = new XorComponent();
     _internal["B"] = new XorComponent();
     _internal["C"] = new XorComponent();
     _internal["D"] = new XorComponent();
-    this->setPinMode(3, PinMode::OUTPUT);
-    this->setPinMode(4, PinMode::OUTPUT);
-    this->setPinMode(10, PinMode::OUTPUT);
-    this->setPinMode(11, PinMode::OUTPUT);
-    this->setLink(1, *_internal["A"], 1);
-    this->setLink(2, *_internal["A"], 2);
-    this->setLink(5, *_internal["B"], 1);
-    this->setLink(6, *_internal["B"], 2);
-    this->setLink(8, *_internal["C"], 1);
-    this->setLink(9, *_internal["C"], 2);
-    this->setLink(12, *_internal["D"], 1);
-    this->setLink(13, *_internal["D"], 2);
-    this->setLink(3, *_internal["A"], 3);
-    this->setLink(4, *_internal["B"], 3);
-    this->setLink(10, *_internal["C"], 3);
-    this->setLink(11, *_internal["D"], 3);
+    this->setPinMode(Y1, PinMode::OUTPUT);
+    this->setPinMode(Y2, PinMode::OUTPUT);
+    this->setPinMode(Y3, PinMode::OUTPUT);
+    this->setPinMode(Y4, PinMode::OUTPUT);
+    this->setInternalLink(A1, *_internal["A"], XorComponent::IN_1);
+    this->setInternalLink(B1, *_internal["A"], XorComponent::IN_2);
+    this->setInternalLink(Y1, *_internal["A"], XorComponent::OUT);
+    this->setInternalLink(A2, *_internal["B"], XorComponent::IN_1);
+    this->setInternalLink(B2, *_internal["B"], XorComponent::IN_2);
+    this->setInternalLink(Y2, *_internal["B"], XorComponent::OUT);
+    this->setInternalLink(A3, *_internal["C"], XorComponent::IN_1);
+    this->setInternalLink(B3, *_internal["C"], XorComponent::IN_2);
+    this->setInternalLink(Y3, *_internal["C"], XorComponent::OUT);
+    this->setInternalLink(A4, *_internal["D"], XorComponent::IN_1);
+    this->setInternalLink(B4, *_internal["D"], XorComponent::IN_2);
+    this->setInternalLink(Y4, *_internal["D"], XorComponent::OUT);
 }
 
 nts::Tristate C4030Component::compute(std::size_t pin)
 {
-    if (pin == 3)
-        return _internal["A"]->compute(3);
-    if (pin == 4)
-        return _internal["B"]->compute(3);
-    if (pin == 10)
-        return _internal["C"]->compute(3);
-    if (pin == 11)
-        return _internal["D"]->compute(3);
+    beforeCompute(pin)
+    if (pin == Y1)
+        return _internal["A"]->compute(XorComponent::OUT);
+    if (pin == Y2)
+        return _internal["B"]->compute(XorComponent::OUT);
+    if (pin == Y3)
+        return _internal["C"]->compute(XorComponent::OUT);
+    if (pin == Y4)
+        return _internal["D"]->compute(XorComponent::OUT);
     return UNDEFINED;
 }
 

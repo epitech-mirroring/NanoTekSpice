@@ -12,6 +12,11 @@
 namespace nts::Components {
     class AndComponent: public AbstractComponent {
     public:
+        // ------ PINS ------
+        static inline const std::size_t IN_1 = 1;
+        static inline const std::size_t IN_2 = 2;
+        static inline const std::size_t OUT = 3;
+        // ------ PINS ------
         AndComponent();
         ~AndComponent() override = default;
         Tristate compute(std::size_t pin) override;

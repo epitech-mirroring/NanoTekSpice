@@ -32,11 +32,16 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/Simulation.cpp						\
 			  src/components/OutputComponent.cpp		\
 			  src/components/composed/C4081Component.cpp\
+			  src/components/composed/C7482Component.cpp\
+			  src/components/composed/C4008Component.cpp\
 
 CXX_TESTS	=	tests/tests_Error.cpp						\
 				tests/tests_IComponent.cpp					\
 				tests/tests_ComponentFactory.cpp			\
 				tests/tests_FileContainer.cpp				\
+				tests/tests_4008Component.cpp				\
+				tests/tests_7482Component.cpp				\
+				tests/tests_InputComponent.cpp				\
 
 # Compiler and linker settings
 NAME 			= nanotekspice

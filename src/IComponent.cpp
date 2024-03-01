@@ -25,3 +25,12 @@ std::ostream &operator<<(std::ostream &os, nts::Tristate const &a)
         os << "0";
     return os;
 }
+
+nts::Tristate operator||(nts::Tristate const &a, nts::Tristate const &b)
+{
+    if (a == nts::Tristate::TRUE || b == nts::Tristate::TRUE)
+        return nts::Tristate::TRUE;
+    if (a == nts::Tristate::UNDEFINED && b == nts::Tristate::UNDEFINED)
+        return nts::Tristate::UNDEFINED;
+    return nts::Tristate::FALSE;
+}
