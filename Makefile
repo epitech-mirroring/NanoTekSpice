@@ -39,9 +39,20 @@ CXX_TESTS	=	tests/tests_Error.cpp						\
 				tests/tests_IComponent.cpp					\
 				tests/tests_ComponentFactory.cpp			\
 				tests/tests_FileContainer.cpp				\
+				tests/tests_Simulation.cpp					\
+				tests/tests_TrueComponent.cpp				\
+				tests/tests_FalseComponent.cpp				\
+				tests/tests_AndComponent.cpp				\
+				tests/tests_NotComponent.cpp				\
+				tests/tests_OrComponent.cpp					\
+				tests/tests_XorComponent.cpp				\
+				tests/tests_InputComponent.cpp				\
+				tests/tests_OutputComponent.cpp				\
+				tests/tests_ClockComponent.cpp				\
+				tests/tests_NorComponent.cpp				\
+				tests/tests_NandComponent.cpp				\
 				tests/tests_4008Component.cpp				\
 				tests/tests_7482Component.cpp				\
-				tests/tests_InputComponent.cpp				\
 
 # Compiler and linker settings
 NAME 			= nanotekspice
@@ -122,11 +133,11 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	&& ./tests.out --xml=criterion.xml --ignore-warnings >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
-	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
+	@printf "$(RUNNING)$(YELLOW)  📊  Generating Cobertura coverage$(RESET)";
 	@gcovr --cobertura cobertura.xml --exclude tests/ >> ./build.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n" \
-	&& cat build.log;
+	&& cat $(LOG);
 
 clean_test:
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests.out$(RESET)"
