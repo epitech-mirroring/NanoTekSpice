@@ -8,19 +8,19 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include <iostream>
-#include "../src/components/TrueComponent.hpp"
+#include "../src/components/FalseComponent.hpp"
 
-Test(TrueComponent, simple_true)
+Test(FalseComponent, simple_false)
 {
-    nts::Components::TrueComponent trueComp;
+    nts::Components::FalseComponent trueComp;
 
-    cr_assert_eq(trueComp.compute(1), nts::Tristate::TRUE);
+    cr_assert_eq(trueComp.compute(1), nts::Tristate::FALSE);
 }
 
-Test(TrueComponent, clone)
+Test(FalseComponent, clone)
 {
-    nts::Components::TrueComponent trueComp;
+    nts::Components::FalseComponent falseComp;
 
-    std::unique_ptr<nts::IComponent> clone = trueComp.clone();
-    cr_assert_eq(clone->compute(1), nts::Tristate::TRUE);
+    std::unique_ptr<nts::IComponent> clone = falseComp.clone();
+    cr_assert_eq(clone->compute(1), nts::Tristate::FALSE);
 }
