@@ -49,6 +49,8 @@ CXX_TESTS	=	tests/tests_Error.cpp						\
 				tests/tests_InputComponent.cpp				\
 				tests/tests_OutputComponent.cpp				\
 				tests/tests_ClockComponent.cpp				\
+				tests/tests_NorComponent.cpp				\
+				tests/tests_NandComponent.cpp				\
 				tests/tests_4008Component.cpp				\
 				tests/tests_7482Component.cpp				\
 
