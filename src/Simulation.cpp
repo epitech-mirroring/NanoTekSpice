@@ -35,12 +35,14 @@ void nts::Simulation::execSimulation()
 
     while (!this->_exit) {
         std::cout << "> " << std::flush;
-        if (getline(&line, &len, stdin) == -1)
+        if (getline(&line, &len, stdin) == -1) {
+            free(line);
             return;
-        if (isKnownCommand(line))
-            continue;
-        handleInputs(line);
+        }
+        if (!isKnownCommand(line))
+            handleInputs(line);
     }
+    free(line);
 }
 
 void nts::Simulation::stopLoop()
