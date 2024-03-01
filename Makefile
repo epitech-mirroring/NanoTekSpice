@@ -119,14 +119,15 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	-lcriterion >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n";
 	@printf "$(RUNNING)$(BLUE)  🧪  Running tests$(RESET)" \
-	&& ./tests.out --xml=criterion.xml --ignore-warnings >> $(LOG) 2>&1 \
+	&& ./tests.out --xml=criterion.xml --ignore-warnings >> tests.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
+	@cat tests.log
 	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
-	@gcovr --cobertura cobertura.xml --exclude tests/ >> ./build.log 2>&1 \
+	@gcovr --exclude tests/ >> coverage.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
-	|| printf "\r$(FAILURE)\n" \
-	&& cat build.log;
+	|| printf "\r$(FAILURE)\n";
+	@cat coverage.log
 
 clean_test:
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests.out$(RESET)"
@@ -149,4 +150,10 @@ clean_test:
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting cobertura.xml$(RESET)"
 	@rm -f cobertura.xml >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests.log$(RESET)"
+	@rm -f tests.log >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting coverage.log$(RESET)"
+	@rm -f coverage.log >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
