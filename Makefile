@@ -136,10 +136,6 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	@printf "$(RUNNING)$(YELLOW)  📊  Generating Cobertura coverage$(RESET)";
 	@gcovr --cobertura cobertura.xml --exclude tests/ >> ./build.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
-	|| printf "\r$(FAILURE)\n";
-	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
-	@gcovr --exclude tests/ >> ./build.log 2>&1 \
-	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n" \
 	&& cat $(LOG);
 
