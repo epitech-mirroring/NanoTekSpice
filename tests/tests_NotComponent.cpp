@@ -8,66 +8,49 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include <iostream>
-#include "../src/components/OrComponent.hpp"
+#include "../src/components/NotComponent.hpp"
 #include "../src/components/TrueComponent.hpp"
 #include "../src/components/FalseComponent.hpp"
 #include "../src/components/InputComponent.hpp"
 
 
-Test(OrComponent, simple_and)
+Test(NotComponent, simple_not)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::NotComponent notComp;
     nts::Components::TrueComponent trueComp;
+
+    notComp.setLink(1, trueComp, 1);
+    cr_assert_eq(notComp.compute(2), nts::Tristate::FALSE);
+}
+
+Test(NotComponent, simple_and2)
+{
+    nts::Components::NotComponent notComp;
     nts::Components::FalseComponent falseComp;
 
-    andComp.setLink(1, trueComp, 1);
-    andComp.setLink(2, falseComp, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::TRUE);
+    notComp.setLink(1, falseComp, 1);
+    cr_assert_eq(notComp.compute(2), nts::Tristate::TRUE);
 }
 
-Test(OrComponent, simple_and2)
+Test(NotComponent, undefined2)
 {
-    nts::Components::OrComponent andComp;
-    nts::Components::TrueComponent trueComp;
-    nts::Components::TrueComponent trueComp2;
-
-    andComp.setLink(1, trueComp, 1);
-    andComp.setLink(2, trueComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::TRUE);
-}
-
-Test(OrComponent, simple_and3)
-{
-    nts::Components::OrComponent andComp;
-    nts::Components::FalseComponent falseComp;
-    nts::Components::FalseComponent falseComp2;
-
-    andComp.setLink(1, falseComp, 1);
-    andComp.setLink(2, falseComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::FALSE);
-}
-
-Test(OrComponent, not_linked)
-{
-    nts::Components::OrComponent andComp;
-
-    cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
-}
-
-Test(OrComponent, undefined)
-{
-    nts::Components::OrComponent andComp;
+    nts::Components::NotComponent notComp;
     nts::Components::InputComponent inputComp;
-    nts::Components::InputComponent inputComp2;
 
-    andComp.setLink(1, inputComp, 1);
-    andComp.setLink(2, inputComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
+    notComp.setLink(1, inputComp, 1);
+    cr_assert_eq(notComp.compute(2), nts::Tristate::UNDEFINED);
 }
 
-Test(OrComponent, clone)
+Test(NotComponent, not_linked)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::NotComponent notComp;
 
-    cr_assert(andComp.clone() != nullptr);
+    cr_assert_eq(notComp.compute(2), nts::Tristate::UNDEFINED);
+}
+
+Test(NotComponent, clone)
+{
+    nts::Components::NotComponent notComp;
+
+    cr_assert(notComp.clone() != nullptr);
 }
