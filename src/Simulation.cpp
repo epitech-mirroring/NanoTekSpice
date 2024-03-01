@@ -26,9 +26,7 @@ nts::Simulation::Simulation(std::map<std::string, nts::IComponent *> pins)
     this->_ticks = 0;
 }
 
-nts::Simulation::~Simulation()
-{
-}
+nts::Simulation::~Simulation() = default;
 
 void nts::Simulation::execSimulation()
 {

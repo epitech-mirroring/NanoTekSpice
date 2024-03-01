@@ -179,12 +179,3 @@ void nts::FileContainer::fillLinks(std::string &str)
         token = strtok(nullptr, "\n");
     }
 }
-
-bool nts::FileContainer::isPinExist(const std::string &str)
-{
-    for (const auto & _chipset : this->_chipsets) {
-        if (_chipset == str)
-            return true;
-    }
-    return false;
-}

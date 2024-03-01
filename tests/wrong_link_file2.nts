@@ -4,7 +4,7 @@
 
 .chipsets:
 false in
-output out  g
+output out
 
 .links:
 g:1 out:1

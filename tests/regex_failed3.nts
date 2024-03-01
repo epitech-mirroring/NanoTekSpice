@@ -4,7 +4,7 @@
 
 .chipsets:
 false in
-output out bonjourr
+output out
 
 .links:
-in:1 out:1
+in:1 out:1 bonjour

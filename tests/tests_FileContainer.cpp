@@ -92,13 +92,11 @@ Test(FileContainer, normal_file)
 Test(FileContainer, regex_failed)
 {
     nts::FileContainer file("tests/regex_failed.nts");
-
     cr_assert_throw(file.extractFileContent(), nts::Error);
-}
 
-Test(FileContainer, regex_failed2)
-{
-    nts::FileContainer file("tests/regex_failed2.nts");
+    nts::FileContainer file2("tests/regex_failed2.nts");
+    cr_assert_throw(file2.extractFileContent(), nts::Error);
 
-    cr_assert_throw(file.extractFileContent(), nts::Error);
+    nts::FileContainer file3("tests/regex_failed3.nts");
+    cr_assert_throw(file3.extractFileContent(), nts::Error);
 }
