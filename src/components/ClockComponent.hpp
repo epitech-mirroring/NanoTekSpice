@@ -22,7 +22,7 @@ namespace nts::Components {
         ClockComponent();
         ~ClockComponent() override = default;
         Tristate internalCompute(std::size_t pin) override;
-        void simulate(std::size_t tick) override;
+        void internalSimulate(std::size_t tick) override;
         void setValue(Tristate value);
         [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };

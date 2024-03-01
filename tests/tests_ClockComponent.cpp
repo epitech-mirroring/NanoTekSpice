@@ -30,15 +30,15 @@ Test(ClockComponent, compute_clock)
     cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::UNDEFINED);
     comp->simulate(1);
     cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::FALSE);
-    comp->simulate(1);
+    comp->simulate(2);
     cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::TRUE);
     comp->setValue(nts::TRUE);
     cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::TRUE);
-    comp->simulate(1);
+    comp->simulate(3);
     cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::TRUE);
     comp->setValue(nts::UNDEFINED);
     cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::TRUE);
-    comp->simulate(1);
+    comp->simulate(4);
     cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::UNDEFINED);
     delete comp;
 }

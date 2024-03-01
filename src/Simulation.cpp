@@ -82,15 +82,10 @@ void nts::Simulation::display()
 
 void nts::Simulation::simulate()
 {
-    std::unordered_map<std::string, IComponent *> pins;
     for (auto &pin : this->_pins) {
-        if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) != nullptr)
-            pins[pin.first] = pin.second;
-        else
-            pin.second->simulate(1);
-    }
-    for (auto &pin : pins) {
-        pin.second->simulate(1);
+        if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) != nullptr) {
+            pin.second->simulate(_ticks);
+        }
     }
     this->_ticks++;
 }
