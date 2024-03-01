@@ -14,6 +14,7 @@ ClockComponent::ClockComponent(): InputComponent() {
     this->_name = "clock";
     _value = UNDEFINED;
     _hasChanged = false;
+    _tempValue = UNDEFINED;
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
