@@ -11,41 +11,43 @@
 #include "../src/components/ClockComponent.hpp"
 
 
-Test(ClockComponent, undefined)
+Test(ClockComponent, create_clock)
 {
-    nts::Components::ClockComponent clockComp;
+    nts::Components::ClockComponent *comp = new nts::Components::ClockComponent();
+    cr_assert_not_null(comp);
 
-    cr_assert_eq(clockComp.compute(1), nts::Tristate::UNDEFINED);
+    delete comp;
 }
 
-Test(ClockComponent, simple_clock)
+Test(ClockComponent, compute_clock)
 {
-    nts::Components::ClockComponent clockComp;
-
-    clockComp.simulate(1);
-    cr_assert_eq(clockComp.compute(1), nts::Tristate::UNDEFINED);
+    nts::Components::ClockComponent *comp = new nts::Components::ClockComponent();
+    cr_assert_not_null(comp);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::UNDEFINED);
+    comp->setValue(nts::TRUE);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::UNDEFINED);
+    comp->setValue(nts::FALSE);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::UNDEFINED);
+    comp->simulate(1);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::FALSE);
+    comp->simulate(1);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::TRUE);
+    comp->setValue(nts::TRUE);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::TRUE);
+    comp->simulate(1);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::TRUE);
+    comp->setValue(nts::UNDEFINED);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::TRUE);
+    comp->simulate(1);
+    cr_assert_eq(comp->compute(nts::Components::ClockComponent::OUT), nts::UNDEFINED);
+    delete comp;
 }
 
-Test(ClockComponent, simple_clock2)
+Test(ClockComponent, clone_clock)
 {
-    nts::Components::ClockComponent clockComp;
-
-    clockComp.setValue(nts::Tristate::TRUE);
-    cr_assert_eq(clockComp.compute(1), nts::Tristate::TRUE);
-    clockComp.simulate(1);
-    cr_assert_eq(clockComp.compute(1), nts::Tristate::FALSE);
-}
-
-Test(ClockComponent, not_linked)
-{
-    nts::Components::ClockComponent clockComp;
-
-    cr_assert_eq(clockComp.compute(1), nts::Tristate::UNDEFINED);
-}
-
-Test(ClockComponent, clone)
-{
-    nts::Components::ClockComponent clockComp;
-
-    cr_assert(clockComp.clone() != nullptr);
+    nts::Components::ClockComponent *comp = new nts::Components::ClockComponent();
+    cr_assert_not_null(comp);
+    auto newComp = comp->clone();
+    cr_assert_not_null(newComp);
+    delete comp;
 }
