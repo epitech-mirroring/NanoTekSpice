@@ -26,9 +26,7 @@ nts::Simulation::Simulation(std::map<std::string, nts::IComponent *> pins)
     this->_ticks = 0;
 }
 
-nts::Simulation::~Simulation()
-{
-}
+nts::Simulation::~Simulation() = default;
 
 void nts::Simulation::execSimulation()
 {
@@ -37,12 +35,14 @@ void nts::Simulation::execSimulation()
 
     while (!this->_exit) {
         std::cout << "> " << std::flush;
-        if (getline(&line, &len, stdin) == -1)
+        if (getline(&line, &len, stdin) == -1) {
+            free(line);
             return;
-        if (isKnownCommand(line))
-            continue;
-        handleInputs(line);
+        }
+        if (!isKnownCommand(line))
+            handleInputs(line);
     }
+    free(line);
 }
 
 void nts::Simulation::stopLoop()

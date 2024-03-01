@@ -40,7 +40,5 @@ namespace nts
             void extractChipsetsAndLinks(const std::string &content);
             void fillChipsets(std::string &str);
             void fillLinks(std::string &str);
-            bool isComponentType(const std::string &str);
-            bool isPinExist(const std::string &str);
     };
 };

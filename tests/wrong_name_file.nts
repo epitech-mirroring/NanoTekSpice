@@ -1,0 +1,10 @@
+# Basic wire, direct link false to output.
+#
+# FALSE ---> OUTPUT
+
+.chipsets:
+false in
+output in
+
+.links:
+in:1 in:1
