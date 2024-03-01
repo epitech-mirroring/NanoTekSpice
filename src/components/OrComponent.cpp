@@ -18,8 +18,6 @@ OrComponent::OrComponent(): AbstractComponent(3, "or") {
 
 nts::Tristate OrComponent::compute(std::size_t pin) {
     beforeCompute(pin)
-    if (!this->isLinked(IN_1) || !this->isLinked(IN_2))
-        return UNDEFINED;
     if (pin != OUT)
         return UNDEFINED;
 
