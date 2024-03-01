@@ -30,6 +30,7 @@ void ClockComponent::setValue(nts::Tristate value) {
 
 void ClockComponent::simulate(std::size_t tick)
 {
+    AbstractComponent::simulate(tick);
     if (_hasChanged) {
         _value = _tempValue;
         _hasChanged = false;
