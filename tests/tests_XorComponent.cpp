@@ -14,60 +14,96 @@
 #include "../src/components/InputComponent.hpp"
 
 
-Test(XorComponent, simple_and)
+Test(XorComponent, True_False)
 {
-    nts::Components::XorComponent andComp;
+    nts::Components::XorComponent xorComp;
     nts::Components::TrueComponent trueComp;
     nts::Components::FalseComponent falseComp;
 
-    andComp.setLink(1, trueComp, 1);
-    andComp.setLink(2, falseComp, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::TRUE);
+    xorComp.setLink(1, trueComp, 1);
+    xorComp.setLink(2, falseComp, 1);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::TRUE);
 }
 
-Test(XorComponent, simple_and2)
+Test(XorComponent, True_True)
 {
-    nts::Components::XorComponent andComp;
+    nts::Components::XorComponent xorComp;
     nts::Components::TrueComponent trueComp;
     nts::Components::TrueComponent trueComp2;
 
-    andComp.setLink(1, trueComp, 1);
-    andComp.setLink(2, trueComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::FALSE);
+    xorComp.setLink(1, trueComp, 1);
+    xorComp.setLink(2, trueComp2, 1);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::FALSE);
 }
 
-Test(XorComponent, simple_and3)
+Test(XorComponent, False_False)
 {
-    nts::Components::XorComponent andComp;
+    nts::Components::XorComponent xorComp;
     nts::Components::FalseComponent falseComp;
     nts::Components::FalseComponent falseComp2;
 
-    andComp.setLink(1, falseComp, 1);
-    andComp.setLink(2, falseComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::FALSE);
+    xorComp.setLink(1, falseComp, 1);
+    xorComp.setLink(2, falseComp2, 1);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::FALSE);
 }
 
 Test(XorComponent, not_linked)
 {
-    nts::Components::XorComponent andComp;
+    nts::Components::XorComponent xorComp;
 
-    cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::UNDEFINED);
 }
 
 Test(XorComponent, undefined)
 {
-    nts::Components::XorComponent andComp;
+    nts::Components::XorComponent xorComp;
     nts::Components::InputComponent inputComp;
     nts::Components::InputComponent inputComp2;
 
-    andComp.setLink(1, inputComp, 1);
-    andComp.setLink(2, inputComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
+    xorComp.setLink(1, inputComp, 1);
+    xorComp.setLink(2, inputComp2, 1);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::UNDEFINED);
 }
 
 Test(XorComponent, clone)
 {
-    nts::Components::XorComponent andComp;
+    nts::Components::XorComponent xorComp;
 
-    cr_assert(andComp.clone() != nullptr);
+    cr_assert(xorComp.clone() != nullptr);
+}
+
+Test(XorComponent, True_notLinked)
+{
+    nts::Components::XorComponent xorComp;
+    nts::Components::TrueComponent trueComp;
+
+    xorComp.setLink(1, trueComp, 1);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::UNDEFINED);
+}
+
+Test(XorComponent, notLinked_True)
+{
+    nts::Components::XorComponent xorComp;
+    nts::Components::TrueComponent trueComp;
+
+    xorComp.setLink(2, trueComp, 1);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::UNDEFINED);
+}
+
+Test(XorComponent, False_notLinked)
+{
+    nts::Components::XorComponent xorComp;
+    nts::Components::FalseComponent falseComp;
+
+    xorComp.setLink(1, falseComp, 1);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::UNDEFINED);
+}
+
+Test(XorComponent, notLinked_False)
+{
+    nts::Components::XorComponent xorComp;
+    nts::Components::FalseComponent falseComp;
+
+    xorComp.setLink(2, falseComp, 1);
+    cr_assert_eq(xorComp.compute(3), nts::Tristate::UNDEFINED);
 }

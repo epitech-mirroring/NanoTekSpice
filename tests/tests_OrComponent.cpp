@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2024
-** NanoTekSpice
+** NorTekSpice
 ** File description:
-** No file there , just an epitech header example.
+** No file there , just orepitech header example.
 */
 
 #include <criterion/criterion.h>
@@ -14,60 +14,96 @@
 #include "../src/components/InputComponent.hpp"
 
 
-Test(OrComponent, simple_and)
+Test(OrComponent, True_False)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::OrComponent orComp;
     nts::Components::TrueComponent trueComp;
     nts::Components::FalseComponent falseComp;
 
-    andComp.setLink(1, trueComp, 1);
-    andComp.setLink(2, falseComp, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::TRUE);
+    orComp.setLink(1, trueComp, 1);
+    orComp.setLink(2, falseComp, 1);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::TRUE);
 }
 
-Test(OrComponent, simple_and2)
+Test(OrComponent, True_True)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::OrComponent orComp;
     nts::Components::TrueComponent trueComp;
     nts::Components::TrueComponent trueComp2;
 
-    andComp.setLink(1, trueComp, 1);
-    andComp.setLink(2, trueComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::TRUE);
+    orComp.setLink(1, trueComp, 1);
+    orComp.setLink(2, trueComp2, 1);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::TRUE);
 }
 
-Test(OrComponent, simple_and3)
+Test(OrComponent, False_False)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::OrComponent orComp;
     nts::Components::FalseComponent falseComp;
     nts::Components::FalseComponent falseComp2;
 
-    andComp.setLink(1, falseComp, 1);
-    andComp.setLink(2, falseComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::FALSE);
+    orComp.setLink(1, falseComp, 1);
+    orComp.setLink(2, falseComp2, 1);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::FALSE);
 }
 
 Test(OrComponent, not_linked)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::OrComponent orComp;
 
-    cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::UNDEFINED);
 }
 
 Test(OrComponent, undefined)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::OrComponent orComp;
     nts::Components::InputComponent inputComp;
     nts::Components::InputComponent inputComp2;
 
-    andComp.setLink(1, inputComp, 1);
-    andComp.setLink(2, inputComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
+    orComp.setLink(1, inputComp, 1);
+    orComp.setLink(2, inputComp2, 1);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::UNDEFINED);
 }
 
 Test(OrComponent, clone)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::OrComponent orComp;
 
-    cr_assert(andComp.clone() != nullptr);
+    cr_assert(orComp.clone() != nullptr);
+}
+
+Test(OrComponent, True_notLinked)
+{
+    nts::Components::OrComponent orComp;
+    nts::Components::TrueComponent trueComp;
+
+    orComp.setLink(1, trueComp, 1);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::TRUE);
+}
+
+Test(OrComponent, notLinked_True)
+{
+    nts::Components::OrComponent orComp;
+    nts::Components::TrueComponent trueComp;
+
+    orComp.setLink(2, trueComp, 1);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::TRUE);
+}
+
+Test(OrComponent, False_notLinked)
+{
+    nts::Components::OrComponent orComp;
+    nts::Components::FalseComponent falseComp;
+
+    orComp.setLink(1, falseComp, 1);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::UNDEFINED);
+}
+
+Test(OrComponent, notLinked_False)
+{
+    nts::Components::OrComponent orComp;
+    nts::Components::FalseComponent falseComp;
+
+    orComp.setLink(2, falseComp, 1);
+    cr_assert_eq(orComp.compute(3), nts::Tristate::UNDEFINED);
 }

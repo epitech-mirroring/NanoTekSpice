@@ -71,3 +71,39 @@ Test(AndComponent, clone)
 
     cr_assert(andComp.clone() != nullptr);
 }
+
+Test(AndComponent, True_notLinked)
+{
+    nts::Components::AndComponent andComp;
+    nts::Components::TrueComponent trueComp;
+
+    andComp.setLink(1, trueComp, 1);
+    cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
+}
+
+Test(AndComponent, notLinked_True)
+{
+    nts::Components::AndComponent andComp;
+    nts::Components::TrueComponent trueComp;
+
+    andComp.setLink(2, trueComp, 1);
+    cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
+}
+
+Test(AndComponent, False_notLinked)
+{
+    nts::Components::AndComponent andComp;
+    nts::Components::FalseComponent falseComp;
+
+    andComp.setLink(1, falseComp, 1);
+    cr_assert_eq(andComp.compute(3), nts::Tristate::FALSE);
+}
+
+Test(AndComponent, notLinked_False)
+{
+    nts::Components::AndComponent andComp;
+    nts::Components::FalseComponent falseComp;
+
+    andComp.setLink(2, falseComp, 1);
+    cr_assert_eq(andComp.compute(3), nts::Tristate::FALSE);
+}
