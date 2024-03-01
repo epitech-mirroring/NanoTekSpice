@@ -8,15 +8,15 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include <iostream>
-#include "../src/components/OrComponent.hpp"
+#include "../src/components/XorComponent.hpp"
 #include "../src/components/TrueComponent.hpp"
 #include "../src/components/FalseComponent.hpp"
 #include "../src/components/InputComponent.hpp"
 
 
-Test(OrComponent, simple_and)
+Test(XorComponent, simple_and)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::XorComponent andComp;
     nts::Components::TrueComponent trueComp;
     nts::Components::FalseComponent falseComp;
 
@@ -25,20 +25,20 @@ Test(OrComponent, simple_and)
     cr_assert_eq(andComp.compute(3), nts::Tristate::TRUE);
 }
 
-Test(OrComponent, simple_and2)
+Test(XorComponent, simple_and2)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::XorComponent andComp;
     nts::Components::TrueComponent trueComp;
     nts::Components::TrueComponent trueComp2;
 
     andComp.setLink(1, trueComp, 1);
     andComp.setLink(2, trueComp2, 1);
-    cr_assert_eq(andComp.compute(3), nts::Tristate::TRUE);
+    cr_assert_eq(andComp.compute(3), nts::Tristate::FALSE);
 }
 
-Test(OrComponent, simple_and3)
+Test(XorComponent, simple_and3)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::XorComponent andComp;
     nts::Components::FalseComponent falseComp;
     nts::Components::FalseComponent falseComp2;
 
@@ -47,16 +47,16 @@ Test(OrComponent, simple_and3)
     cr_assert_eq(andComp.compute(3), nts::Tristate::FALSE);
 }
 
-Test(OrComponent, not_linked)
+Test(XorComponent, not_linked)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::XorComponent andComp;
 
     cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
 }
 
-Test(OrComponent, undefined)
+Test(XorComponent, undefined)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::XorComponent andComp;
     nts::Components::InputComponent inputComp;
     nts::Components::InputComponent inputComp2;
 
@@ -65,9 +65,9 @@ Test(OrComponent, undefined)
     cr_assert_eq(andComp.compute(3), nts::Tristate::UNDEFINED);
 }
 
-Test(OrComponent, clone)
+Test(XorComponent, clone)
 {
-    nts::Components::OrComponent andComp;
+    nts::Components::XorComponent andComp;
 
     cr_assert(andComp.clone() != nullptr);
 }
