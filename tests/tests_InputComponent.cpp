@@ -39,3 +39,16 @@ Test(InputComponent, compute_input)
     cr_assert_eq(comp->compute(nts::Components::InputComponent::OUT), nts::UNDEFINED);
     delete comp;
 }
+
+Test(InputComponent, no_change_but_simulate)
+{
+    nts::Components::InputComponent *comp = new nts::Components::InputComponent();
+    cr_assert_not_null(comp);
+    comp->simulate(1);
+    cr_assert_eq(comp->compute(nts::Components::InputComponent::OUT), nts::UNDEFINED);
+    comp->simulate(1);
+    cr_assert_eq(comp->compute(nts::Components::InputComponent::OUT), nts::UNDEFINED);
+    comp->simulate(1);
+    cr_assert_eq(comp->compute(nts::Components::InputComponent::OUT), nts::UNDEFINED);
+    delete comp;
+}
