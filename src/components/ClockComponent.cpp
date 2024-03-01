@@ -13,6 +13,7 @@ using namespace nts::Components;
 ClockComponent::ClockComponent(): InputComponent() {
     this->_name = "clock";
     _value = UNDEFINED;
+    _hasChanged = false;
     this->setPinMode(OUT, PinMode::OUTPUT);
 }
 
@@ -22,17 +23,23 @@ nts::Tristate ClockComponent::compute(std::size_t pin) {
     return _value;
 }
 
-std::unique_ptr<nts::IComponent> ClockComponent::clone() const {
-    return std::make_unique<ClockComponent>();
+void ClockComponent::setValue(nts::Tristate value) {
+    _tempValue = value;
+    _hasChanged = true;
 }
 
 void ClockComponent::simulate(std::size_t tick)
 {
-    for (size_t i = 0; i < tick; i++) {
-        _value = !_value;
+    if (_hasChanged) {
+        _value = _tempValue;
+        _hasChanged = false;
+    } else {
+        for (size_t i = 0; i < tick; i++) {
+            _value = !_value;
+        }
     }
 }
 
-void ClockComponent::setValue(nts::Tristate value) {
-    _value = value;
+std::unique_ptr<nts::IComponent> ClockComponent::clone() const {
+    return std::make_unique<ClockComponent>();
 }
