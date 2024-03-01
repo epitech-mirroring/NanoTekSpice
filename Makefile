@@ -40,10 +40,17 @@ CXX_TESTS	=	tests/tests_Error.cpp						\
 				tests/tests_ComponentFactory.cpp			\
 				tests/tests_FileContainer.cpp				\
 				tests/tests_Simulation.cpp					\
-				tests/components/tests_AndComponent.cpp		\
+				tests/tests_TrueComponent.cpp				\
+				tests/tests_FalseComponent.cpp				\
+				tests/tests_AndComponent.cpp				\
+				tests/tests_NotComponent.cpp				\
+				tests/tests_OrComponent.cpp					\
+				tests/tests_XorComponent.cpp				\
+				tests/tests_InputComponent.cpp				\
+				tests/tests_OutputComponent.cpp				\
+				tests/tests_ClockComponent.cpp				\
 				tests/tests_4008Component.cpp				\
 				tests/tests_7482Component.cpp				\
-				tests/tests_InputComponent.cpp				\
 
 # Compiler and linker settings
 NAME 			= nanotekspice
