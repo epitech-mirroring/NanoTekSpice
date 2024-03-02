@@ -38,7 +38,7 @@ namespace nts::Components {
         P4013Component();
         ~P4013Component() override = default;
         Tristate internalCompute(std::size_t pin) override;
-        void internalSimulate(std::size_t tick) override;
+        void beforeSimulation(std::size_t tick) override;
         [[nodiscard]] std::unique_ptr<IComponent> clone() const override;
     };
 }
