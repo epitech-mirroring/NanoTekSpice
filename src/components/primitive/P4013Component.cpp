@@ -16,11 +16,17 @@ P4013Component::P4013Component(): AbstractComponent(14, "4013") {
     this->setPinMode(P4013Component::Q2B, PinMode::OUTPUT);
 }
 
-void P4013Component::internalSimulate(std::size_t tick) {
-    if (this->_lastSimulationTick == tick) {
-        return;
-    }
+void P4013Component::beforeSimulation(std::size_t tick) {
+    (void)tick;
 
+    Tristate clk1 = this->computeInput(P4013Component::CLK1);
+    Tristate clk2 = this->computeInput(P4013Component::CLK2);
+
+    this->old_clk1 = clk1;
+    this->old_clk2 = clk2;
+}
+
+nts::Tristate P4013Component::internalCompute(std::size_t pin) {
     // Simulate the flip-flops
     // First flip-flop
     Tristate clk1 = this->computeInput(P4013Component::CLK1);
@@ -42,6 +48,16 @@ void P4013Component::internalSimulate(std::size_t tick) {
             this->ff1_q = nts::FALSE;
             this->ff1_qb = nts::TRUE;
         }
+    }
+    if (rs1 == nts::TRUE && s1 == nts::FALSE) {
+        this->ff1_q = nts::FALSE;
+        this->ff1_qb = nts::TRUE;
+    } else if (rs1 == nts::FALSE && s1 == nts::TRUE) {
+        this->ff1_q = nts::TRUE;
+        this->ff1_qb = nts::FALSE;
+    } else if (rs1 == nts::TRUE && s1 == nts::TRUE) {
+        this->ff1_q = nts::TRUE;
+        this->ff1_qb = nts::TRUE;
     }
 
     // Second flip-flop
@@ -65,19 +81,26 @@ void P4013Component::internalSimulate(std::size_t tick) {
             this->ff2_qb = nts::TRUE;
         }
     }
+    if (rs2 == nts::TRUE && s2 == nts::FALSE) {
+        this->ff2_q = nts::FALSE;
+        this->ff2_qb = nts::TRUE;
+    } else if (rs2 == nts::FALSE && s2 == nts::TRUE) {
+        this->ff2_q = nts::TRUE;
+        this->ff2_qb = nts::FALSE;
+    } else if (rs2 == nts::TRUE && s2 == nts::TRUE) {
+        this->ff2_q = nts::TRUE;
+        this->ff2_qb = nts::TRUE;
+    }
 
-    this->old_clk1 = clk1;
-    this->old_clk2 = clk2;
-}
-
-nts::Tristate P4013Component::internalCompute(std::size_t pin) {
-    if (pin == P4013Component::Q1)
+    if (pin == P4013Component::Q1) {
         return this->ff1_q;
-    if (pin == P4013Component::Q1B)
+    } else if (pin == P4013Component::Q1B) {
         return this->ff1_qb;
-    if (pin == P4013Component::Q2)
+    } else if (pin == P4013Component::Q2) {
         return this->ff2_q;
-    return this->ff2_qb;
+    } else if (pin == P4013Component::Q2B) {
+        return this->ff2_qb;
+    }
 }
 
 std::unique_ptr<nts::IComponent> P4013Component::clone() const {
