@@ -80,3 +80,7 @@ nts::Tristate P4040Component::internalCompute(std::size_t pin) {
         return (this->_value & 2048) ? nts::TRUE : nts::FALSE;
     }
 }
+
+std::unique_ptr<nts::IComponent> P4040Component::clone() const {
+    return std::make_unique<P4040Component>();
+}
