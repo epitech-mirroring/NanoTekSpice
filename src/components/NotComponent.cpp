@@ -16,6 +16,7 @@ NotComponent::NotComponent(): AbstractComponent(2, "not") {
 }
 
 nts::Tristate NotComponent::internalCompute(std::size_t pin) {
+    (void)pin;
     Tristate a = this->computeInput(IN);
 
     if (a == TRUE)

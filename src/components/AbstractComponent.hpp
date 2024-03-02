@@ -25,6 +25,7 @@ namespace nts::Components {
     class AbstractComponent : public IComponent {
     protected:
         std::string _name;
+        std::size_t _lastSimulationTick = -1;
         AbstractComponent(std::size_t nbPins, const std::string &name);
 
         void setPinMode(std::size_t pin, PinMode type);
@@ -37,7 +38,7 @@ namespace nts::Components {
     public:
         ~AbstractComponent() override;
 
-        void simulate(std::size_t tick) override;
+        void simulate(std::size_t tick) final;
 
         void setLink(std::size_t pin, nts::IComponent &other,
                      std::size_t otherPin) override;
@@ -60,6 +61,8 @@ namespace nts::Components {
         [[nodiscard]] nts::Tristate compute(std::size_t pin) final;
 
         [[nodiscard]] virtual nts::Tristate internalCompute(std::size_t pin) = 0;
+
+        virtual void internalSimulate(std::size_t tick);
 
         void setOldValue(std::size_t pin, nts::Tristate value);
     };

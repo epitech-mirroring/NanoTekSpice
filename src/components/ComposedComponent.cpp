@@ -34,3 +34,15 @@ void ComposedComponent::setInternalLink(std::size_t pin, nts::IComponent &other,
     // Link the other component's pin
     other.setLink(otherPin, *this, pin);
 }
+
+void ComposedComponent::internalSimulate(std::size_t tick) {
+    for (auto &internal : this->_internal) {
+        internal.second->simulate(tick);
+    }
+
+    this->composedSimulate(tick);
+}
+
+void ComposedComponent::composedSimulate(std::size_t tick) {
+    (void)tick;
+}

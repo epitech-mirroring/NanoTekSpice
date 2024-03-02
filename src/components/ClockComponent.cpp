@@ -29,16 +29,13 @@ void ClockComponent::setValue(nts::Tristate value) {
     _hasChanged = true;
 }
 
-void ClockComponent::simulate(std::size_t tick)
+void ClockComponent::internalSimulate(std::size_t tick)
 {
-    AbstractComponent::simulate(tick);
     if (_hasChanged) {
         _value = _tempValue;
         _hasChanged = false;
     } else {
-        for (size_t i = 0; i < tick; i++) {
-            _value = !_value;
-        }
+        _value = !_value;
     }
 }
 

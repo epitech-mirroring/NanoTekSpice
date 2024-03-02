@@ -29,11 +29,30 @@ AbstractComponent::~AbstractComponent() {
 }
 
 void AbstractComponent::simulate(std::size_t tick) {
-    // Simulate the component
-    (void)tick;
+    if (this->_lastSimulationTick == tick) {
+        return;
+    }
+    this->_lastSimulationTick = tick;
+
+    // Simulate connected input components
+    for (std::size_t i = 1; i <= this->_pins.size(); i++) {
+        if (this->getPinMode(i) == INPUT) {
+            std::vector<Link> links = std::get<1>(this->_pins.at(i));
+            for (auto &link : links) {
+                if (std::get<0>(link) != nullptr) {
+                    std::get<0>(link)->simulate(tick);
+                }
+            }
+        }
+    }
+
+    // Reset computed values
     for (std::size_t i = 1; i <= this->_pins.size(); i++) {
         this->_computed[i] = false;
     }
+
+    // Simulate the component
+    this->internalSimulate(tick);
 }
 
 bool AbstractComponent::isLinkedTo(std::size_t pin, IComponent *component) const {
@@ -197,4 +216,8 @@ void AbstractComponent::setOldValue(std::size_t pin, nts::Tristate value) {
     if (this->hasPin(pin)) {
         this->_oldValues[pin] = value;
     }
+}
+
+void AbstractComponent::internalSimulate(std::size_t tick) {
+    (void)tick;
 }

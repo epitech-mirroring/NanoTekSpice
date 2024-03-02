@@ -21,8 +21,7 @@ nts::Tristate OutputComponent::internalCompute(std::size_t pin) {
     return this->_value;
 }
 
-void OutputComponent::simulate(std::size_t tick) {
-    (void)tick;
+void OutputComponent::internalSimulate(std::size_t tick) {
     this->_value = this->computeInput(IN);
 }
 

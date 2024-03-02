@@ -21,5 +21,9 @@ namespace nts::Components {
                      std::size_t otherPin);
     public:
         ~ComposedComponent() override;
+
+        void internalSimulate(std::size_t tick) final;
+
+        virtual void composedSimulate(std::size_t tick);
     };
 }

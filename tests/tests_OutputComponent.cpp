@@ -34,7 +34,7 @@ Test(OutputComponent, simple_output2)
     nts::Components::TrueComponent trueComp;
 
     outputComp.setLink(1, trueComp, 1);
-    outputComp.simulate(1);
+    outputComp.simulate(0);
     cr_assert_eq(outputComp.compute(1), nts::Tristate::TRUE);
 }
 
@@ -44,7 +44,7 @@ Test(OutputComponent, simple_output3)
     nts::Components::FalseComponent falseComp;
 
     outputComp.setLink(1, falseComp, 1);
-    outputComp.simulate(1);
+    outputComp.simulate(0);
     cr_assert_eq(outputComp.compute(1), nts::Tristate::FALSE);
 }
 

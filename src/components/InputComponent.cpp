@@ -26,8 +26,7 @@ void InputComponent::setValue(Tristate value) {
     _tempValue = value;
 }
 
-void InputComponent::simulate(std::size_t tick) {
-    AbstractComponent::simulate(tick);
+void InputComponent::internalSimulate(std::size_t tick) {
     _value = _tempValue;
 }
 
