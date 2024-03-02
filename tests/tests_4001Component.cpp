@@ -60,7 +60,7 @@ static void test(nts::Tristate a[4], nts::Tristate b[4])
 
     for (int i = 0; i < 4; i++) {
         outputs[i].simulate(0);
-        nts::Tristate expected = orTruthTable(a[i], b[i]);
+        nts::Tristate expected = norTruthTable(a[i], b[i]);
         nts::Tristate actual = outputs[i].compute(nts::Components::OutputComponent::IN);
         cr_assert_eq(expected, actual, "Expected %d, got %d", expected, actual);
     }
