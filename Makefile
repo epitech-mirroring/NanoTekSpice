@@ -54,6 +54,8 @@ CXX_TESTS	=	tests/tests_Error.cpp						\
 				tests/tests_NandComponent.cpp				\
 				tests/tests_4008Component.cpp				\
 				tests/tests_7482Component.cpp				\
+				tests/tests_4081Component.cpp				\
+				tests/tests_4071Component.cpp				\
 
 # Compiler and linker settings
 NAME 			= nanotekspice
