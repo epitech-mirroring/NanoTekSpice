@@ -64,6 +64,8 @@ namespace nts::Components {
 
         virtual void internalSimulate(std::size_t tick);
 
+        virtual void beforeSimulation(std::size_t tick);
+
         void setOldValue(std::size_t pin, nts::Tristate value);
     };
 }

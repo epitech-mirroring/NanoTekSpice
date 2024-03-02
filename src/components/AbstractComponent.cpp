@@ -7,6 +7,7 @@
 */
 
 #include "AbstractComponent.hpp"
+#include <iostream>
 
 using namespace nts::Components;
 
@@ -33,6 +34,9 @@ void AbstractComponent::simulate(std::size_t tick) {
         return;
     }
     this->_lastSimulationTick = tick;
+
+    // Execute the beforeSimulation method
+    this->beforeSimulation(tick);
 
     // Simulate connected input components
     for (std::size_t i = 1; i <= this->_pins.size(); i++) {
@@ -186,4 +190,8 @@ void AbstractComponent::internalSimulate(std::size_t tick) {
 nts::Tristate AbstractComponent::internalCompute(std::size_t pin) {
     (void)pin;
     return UNDEFINED;
+}
+
+void AbstractComponent::beforeSimulation(std::size_t tick) {
+    (void)tick;
 }
