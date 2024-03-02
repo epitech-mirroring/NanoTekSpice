@@ -35,6 +35,7 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/components/composed/C7482Component.cpp\
 			  src/components/composed/C4008Component.cpp\
 			  src/components/primitive/P4013Component.cpp\
+			  src/components/primitive/P4040Component.cpp\
 
 CXX_TESTS	=	tests/tests_Error.cpp						\
 				tests/tests_IComponent.cpp					\
