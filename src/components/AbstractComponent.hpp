@@ -60,7 +60,7 @@ namespace nts::Components {
 
         [[nodiscard]] nts::Tristate compute(std::size_t pin) final;
 
-        [[nodiscard]] virtual nts::Tristate internalCompute(std::size_t pin) = 0;
+        [[nodiscard]] virtual nts::Tristate internalCompute(std::size_t pin);
 
         virtual void internalSimulate(std::size_t tick);
 

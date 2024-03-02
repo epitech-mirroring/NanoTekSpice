@@ -15,12 +15,6 @@ OutputComponent::OutputComponent(): AbstractComponent(1, "output") {
     this->setPinMode(IN, PinMode::INPUT);
 }
 
-nts::Tristate OutputComponent::internalCompute(std::size_t pin) {
-    if (pin != IN)
-        return UNDEFINED;
-    return this->_value;
-}
-
 void OutputComponent::internalSimulate(std::size_t tick) {
     this->_value = this->computeInput(IN);
 }

@@ -42,9 +42,7 @@ nts::Tristate C4030Component::internalCompute(std::size_t pin) {
         return _internal["B"]->compute(XorComponent::OUT);
     if (pin == Y3)
         return _internal["C"]->compute(XorComponent::OUT);
-    if (pin == Y4)
-        return _internal["D"]->compute(XorComponent::OUT);
-    return UNDEFINED;
+    return _internal["D"]->compute(XorComponent::OUT);
 }
 
 std::unique_ptr<nts::IComponent> C4030Component::clone() const

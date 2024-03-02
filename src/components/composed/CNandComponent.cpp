@@ -24,9 +24,7 @@ CNandComponent::CNandComponent(): ComposedComponent(3, "nand", 2)
 }
 
 nts::Tristate CNandComponent::internalCompute(std::size_t pin) {
-    if (pin == OUT)
-        return _internal["B"]->compute(NotComponent::OUT);
-    return UNDEFINED;
+    return _internal["B"]->compute(NotComponent::OUT);
 }
 
 std::unique_ptr<nts::IComponent> CNandComponent::clone() const

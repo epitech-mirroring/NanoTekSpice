@@ -58,9 +58,7 @@ nts::Tristate C7482Component::internalCompute(std::size_t pin) {
         return _internal["g20"]->compute(XorComponent::OUT);
     if (pin == Y2)
         return _internal["g21"]->compute(XorComponent::OUT);
-    if (pin == COUT)
-        return _internal["g41"]->compute(OrComponent::OUT);
-    return UNDEFINED;
+    return _internal["g41"]->compute(OrComponent::OUT);
 }
 
 std::unique_ptr<nts::IComponent> C7482Component::clone() const {

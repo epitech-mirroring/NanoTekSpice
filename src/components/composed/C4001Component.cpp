@@ -42,9 +42,7 @@ nts::Tristate C4001Component::internalCompute(std::size_t pin) {
         return _internal["B"]->compute(CNorComponent::OUT);
     if (pin == Y3)
         return _internal["C"]->compute(CNorComponent::OUT);
-    if (pin == Y4)
-        return _internal["D"]->compute(CNorComponent::OUT);
-    return UNDEFINED;
+    return _internal["D"]->compute(CNorComponent::OUT);
 }
 
 std::unique_ptr<nts::IComponent> C4001Component::clone() const

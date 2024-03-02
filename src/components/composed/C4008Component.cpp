@@ -45,9 +45,7 @@ nts::Tristate C4008Component::internalCompute(std::size_t pin) {
         return _internal["B"]->compute(C7482Component::Y1);
     if (pin == Y4)
         return _internal["B"]->compute(C7482Component::Y2);
-    if (pin == COUT)
-        return _internal["B"]->compute(C7482Component::COUT);
-    return UNDEFINED;
+    return _internal["B"]->compute(C7482Component::COUT);
 }
 
 std::unique_ptr<nts::IComponent> C4008Component::clone() const {

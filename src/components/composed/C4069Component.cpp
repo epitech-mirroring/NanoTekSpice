@@ -50,9 +50,7 @@ nts::Tristate C4069Component::internalCompute(std::size_t pin) {
         return _internal["D"]->compute(NotComponent::OUT);
     if (pin == OUT_5)
         return _internal["E"]->compute(NotComponent::OUT);
-    if (pin == OUT_6)
-        return _internal["F"]->compute(NotComponent::OUT);
-    return UNDEFINED;
+    return _internal["F"]->compute(NotComponent::OUT);
 }
 
 std::unique_ptr<nts::IComponent> C4069Component::clone() const

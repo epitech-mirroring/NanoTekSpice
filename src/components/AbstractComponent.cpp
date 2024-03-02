@@ -221,3 +221,8 @@ void AbstractComponent::setOldValue(std::size_t pin, nts::Tristate value) {
 void AbstractComponent::internalSimulate(std::size_t tick) {
     (void)tick;
 }
+
+nts::Tristate AbstractComponent::internalCompute(std::size_t pin) {
+    (void)pin;
+    return UNDEFINED;
+}

@@ -42,9 +42,7 @@ nts::Tristate C4071Component::internalCompute(std::size_t pin) {
         return _internal["B"]->compute(OrComponent::OUT);
     if (pin == Y3)
         return _internal["C"]->compute(OrComponent::OUT);
-    if (pin == Y4)
-        return _internal["D"]->compute(OrComponent::OUT);
-    return UNDEFINED;
+    return _internal["D"]->compute(OrComponent::OUT);
 }
 
 std::unique_ptr<nts::IComponent> C4071Component::clone() const

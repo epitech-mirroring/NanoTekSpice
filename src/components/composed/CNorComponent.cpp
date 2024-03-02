@@ -24,9 +24,7 @@ CNorComponent::CNorComponent(): ComposedComponent(3, "nor", 2)
 }
 
 nts::Tristate CNorComponent::internalCompute(std::size_t pin) {
-    if (pin == OUT)
-        return _internal["B"]->compute(NotComponent::OUT);
-    return UNDEFINED;
+    return _internal["B"]->compute(NotComponent::OUT);
 }
 
 std::unique_ptr<nts::IComponent> CNorComponent::clone() const
