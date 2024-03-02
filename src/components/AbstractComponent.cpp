@@ -101,7 +101,6 @@ bool AbstractComponent::isLinked(std::size_t pin) const {
     return !links.empty();
 }
 
-
 void AbstractComponent::getLink(std::size_t pin) const {
     // Check that the pin exists, it is linked and it is an output
     if (!this->hasPin(pin) || !this->isLinked(pin) || this->getPinMode(pin) != OUTPUT) {
@@ -127,31 +126,6 @@ void AbstractComponent::setPinMode(std::size_t pin, PinMode type) {
     }
 }
 
-std::size_t AbstractComponent::getParentPin(std::size_t pin, std::size_t link) const {
-    if (!this->hasPin(pin)) {
-        return 0;
-    }
-    Pin pinData = this->_pins.at(pin);
-    std::vector<Link> links = std::get<1>(pinData);
-    if (link >= links.size()) {
-        return 0;
-    }
-
-    return std::get<1>(links.at(link));
-}
-
-nts::IComponent *AbstractComponent::getLinkedComponent(std::size_t pin, std::size_t link) const {
-    if (!this->isLinked(pin)) {
-        return nullptr;
-    }
-    Pin pinData = this->_pins.at(pin);
-    std::vector<Link> links = std::get<1>(pinData);
-    if (link >= links.size()) {
-        return nullptr;
-    }
-    return std::get<0>(links.at(link));
-}
-
 nts::Tristate AbstractComponent::computeInput(std::size_t pin) const {
     if (!this->hasPin(pin) || this->getPinMode(pin) != INPUT) {
         return UNDEFINED;
@@ -160,10 +134,6 @@ nts::Tristate AbstractComponent::computeInput(std::size_t pin) const {
     std::vector<Link> links = std::get<1>(pinData);
     if (links.empty()) {
         return UNDEFINED;
-    }
-
-    if (this->isLinkedTo(pin, (IComponent *) this)) {
-        return this->_oldValues.at(pin);
     }
 
     Tristate value = UNDEFINED;
@@ -189,9 +159,6 @@ nts::Tristate AbstractComponent::computeInput(std::size_t pin) const {
             }
         }
     }
-    if (!hasValue) {
-        return UNDEFINED;
-    }
     return value;
 }
 
@@ -210,12 +177,6 @@ nts::Tristate AbstractComponent::compute(std::size_t pin) {
     Tristate n = this->internalCompute(pin);
     _oldValues[pin] = n;
     return n;
-}
-
-void AbstractComponent::setOldValue(std::size_t pin, nts::Tristate value) {
-    if (this->hasPin(pin)) {
-        this->_oldValues[pin] = value;
-    }
 }
 
 void AbstractComponent::internalSimulate(std::size_t tick) {

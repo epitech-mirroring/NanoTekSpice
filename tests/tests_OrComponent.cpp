@@ -107,3 +107,12 @@ Test(OrComponent, notLinked_False)
     orComp.setLink(2, falseComp, 1);
     cr_assert_eq(orComp.compute(3), nts::Tristate::UNDEFINED);
 }
+
+Test(OrComponent, out_of_range_pin)
+{
+    nts::Components::OrComponent orComp;
+    nts::Components::FalseComponent falseComp;
+
+    orComp.setLink(1, falseComp, 1);
+    cr_assert_eq(orComp.compute(4), nts::Tristate::UNDEFINED);
+}
