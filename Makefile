@@ -143,7 +143,16 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	&& ./tests.out --xml=criterion.xml --ignore-warnings >> tests.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
-	@cat tests.log
+	@cat tests.log;
+	@printf "$(RUNNING)$(YELLOW)  🧪 Running functionnal tests$(RESET)" \
+	@python3 -m pip install --upgrade pip --no-warn-script-location >> /dev/null 2>&1;
+	@pip install junit-xml >> /dev/null 2>&1;
+	@$(XX) -o $(NAME) $(CXX_OBJS) $(XXFLAGS) >> $(LOG) 2>&1 \
+	@./tester.py >> functests.log 2>&1 \
+	&& printf "\r$(SUCCESS)\n" \
+	|| printf "\r$(FAILURE)\n";
+	@rm -f nanotekspice
+	@cat functests.log
 	@printf "$(RUNNING)$(YELLOW)  📊  Generating coverage$(RESET)";
 	@gcovr --exclude tests/ >> coverage.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
@@ -172,9 +181,25 @@ clean_test:
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting cobertura.xml$(RESET)"
 	@rm -f cobertura.xml >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting functests.xml$(RESET)"
+	@rm -f functests.xml >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests.log$(RESET)"
 	@rm -f tests.log >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting coverage.log$(RESET)"
 	@rm -f coverage.log >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@printf "$(RUNNING) $(RED) 🗑️   Deleting functests.log$(RESET)"
+	@rm -f functests.log >> $(LOG) 2>&1 \
+	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
+	@if [ -d .cache/ ]; then \
+		printf "$(RUNNING) $(RED) 🗑️   Deleting .cache/$(RESET)"; \
+		rm -rf .cache >> $(LOG) 2>&1 \
+		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"; \
+	fi
+	@if [ -d .local/ ]; then \
+		printf "$(RUNNING) $(RED) 🗑️   Deleting .local/$(RESET)"; \
+		rm -rf .local >> $(LOG) 2>&1 \
+		&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"; \
+	fi
