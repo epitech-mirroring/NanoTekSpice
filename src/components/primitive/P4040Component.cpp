@@ -38,7 +38,7 @@ void P4040Component::internalSimulate(std::size_t tick) {
 
     Tristate clk = this->computeInput(CLK);
 
-    if (this->_lastClk == nts::FALSE && clk == nts::TRUE) {
+    if (this->_lastClk == nts::TRUE && clk == nts::FALSE) {
         this->_value++;
     }
 

@@ -41,14 +41,15 @@ Test(P4040Component, no_reset)
     // Since we start from low on tick 0, first rising edge is on tick 1
     // We count up to 4096, so we need 8192 ticks
     clock.setValue(nts::FALSE);
+    nts::Tristate oldClock = nts::FALSE;
 
     for (std::size_t i = 0; i < 8192; i++) {
         for (std::size_t j = 0; j < 12; j++) {
             q[j].simulate(tick);
         }
 
-        // Increment the value on the rising edge
-        if (clock.compute(nts::Components::ClockComponent::OUT) == nts::TRUE) {
+        // Increment the value on the falling edge
+        if (oldClock == nts::TRUE && clock.compute(nts::Components::ClockComponent::OUT) == nts::FALSE) {
             value++;
         }
 
@@ -56,6 +57,8 @@ Test(P4040Component, no_reset)
         for (std::size_t j = 0; j < 12; j++) {
             cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::FALSE : nts::TRUE);
         }
+
+        oldClock = clock.compute(nts::Components::ClockComponent::OUT);
     }
 }
 
@@ -88,14 +91,15 @@ Test(P4040Component, no_reset_overflow)
     // Since we start from low on tick 0, first rising edge is on tick 1
     // We count up to 4096, so we need 8192 ticks
     clock.setValue(nts::FALSE);
+    nts::Tristate oldClock = nts::FALSE;
 
     for (; tick < 8192; tick++) {
         for (std::size_t j = 0; j < 12; j++) {
             q[j].simulate(tick);
         }
 
-        // Increment the value on the rising edge
-        if (clock.compute(nts::Components::ClockComponent::OUT) == nts::TRUE) {
+        // Increment the value on the falling edge
+        if (oldClock == nts::TRUE && clock.compute(nts::Components::ClockComponent::OUT) == nts::FALSE) {
             value++;
         }
 
@@ -103,6 +107,8 @@ Test(P4040Component, no_reset_overflow)
         for (std::size_t j = 0; j < 12; j++) {
             cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::FALSE : nts::TRUE);
         }
+
+        oldClock = clock.compute(nts::Components::ClockComponent::OUT);
     }
 
     for (std::size_t i = 0; i < 12; i++) {
@@ -144,6 +150,7 @@ Test(P4040Component, reset_half_way)
     // Since we start from low on tick 0, first rising edge is on tick 1
     // We count up to 4096, so we need 8192 ticks
     clock.setValue(nts::FALSE);
+    nts::Tristate oldClock = nts::FALSE;
 
     for (;tick < 8192; tick++) {
         if (tick == 4096) {
@@ -154,8 +161,8 @@ Test(P4040Component, reset_half_way)
             q[j].simulate(tick);
         }
 
-        // Increment the value on the rising edge
-        if (clock.compute(nts::Components::ClockComponent::OUT) == nts::TRUE) {
+        // Increment the value on the falling edge
+        if (oldClock == nts::TRUE && clock.compute(nts::Components::ClockComponent::OUT) == nts::FALSE) {
             value++;
         }
 
@@ -168,5 +175,7 @@ Test(P4040Component, reset_half_way)
         for (std::size_t j = 0; j < 12; j++) {
             cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::FALSE : nts::TRUE);
         }
+
+        oldClock = clock.compute(nts::Components::ClockComponent::OUT);
     }
 }
