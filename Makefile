@@ -172,9 +172,6 @@ clean_test:
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting cobertura.xml$(RESET)"
 	@rm -f cobertura.xml >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
-	@printf "$(RUNNING) $(RED) 🗑️   Deleting functests.xml$(RESET)"
-	@rm -f functests.xml >> $(LOG) 2>&1 \
-	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
 	@printf "$(RUNNING) $(RED) 🗑️   Deleting tests.log$(RESET)"
 	@rm -f tests.log >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || printf "\r$(FAILURE)\n"
