@@ -88,7 +88,7 @@ def main():
     result = []
     for test in tests:
         result.append(test_command(test, len(argv) > 1 and (argv[1] == "--verbose" or argv[1] == "-v")))
-    print(f"[====]Synthesis: Tested: {test_nb} | Passed: {result.count(State.OK)} | Failed: {result.count(State.KO)} | Crashed: {result.count(State.CRASH)}")
+    print(f"[====] Synthesis: Tested: {test_nb} | Passing: {result.count(State.OK)} | Failing: {result.count(State.KO)} | Crashing: {result.count(State.CRASH)}")
     generate_file(result)
     return 0
 
