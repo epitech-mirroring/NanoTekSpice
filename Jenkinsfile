@@ -72,6 +72,9 @@ pipeline {
                     // Run the tests
                     sh 'make tests_run'
 
+                    // Update gcovr
+                    sh 'python3 -m pip install -Iv gcovr==6.0'
+
                     // Run gcovr to generate the coverage report
                     sh 'gcovr --cobertura cobertura.xml --exclude tests/'
 
