@@ -30,6 +30,7 @@
 #include "components/composed/C4008Component.hpp"
 #include "components/primitive/P4013Component.hpp"
 #include "components/primitive/P4040Component.hpp"
+#include "components/primitive/P4514Component.hpp"
 
 static void registerComponents(nts::ComponentFactory &factory)
 {
@@ -54,6 +55,7 @@ static void registerComponents(nts::ComponentFactory &factory)
     factory.registerComponent("4008", new nts::Components::C4008Component());
     factory.registerComponent("4013", new nts::Components::P4013Component());
     factory.registerComponent("4040", new nts::Components::P4040Component());
+    factory.registerComponent("4514", new nts::Components::P4514Component());
 }
 
 int main(int argc, char **argv) {
