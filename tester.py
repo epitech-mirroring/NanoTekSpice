@@ -86,8 +86,19 @@ def generate_file(result):
 def main():
     test_nb = tests.__len__()
     result = []
+    print_details = False
+    if len(argv) > 1 and (argv[1] == "--help" or argv[1] == "-h"):
+        print("Usage: ./tester.py [--verbose|-v]")
+        return 0
+    if len(argv) > 1 and (argv[1] == "--verbose" or argv[1] == "-v"):
+        print_details = True
+    if len(argv) > 1 and (argv[1] != "--verbose" and argv[1] != "-v"):
+        print("Usage: ./tester.py [--verbose|-v]")
+        for i in  argv:
+            print(i)
+        return 84
     for test in tests:
-        result.append(test_command(test, len(argv) > 1 and (argv[1] == "--verbose" or argv[1] == "-v")))
+        result.append(test_command(test, print_details))
     print(f"[====] Synthesis: Tested: {test_nb} | Passing: {result.count(State.OK)} | Failing: {result.count(State.KO)} | Crashing: {result.count(State.CRASH)}")
     generate_file(result)
     return 0
