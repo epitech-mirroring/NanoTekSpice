@@ -34,9 +34,9 @@ P4514Component::P4514Component(): AbstractComponent(24, "4514")
     this->d = UNDEFINED;
 }
 
-static nts::Tristate computeResult(nts::Tristate data[4], nts::Tristate a, nts::Tristate b, nts::Tristate c, nts::Tristate d)
+static nts::Tristate computeResult(nts::Tristate data[4], nts::Tristate d, nts::Tristate c, nts::Tristate b, nts::Tristate a)
 {
-    if (data[0] == a && data[1] == b && data[2] == c && data[3] == d) {
+    if (data[0] == d && data[1] == c && data[2] == b && data[3] == a) {
         return nts::Tristate::TRUE;
     }
     return nts::Tristate::FALSE;
@@ -70,39 +70,39 @@ nts::Tristate P4514Component::internalCompute(std::size_t pin)
         return nts::Tristate::UNDEFINED;
     }
 
-    Tristate data[4] = {this->a, this->b, this->c, this->d};
+    Tristate data[4] = {this->d, this->c, this->b, this->a};
 
     // Compute the output
     if (pin == P4514Component::S0) {
         return computeResult(data, FALSE, FALSE, FALSE, FALSE);
     } else if (pin == P4514Component::S1) {
-        return computeResult(data, TRUE, FALSE, FALSE, FALSE);
+        return computeResult(data, FALSE, FALSE, FALSE, TRUE);
     } else if (pin == P4514Component::S2) {
-        return computeResult(data, FALSE, TRUE, FALSE, FALSE);
-    } else if (pin == P4514Component::S3) {
-        return computeResult(data, TRUE, TRUE, FALSE, FALSE);
-    } else if (pin == P4514Component::S4) {
         return computeResult(data, FALSE, FALSE, TRUE, FALSE);
+    } else if (pin == P4514Component::S3) {
+        return computeResult(data, FALSE, FALSE, TRUE, TRUE);
+    } else if (pin == P4514Component::S4) {
+        return computeResult(data, FALSE, TRUE, FALSE, FALSE);
     } else if (pin == P4514Component::S5) {
-        return computeResult(data, TRUE, FALSE, TRUE, FALSE);
+        return computeResult(data, FALSE, TRUE, FALSE, TRUE);
     } else if (pin == P4514Component::S6) {
         return computeResult(data, FALSE, TRUE, TRUE, FALSE);
     } else if (pin == P4514Component::S7) {
-        return computeResult(data, TRUE, TRUE, TRUE, FALSE);
+        return computeResult(data, FALSE, TRUE, TRUE, TRUE);
     } else if (pin == P4514Component::S8) {
-        return computeResult(data, FALSE, FALSE, FALSE, TRUE);
+        return computeResult(data, TRUE, FALSE, FALSE, FALSE);
     } else if (pin == P4514Component::S9) {
         return computeResult(data, TRUE, FALSE, FALSE, TRUE);
     } else if (pin == P4514Component::S10) {
-        return computeResult(data, FALSE, TRUE, FALSE, TRUE);
+        return computeResult(data, TRUE, FALSE, TRUE, FALSE);
     } else if (pin == P4514Component::S11) {
-        return computeResult(data, TRUE, TRUE, FALSE, TRUE);
-    } else if (pin == P4514Component::S12) {
-        return computeResult(data, FALSE, FALSE, TRUE, TRUE);
-    } else if (pin == P4514Component::S13) {
         return computeResult(data, TRUE, FALSE, TRUE, TRUE);
+    } else if (pin == P4514Component::S12) {
+        return computeResult(data, TRUE, TRUE, FALSE, FALSE);
+    } else if (pin == P4514Component::S13) {
+        return computeResult(data, TRUE, TRUE, FALSE, TRUE);
     } else if (pin == P4514Component::S14) {
-        return computeResult(data, FALSE, TRUE, TRUE, TRUE);
+        return computeResult(data, TRUE, TRUE, TRUE, FALSE);
     } else if (pin == P4514Component::S15) {
         return computeResult(data, TRUE, TRUE, TRUE, TRUE);
     }
