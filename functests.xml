@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<testsuites disabled="0" errors="0" failures="0" tests="2" time="0.0">
+	<testsuite disabled="0" errors="0" failures="0" name="nanotekspice" skipped="0" tests="2" time="0">
+		<testcase name="Simple exit" classname="nanotekspice" status="OK">
+			<system-out>OK</system-out>
+		</testcase>
+		<testcase name="Simple display" classname="nanotekspice" status="OK">
+			<system-out>OK</system-out>
+		</testcase>
+	</testsuite>
+</testsuites>
