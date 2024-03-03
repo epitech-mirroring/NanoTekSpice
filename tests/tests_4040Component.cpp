@@ -54,7 +54,7 @@ Test(P4040Component, no_reset)
 
         // Check the value of each output
         for (std::size_t j = 0; j < 12; j++) {
-            cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::TRUE : nts::FALSE);
+            cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::FALSE : nts::TRUE);
         }
     }
 }
@@ -101,7 +101,7 @@ Test(P4040Component, no_reset_overflow)
 
         // Check the value of each output
         for (std::size_t j = 0; j < 12; j++) {
-            cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::TRUE : nts::FALSE);
+            cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::FALSE : nts::TRUE);
         }
     }
 
@@ -111,7 +111,7 @@ Test(P4040Component, no_reset_overflow)
 
     // The value should be 0
     for (std::size_t i = 0; i < 12; i++) {
-        cr_assert_eq(q[i].compute(nts::Components::OutputComponent::IN), nts::FALSE);
+        cr_assert_eq(q[i].compute(nts::Components::OutputComponent::IN), nts::TRUE);
     }
 }
 
@@ -166,7 +166,7 @@ Test(P4040Component, reset_half_way)
 
         // Check the value of each output
         for (std::size_t j = 0; j < 12; j++) {
-            cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::TRUE : nts::FALSE);
+            cr_assert_eq(q[j].compute(nts::Components::OutputComponent::IN), (value & (1 << j)) ? nts::FALSE : nts::TRUE);
         }
     }
 }

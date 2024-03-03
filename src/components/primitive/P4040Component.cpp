@@ -55,29 +55,29 @@ nts::Tristate P4040Component::internalCompute(std::size_t pin) {
     }
 
     if (pin == Q1) {
-        return (this->_value & 1) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 1) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q2) {
-        return (this->_value & 2) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 2) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q3) {
-        return (this->_value & 4) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 4) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q4) {
-        return (this->_value & 8) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 8) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q5) {
-        return (this->_value & 16) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 16) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q6) {
-        return (this->_value & 32) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 32) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q7) {
-        return (this->_value & 64) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 64) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q8) {
-        return (this->_value & 128) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 128) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q9) {
-        return (this->_value & 256) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 256) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q10) {
-        return (this->_value & 512) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 512) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q11) {
-        return (this->_value & 1024) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 1024) ? nts::FALSE : nts::TRUE;
     } else if (pin == Q12) {
-        return (this->_value & 2048) ? nts::TRUE : nts::FALSE;
+        return (this->_value & 2048) ? nts::FALSE : nts::TRUE;
     }
 }
 
