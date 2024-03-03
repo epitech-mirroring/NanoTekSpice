@@ -73,38 +73,40 @@ nts::Tristate P4514Component::internalCompute(std::size_t pin)
     Tristate data[4] = {this->d, this->c, this->b, this->a};
 
     // Compute the output
-    if (pin == P4514Component::S0) {
-        return computeResult(data, FALSE, FALSE, FALSE, FALSE);
-    } else if (pin == P4514Component::S1) {
-        return computeResult(data, FALSE, FALSE, FALSE, TRUE);
-    } else if (pin == P4514Component::S2) {
-        return computeResult(data, FALSE, FALSE, TRUE, FALSE);
-    } else if (pin == P4514Component::S3) {
-        return computeResult(data, FALSE, FALSE, TRUE, TRUE);
-    } else if (pin == P4514Component::S4) {
-        return computeResult(data, FALSE, TRUE, FALSE, FALSE);
-    } else if (pin == P4514Component::S5) {
-        return computeResult(data, FALSE, TRUE, FALSE, TRUE);
-    } else if (pin == P4514Component::S6) {
-        return computeResult(data, FALSE, TRUE, TRUE, FALSE);
-    } else if (pin == P4514Component::S7) {
-        return computeResult(data, FALSE, TRUE, TRUE, TRUE);
-    } else if (pin == P4514Component::S8) {
-        return computeResult(data, TRUE, FALSE, FALSE, FALSE);
-    } else if (pin == P4514Component::S9) {
-        return computeResult(data, TRUE, FALSE, FALSE, TRUE);
-    } else if (pin == P4514Component::S10) {
-        return computeResult(data, TRUE, FALSE, TRUE, FALSE);
-    } else if (pin == P4514Component::S11) {
-        return computeResult(data, TRUE, FALSE, TRUE, TRUE);
-    } else if (pin == P4514Component::S12) {
-        return computeResult(data, TRUE, TRUE, FALSE, FALSE);
-    } else if (pin == P4514Component::S13) {
-        return computeResult(data, TRUE, TRUE, FALSE, TRUE);
-    } else if (pin == P4514Component::S14) {
-        return computeResult(data, TRUE, TRUE, TRUE, FALSE);
-    } else if (pin == P4514Component::S15) {
-        return computeResult(data, TRUE, TRUE, TRUE, TRUE);
+    switch (pin) {
+        case P4514Component::S0:
+            return computeResult(data, FALSE, FALSE, FALSE, FALSE);
+        case P4514Component::S1:
+            return computeResult(data, FALSE, FALSE, FALSE, TRUE);
+        case P4514Component::S2:
+            return computeResult(data, FALSE, FALSE, TRUE, FALSE);
+        case P4514Component::S3:
+            return computeResult(data, FALSE, FALSE, TRUE, TRUE);
+        case P4514Component::S4:
+            return computeResult(data, FALSE, TRUE, FALSE, FALSE);
+        case P4514Component::S5:
+            return computeResult(data, FALSE, TRUE, FALSE, TRUE);
+        case P4514Component::S6:
+            return computeResult(data, FALSE, TRUE, TRUE, FALSE);
+        case P4514Component::S7:
+            return computeResult(data, FALSE, TRUE, TRUE, TRUE);
+        case P4514Component::S8:
+            return computeResult(data, TRUE, FALSE, FALSE, FALSE);
+        case P4514Component::S9:
+            return computeResult(data, TRUE, FALSE, FALSE, TRUE);
+        case P4514Component::S10:
+            return computeResult(data, TRUE, FALSE, TRUE, FALSE);
+        case P4514Component::S11:
+            return computeResult(data, TRUE, FALSE, TRUE, TRUE);
+        case P4514Component::S12:
+            return computeResult(data, TRUE, TRUE, FALSE, FALSE);
+        case P4514Component::S13:
+            return computeResult(data, TRUE, TRUE, FALSE, TRUE);
+        case P4514Component::S14:
+            return computeResult(data, TRUE, TRUE, TRUE, FALSE);
+        default:
+        case P4514Component::S15:
+            return computeResult(data, TRUE, TRUE, TRUE, TRUE);
     }
 }
 
