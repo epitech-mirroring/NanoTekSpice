@@ -149,7 +149,7 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	@printf "$(RUNNING)$(YELLOW)  📥 Prepare functional tests$(RESET)" \
 	&& pip3 install -r requirements.txt >> build.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
-	|| printf "\r$(FAILURE)\n";
+	|| (printf "\r$(FAILURE)\n" && tail -n 10 build.log);
 	@printf "$(RUNNING)$(YELLOW)  🧪 Running functionnal tests$(RESET)"
 	@$(XX) -o $(NAME) $(CXX_OBJS) $(XXFLAGS) >> $(LOG) 2>&1 \
 	&&python3 ./tester.py >> functests.log 2>&1 \
