@@ -146,11 +146,13 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
 	@cat tests.log;
+	@printf "$(RUNNING)$(YELLOW)  📥 Prepare functional tests$(RESET)" \
+	&& pip3 install -r requirements.txt >> build.log 2>&1 \
+	&& printf "\r$(SUCCESS)\n" \
+	|| printf "\r$(FAILURE)\n";
 	@printf "$(RUNNING)$(YELLOW)  🧪 Running functionnal tests$(RESET)"
-	@/bin/python3 -m pip install --upgrade pip >> /dev/null 2>&1
-	@pip install junit-xml >> /dev/null 2>&1
 	@$(XX) -o $(NAME) $(CXX_OBJS) $(XXFLAGS) >> $(LOG) 2>&1 \
-	&& ./tester.py >> functests.log 2>&1 \
+	&&python3 ./tester.py >> functests.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
 	@rm -f nanotekspice;

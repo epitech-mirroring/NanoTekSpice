@@ -50,18 +50,20 @@ pipeline {
                 }
             }
             steps {
-                // Run the build
-                sh 'make'
+                ansiColor('xterm') {
+                    // Run the build
+                    sh 'make'
 
-                // Check file presence (e.g. binary, library, etc.)
-                script {
-                    if (!fileExists('nanotekspice')) {
-                        error "The binary file does not exist"
+                    // Check file presence (e.g. binary, library, etc.)
+                    script {
+                        if (!fileExists('nanotekspice')) {
+                            error "The binary file does not exist"
+                        }
                     }
-                }
 
-                // Archive the binary
-                archiveArtifacts 'nanotekspice'
+                    // Archive the binary
+                    archiveArtifacts 'nanotekspice'
+                }
             }
         }
         stage ('🧪 Tests') {
@@ -72,20 +74,22 @@ pipeline {
                 }
             }
             steps {
-                // Run the tests
-                sh 'make tests_run'
+                ansiColor('xterm') {
+                    // Run the tests
+                    sh 'make tests_run'
 
-                // Run gcovr to generate the coverage report
-                sh 'gcovr --cobertura cobertura.xml --exclude tests/'
+                    // Run gcovr to generate the coverage report
+                    sh 'gcovr --cobertura cobertura.xml --exclude tests/'
 
-                // Display the tests results in a graph using the JUnit plugin
-                junit(testResults: 'criterion.xml', allowEmptyResults : true)
-                junit(testResults: 'functests.xml', allowEmptyResults : true)
+                    // Display the tests results in a graph using the JUnit plugin
+                    junit(testResults: 'criterion.xml', allowEmptyResults : true)
+                    junit(testResults: 'functests.xml', allowEmptyResults : true)
 
-                // Display coverage using the Coverage plugin
-                recordCoverage(tools: [[parser: 'COBERTURA']],
-                        id: 'cobertura', name: 'Coverage',
-                        sourceCodeRetention: 'EVERY_BUILD')
+                    // Display coverage using the Coverage plugin
+                    recordCoverage(tools: [[parser: 'COBERTURA']],
+                            id: 'cobertura', name: 'Coverage',
+                            sourceCodeRetention: 'EVERY_BUILD')
+                }
             }
         }
         stage('🪞 Mirror') {
