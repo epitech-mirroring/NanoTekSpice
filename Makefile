@@ -35,6 +35,7 @@ CXX_SOURCES	= src/main.cpp								\
 			  src/components/composed/C7482Component.cpp\
 			  src/components/composed/C4008Component.cpp\
 			  src/components/primitive/P4013Component.cpp\
+			  src/components/primitive/P4040Component.cpp\
 
 CXX_TESTS	=	tests/tests_Error.cpp						\
 				tests/tests_IComponent.cpp					\
@@ -61,6 +62,7 @@ CXX_TESTS	=	tests/tests_Error.cpp						\
 				tests/tests_4069Component.cpp				\
 				tests/tests_4001Component.cpp				\
 				tests/tests_4013Component.cpp				\
+				tests/tests_4040Component.cpp				\
 
 # Compiler and linker settings
 NAME 			= nanotekspice
