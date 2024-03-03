@@ -75,7 +75,7 @@ nts::Tristate P4017Component::internalCompute(std::size_t pin) {
     } else if (pin == Q9) {
         return (_value == 9) ? nts::TRUE : nts::FALSE;
     } else if (pin == QB_5_9) {
-        return (_value >= 5) ? nts::TRUE : nts::FALSE;
+        return (_value >= 5) ? nts::FALSE : nts::TRUE;
     }
 }
 
