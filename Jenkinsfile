@@ -50,41 +50,43 @@ pipeline {
                 }
             }
             steps {
-                // Run the build
-                sh 'make'
+                ansiColor('xterm') {
+                    // Run the build
+                    sh 'make'
 
-                // Check file presence (e.g. binary, library, etc.)
-                script {
-                    if (!fileExists('nanotekspice')) {
-                        error "The binary file does not exist"
+                    // Check file presence (e.g. binary, library, etc.)
+                    script {
+                        if (!fileExists('nanotekspice')) {
+                            error "The binary file does not exist"
+                        }
                     }
-                }
 
-                // Archive the binary
-                archiveArtifacts 'nanotekspice'
+                    // Archive the binary
+                    archiveArtifacts 'nanotekspice'
+                }
             }
         }
         stage ('🧪 Tests') {
-            agent {
-                docker {
-                    image 'epitechcontent/epitest-docker:latest'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
-                // Run the tests
-                sh 'make tests_run'
+                ansiColor('xterm') {
+                    // Run the tests
+                    sh 'make tests_run'
 
-                // Run gcovr to generate the coverage report
-                sh 'gcovr --cobertura cobertura.xml --exclude tests/'
+                    // Update gcovr
+                    sh 'python3 -m pip install -Iv gcovr==6.0'
 
-                // Display the tests results in a graph using the JUnit plugin
-                junit(testResults: 'criterion.xml', allowEmptyResults : true)
+                    // Run gcovr to generate the coverage report
+                    sh 'gcovr --cobertura cobertura.xml --exclude tests/'
 
-                // Display coverage using the Coverage plugin
-                recordCoverage(tools: [[parser: 'COBERTURA']],
-                        id: 'cobertura', name: 'Coverage',
-                        sourceCodeRetention: 'EVERY_BUILD')
+                    // Display the tests results in a graph using the JUnit plugin
+                    junit(testResults: 'criterion.xml', allowEmptyResults : true)
+                    junit(testResults: 'functests.xml', allowEmptyResults : true)
+
+                    // Display coverage using the Coverage plugin
+                    recordCoverage(tools: [[parser: 'COBERTURA']],
+                            id: 'cobertura', name: 'Coverage',
+                            sourceCodeRetention: 'EVERY_BUILD')
+                }
             }
         }
         stage('🪞 Mirror') {
