@@ -10,6 +10,7 @@
 #include "components/InputComponent.hpp"
 #include "components/ClockComponent.hpp"
 #include "components/OutputComponent.hpp"
+#include "components/LoggerComponent.hpp"
 #include <cstring>
 #include <sstream>
 #include <csignal>
@@ -83,7 +84,8 @@ void nts::Simulation::display()
 void nts::Simulation::simulate()
 {
     for (auto &pin : this->_pins) {
-        if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) != nullptr) {
+        if (dynamic_cast<nts::Components::OutputComponent *>(pin.second) != nullptr ||
+        dynamic_cast<nts::Components::LoggerComponent *>(pin.second) != nullptr) {
             pin.second->simulate(_ticks);
         }
     }

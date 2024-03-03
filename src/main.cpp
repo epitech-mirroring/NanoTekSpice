@@ -33,6 +33,7 @@
 #include "components/primitive/P4514Component.hpp"
 #include "components/primitive/P4017Component.hpp"
 #include "components/primitive/P4512Component.hpp"
+#include "components/LoggerComponent.hpp"
 
 static void registerComponents(nts::ComponentFactory &factory)
 {
@@ -60,6 +61,7 @@ static void registerComponents(nts::ComponentFactory &factory)
     factory.registerComponent("4514", new nts::Components::P4514Component());
     factory.registerComponent("4017", new nts::Components::P4017Component());
     factory.registerComponent("4512", new nts::Components::P4512Component());
+    factory.registerComponent("logger", new nts::Components::LoggerComponent());
 }
 
 int main(int argc, char **argv) {
