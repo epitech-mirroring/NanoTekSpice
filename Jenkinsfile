@@ -80,6 +80,7 @@ pipeline {
 
                 // Display the tests results in a graph using the JUnit plugin
                 junit(testResults: 'criterion.xml', allowEmptyResults : true)
+                junit(testResults: 'functests.xml', allowEmptyResults : true)
 
                 // Display coverage using the Coverage plugin
                 recordCoverage(tools: [[parser: 'COBERTURA']],
