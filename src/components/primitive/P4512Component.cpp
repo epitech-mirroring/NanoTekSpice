@@ -38,17 +38,17 @@ nts::Tristate P4512Component::internalCompute(std::size_t pin) {
 
     if (a == nts::FALSE && b == nts::FALSE && c == nts::FALSE) {
         return this->computeInput(X0);
-    } else if (a == nts::FALSE && b == nts::FALSE && c == nts::TRUE) {
+    } else if (a == nts::TRUE && b == nts::FALSE && c == nts::FALSE) {
         return this->computeInput(X1);
     } else if (a == nts::FALSE && b == nts::TRUE && c == nts::FALSE) {
         return this->computeInput(X2);
-    } else if (a == nts::FALSE && b == nts::TRUE && c == nts::TRUE) {
+    } else if (a == nts::TRUE && b == nts::TRUE && c == nts::FALSE) {
         return this->computeInput(X3);
-    } else if (a == nts::TRUE && b == nts::FALSE && c == nts::FALSE) {
+    } else if (a == nts::FALSE && b == nts::FALSE && c == nts::TRUE) {
         return this->computeInput(X4);
     } else if (a == nts::TRUE && b == nts::FALSE && c == nts::TRUE) {
         return this->computeInput(X5);
-    } else if (a == nts::TRUE && b == nts::TRUE && c == nts::FALSE) {
+    } else if (a == nts::FALSE && b == nts::TRUE && c == nts::TRUE) {
         return this->computeInput(X6);
     } else if (a == nts::TRUE && b == nts::TRUE && c == nts::TRUE) {
         return this->computeInput(X7);
