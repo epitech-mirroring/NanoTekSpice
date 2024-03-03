@@ -144,11 +144,11 @@ tests_run: fclean $(CXX_OBJS) $(CXX_TESTS_OBJS)
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
 	@cat tests.log;
-	@printf "$(RUNNING)$(YELLOW)  🧪 Running functionnal tests$(RESET)" \
+	@printf "$(RUNNING)$(YELLOW)  🧪 Running functionnal tests$(RESET)"
 	@python3 -m pip install --upgrade pip --no-warn-script-location \
 	>> /dev/null 2>&1;
-	@pip install junit-xml >> /dev/null 2>&1;
-	@$(XX) -o $(NAME) $(CXX_OBJS) $(XXFLAGS) >> $(LOG) 2>&1 \
+	@pip install junit-xml >> /dev/null 2>&1
+	@$(XX) -o $(NAME) $(CXX_OBJS) $(XXFLAGS) >> $(LOG) 2>&1
 	@./tester.py >> functests.log 2>&1 \
 	&& printf "\r$(SUCCESS)\n" \
 	|| printf "\r$(FAILURE)\n";
